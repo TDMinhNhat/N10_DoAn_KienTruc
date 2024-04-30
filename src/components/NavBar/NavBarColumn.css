@@ -1,0 +1,56 @@
+/* 
+.navbar-container {
+  position: fixed;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background: #f9f9f9;
+  transition: left 0.5s;
+  z-index: 1000;
+}
+
+.toggle-button {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 10px;
+  transition: left 0.5s;
+}
+
+.toggle-button.open {
+  left: 200px;
+}
+
+.toggle-button.close {
+  left: 0;
+} */
+
+.navbar-container {
+  position: fixed;
+  top: 100px;
+  width: 200px;
+  background: #f9f9f9;
+  transition: left 0.5s;
+  z-index: 1000;
+}
+
+.toggle-button {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  transition: left 0.5s;
+  border: none;
+}
+
+.toggle-button.open {
+  left: 200px;
+}
+
+.toggle-button.close {
+  left: 0;
+}
+.content .nav-link:hover {
+  background-color: #e7ecf0 !important;
+  color: blue !important;
+  cursor: pointer;
+}

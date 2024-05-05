@@ -100,7 +100,7 @@ const HomePage = ({ currentUser }) => {
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/study-results" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
-                                            <CalendarMonthOutlinedIcon />
+                                            <EqualizerOutlinedIcon />
                                             <span>Kết quả học tập</span>
                                         </Link>
                                     </button>
@@ -110,7 +110,7 @@ const HomePage = ({ currentUser }) => {
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/register-course" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
-                                            <CalendarMonthOutlinedIcon />
+                                            <StorageOutlinedIcon />
                                             <span>Đăng ký học phần</span>
                                         </Link>
                                     </button>
@@ -120,7 +120,7 @@ const HomePage = ({ currentUser }) => {
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/home" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
-                                            <CalendarMonthOutlinedIcon />
+                                            <EventNoteOutlinedIcon />
                                             <span>Lịch theo tiến độ</span>
                                         </Link>
                                     </button>
@@ -130,7 +130,7 @@ const HomePage = ({ currentUser }) => {
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/home" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
-                                            <CalendarMonthOutlinedIcon />
+                                            <UpcomingOutlinedIcon />
                                             <span>Nhắc nhở</span>
                                         </Link>
                                     </button>

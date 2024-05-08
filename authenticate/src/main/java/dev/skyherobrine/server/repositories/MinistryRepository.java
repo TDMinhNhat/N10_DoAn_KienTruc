@@ -4,6 +4,9 @@ import dev.skyherobrine.server.models.Ministry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MinistryRepository extends JpaRepository<Ministry,String> {
+    Optional<Ministry> findByIdAndPassword(String id, String password);
 }

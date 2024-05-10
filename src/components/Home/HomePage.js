@@ -6,6 +6,17 @@ import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import UpcomingOutlinedIcon from '@mui/icons-material/UpcomingOutlined';
 
+const levelMapping = {
+    'COLLEGE': 'Cao đẳng',
+    'UNIVERSITY': 'Đại học',
+    'POSTGRADUATE': 'Sau đại học'
+};
+
+const educationTypeMapping = {
+    'FORMAL': 'Chính quy',
+    'HIGH_QUALITY': 'Chất lượng cao',
+};
+
 const HomePage = ({ currentUser }) => {
     const navigate = useNavigate();
 
@@ -28,31 +39,30 @@ const HomePage = ({ currentUser }) => {
                                         <h1>Thông tin sinh viên</h1>
                                     </div>
                                     <div className="border-bottom w-100 my-3"></div>
-                                    <div className='row'>
-                                        <div className="col-4 d-flex flex-column align-items-center">
+                                    <div className='row col-md-12'>
+                                        <div className="col-md-4 d-flex flex-column align-items-center">
                                             <img
-                                                src={currentUser.user.avatar}
+                                                src={currentUser.data.person.avatar}
                                                 alt="Brand Logo"
                                                 className="img-fluid mb-3"
                                                 style={{ maxHeight: '150px', borderRadius: '50%' }}
                                             />
                                             <Link className="text-decoration-none text-blue" to="/profile">Xem chi tiết</Link>
                                         </div>
-                                        <div className='col-8'>
+                                        <div className='col-md-8'>
                                             <div className='row'>
-                                                <div className='col-6'>
-                                                    <p>MSSV: {currentUser.user.id}</p>
-                                                    <p>Họ tên: {currentUser.user.fullName}</p>
-                                                    <p>Giới tính: {currentUser.user.sex}</p>
-                                                    <p>Ngày sinh: {currentUser.user.birthDay}</p>
-                                                    <p>Nơi sinh: {currentUser.user.cityBorn}</p>
+                                                <div className='col-md-6'>
+                                                    <p>MSSV: {currentUser.data.person.id}</p>
+                                                    <p>Họ tên: {currentUser.data.person.fullName}</p>
+                                                    <p>Giới tính: {currentUser.data.person.sex ? 'Nam' : 'Nữ'}</p>                                                    <p>Ngày sinh: {currentUser.data.person.birthDay}</p>
+                                                    <p>Nơi sinh: {currentUser.data.person.cityBorn}</p>
                                                 </div>
-                                                <div className='col-6'>
-                                                    <p>Lớp học: {currentUser.user.class}</p>
-                                                    <p>Khóa học: {currentUser.user.courseYear}</p>
-                                                    <p>Bậc đào tạo: {currentUser.user.educationLevel}</p>
-                                                    <p>Loại hình đào tạo: {currentUser.user.educationType}</p>
-                                                    <p>Ngành: {currentUser.user.facultyID}</p>
+                                                <div className='col-md-6'>
+                                                    <p>Lớp học: {currentUser.data.person.class}</p>
+                                                    <p>Khóa học: {currentUser.data.person.courseYear}</p>
+                                                    <p>Bậc đào tạo: {levelMapping[currentUser.data.person.level]}</p>
+                                                    <p>Loại hình đào tạo: {educationTypeMapping[currentUser.data.person.type]}</p>
+                                                    <p>Ngành: {currentUser.data.person.facultyID}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +126,7 @@ const HomePage = ({ currentUser }) => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/home" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
@@ -135,7 +145,7 @@ const HomePage = ({ currentUser }) => {
                                         </Link>
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

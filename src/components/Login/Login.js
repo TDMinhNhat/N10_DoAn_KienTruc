@@ -24,10 +24,10 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         setObjValidInput(defaultObjValidInput);
-
+    
         if(!username){
             setObjValidInput({...defaultObjValidInput, isValidUsername : false});
-            toast.error("Please enter email or phone number");
+            toast.error("Please enter id");
             return;
         }
         if(!password){
@@ -44,7 +44,7 @@ const Login = (props) => {
                 navigate('/dashboard');
             }
         } catch (error) {
-            toast.error('Invalid username or password');
+            toast.error('Invalid id or password');
         }
     }
 

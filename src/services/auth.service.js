@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/v1/students';
+const API_URL = 'http://localhost:8000/api/v1';
 
 class AuthService {
     async register(username, password) {
@@ -11,11 +11,8 @@ class AuthService {
         return response;
     }
 
-    async login(username, password) {
-        const response = await axios.post(API_URL + '/login', {
-            username,
-            password,
-        });
+    async login(id, password) {
+        const response = await axios.get(API_URL + '/login/' + id + '/' + password)
         return response;
     }
 }

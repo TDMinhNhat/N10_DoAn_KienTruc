@@ -54,6 +54,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                             <RowRadioButtonsGroup />
                         </div>
                     </div>
+                    {/* Danh sach dang ky */}
                     <div className="my-4"></div>
                     <h6 className='text-primary'>Môn học/học phần đang chờ đăng ký</h6>
                     <div className="table-responsive">
@@ -120,8 +121,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => SelectMonHocChoDangKy("3320")} data-id="3320" data-mamh="003320" data-mahpduochoc="4203003320">
@@ -145,8 +144,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => SelectMonHocChoDangKy("3395")} data-id="3395" data-mamh="003395" data-mahpduochoc="4203003395">
@@ -170,8 +167,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => SelectMonHocChoDangKy("3196")} data-id="3196" data-mamh="003196" data-mahpduochoc="4203003196">
@@ -195,8 +190,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => SelectMonHocChoDangKy("3206")} data-id="3206" data-mamh="003206" data-mahpduochoc="4203003206">
@@ -220,8 +213,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                                 <tr onClick={() => SelectMonHocChoDangKy("3217")} data-id="3217" data-mamh="003217" data-mahpduochoc="4203003217">
@@ -245,15 +236,137 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                     </td>
                                     <td>
-
-
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
+                    {/* Mon hoc cho dang ky */}
+                    <div className="row mt-4" id="lopHPChoDangKy">
+                        <div className="col-md-6">
+                            <div className="gr-table">
+                                <div className="border-scroll overflow-auto outline-none" style={{ maxHeight: '570px' }} tabindex="1">                                    <div id="box_lophocphan_chodangky">
+                                    <h3 className="title-table" lang="lhpchodangky-tabletitle">Lớp học phần chờ đăng ký</h3>
+                                    <div className="text-right mb-4 mt-4">
+                                        <label>
+                                            <input id="checkLichTrung" name="checkLichTrung" type="checkbox" value="true" />
+                                            <input name="checkLichTrung" type="hidden" value="false" />
+                                            <b>
+                                                <span className="text-uppercase text-danger ms-2 me-3" lang="lhpchodangky-lhpkhongtrunglich">HIỂN THỊ LỚP học phần KHÔNG TRÙNG LỊCH</span>
+                                            </b>
+                                        </label>
+                                    </div>
+                                    <div className="table-responsive">
+                                        <table id="table_lhpchodangky" className="table-pointer table-dkhp table-custom table table-bordered text-center no-footer dtr-inline" width="100%" role="grid">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th lang="sv-stt">STT</th>
+                                                    <th lang="dkhp-thongtinlhp">Thông tin lớp học phần</th>
+                                                    <th lang="dkhp-dadangky">Đã đăng ký</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className="tr-active" onClick="SelectLopHocPhanChoDangKy(this)" data-guidlhp="A_z8XtjSSV6iX-VEW36Nuw">
+                                                    <td style={{ width: '40px' }}>1</td>
+                                                    <td className="text-left">
+                                                        <div className="name">Automat &amp; ngôn ngữ hình thức</div>
+                                                        <div>
+                                                            <span lang="dkhp-trangthai">Trạng thái</span>: <span className="cl-red">Đã khóa </span>
+                                                            <span lang="dkhp-malhp">Mã lớp  học phần</span>: 420300136601 - DHCNTT16A
+                                                        </div>
+                                                    </td>
+                                                    <td>72 / 85</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="gr-table">
+                                <div className="border-scroll" tabindex="2" style={{ overflow: 'hidden', outline: 'none' }}>
+                                    <div id="box_chitietlophocphan_chodangky">
+                                        <h3 className="title-table" lang="ctlhpchodangky-tabletitle">Chi tiết lớp học phần</h3>
+                                        <div className="text-right" style={{ marginBottom: '5px' }}>
+                                            <button onClick="XemLichTrung(this)" className="btn btn--m block first" style={{ backgroundColor: '#ec9e0f', color: '#fff' }} lang="dkhp-xemlichtrungButton">Xem lịch trùng</button>
+                                        </div>
+                                        <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>
+                                                        <p><span lang="dkhp-trangthai">Trạng thái</span>: <span className="red-bold">Đã khóa</span></p>
+                                                    </th>
+                                                    <th>
+                                                        <div>
+                                                            <span><span lang="dkhp-sisomax">Sĩ số tối đa</span>: 85</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
+                                                    <td className="text-left">
+                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
+                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
+                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>X (CS1)</b></p>
+                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>X13.05</b></p>
+                                                    </td>
+                                                    <td className="text-left">
+                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
+                                                        27/12/2023 - 24/04/2024
+                                                    </td>
+                                                </tr>
+                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
+                                                    <td className="text-left">
+                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
+                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
+                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>Trực tuyến</b></p>
+                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 115</b></p>
+                                                    </td>
+                                                    <td className="text-left">
+                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
+                                                        20/03/2024 - 03/04/2024
+                                                    </td>
+                                                </tr>
+                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
+                                                    <td className="text-left">
+                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
+                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
+                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>Trực tuyến</b></p>
+                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 172</b></p>
+                                                    </td>
+                                                    <td className="text-left">
+                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
+                                                        21/02/2024 - 21/02/2024
+                                                    </td>
+                                                </tr>
+                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
+                                                    <td className="text-left">
+                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 6  (Tiết 7  -&gt; 9 )</b></div>
+                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
+                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>X (CS1)</b></p>
+                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>X13.06</b></p>
+                                                    </td>
+                                                    <td className="text-left">
+                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
+                                                        03/05/2024 - 03/05/2024
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div className="text-center has-2btn">
+                                            <button onclick="DangKyHocPhan(this)" className="btn btn--m block first" style={{ backgroundColor: '#0190F3', color: '#fff', width: 100 }} lang="dkhp-dangkyButton">Đăng ký</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    {/* Hoc phan da dang ky */}
                     <div className='my-4'></div>
                     <h6 className='text-primary'>Lớp HP đã đăng ký trong học kỳ này</h6>
                     <div className="table-responsive">
@@ -288,8 +401,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </tr>
                                 <tr onClick={() => SelectHocPhanDaDangKy(this)}>
                                     <td>
-                                        <button className="btn btn-primary p-0 w-100" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'EHbuRMwZbLq-wqeg2E8Akg', 3) }}>Xem lịch</button>
-                                        <button className="btn btn-warning p-0 w-100" onClick={(e) => { e.stopPropagation(); HuyLopHocPhanDangKy(this, 'YFWzqs8Sa01ZfbLJ2Ele7g', '420300154901') }}>Hủy đăng ký</button>
+                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'EHbuRMwZbLq-wqeg2E8Akg', 3) }}>Xem lịch</button>
                                     </td>
                                     <td>1</td>
                                     <td>420300154901</td>
@@ -312,8 +424,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </tr>
                                 <tr onClick={() => SelectHocPhanDaDangKy(this)}>
                                     <td>
-                                        <button className="btn btn-primary p-0 w-100" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'HtfPo6KFwpTbEWELq-gWlA', 1) }} data-idlhpdk="8668950" data-guid="YhEVHnGDpbJCynKFAjMk2g" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                        <button className="btn btn-warning p-0 w-100" onClick={(e) => { e.stopPropagation(); HuyLopHocPhanDangKy(this, 'YhEVHnGDpbJCynKFAjMk2g', '420300214605') }} data-idlhpdk="8668950" data-guid="YhEVHnGDpbJCynKFAjMk2g" lang="dangkyhocphan-huy-button">Hủy đăng ký</button>
+                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'HtfPo6KFwpTbEWELq-gWlA', 1) }} data-idlhpdk="8668950" data-guid="YhEVHnGDpbJCynKFAjMk2g" lang="dangkyhocphan-xem-button">Xem lịch</button>
                                     </td>
                                     <td>2</td>
                                     <td>420300214605</td>
@@ -336,8 +447,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </tr>
                                 <tr onClick={() => SelectHocPhanDaDangKy(this)}>
                                     <td>
-                                        <button className="btn btn-primary p-0 w-100" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'K-16G7f-0qPI93MRzeEPBQ', 3) }} data-idlhpdk="8690765" data-guid="wKvXJ-3pUtny60yo0xgQ7g" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                        <button className="btn btn-warning p-0 w-100" onClick={(e) => { e.stopPropagation(); HuyLopHocPhanDangKy(this, 'wKvXJ-3pUtny60yo0xgQ7g', '420300232902') }} data-idlhpdk="8690765" data-guid="wKvXJ-3pUtny60yo0xgQ7g" lang="dangkyhocphan-huy-button">Hủy đăng ký</button>
+                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'K-16G7f-0qPI93MRzeEPBQ', 3) }} data-idlhpdk="8690765" data-guid="wKvXJ-3pUtny60yo0xgQ7g" lang="dangkyhocphan-xem-button">Xem lịch</button>
                                     </td>
                                     <td>3</td>
                                     <td>420300232902</td>
@@ -360,8 +470,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </tr>
                                 <tr onClick={() => SelectHocPhanDaDangKy(this)}>
                                     <td>
-                                        <button className="btn btn-primary p-0 w-100" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'mKojxuIkHMZpIR2kb-Ra3A', 2) }} data-idlhpdk="8668938" data-guid="gNJjaPSJqDkjj4B_9q-3eQ" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                        <button className="btn btn-warning p-0 w-100" onClick={(e) => { e.stopPropagation(); HuyLopHocPhanDangKy(this, 'gNJjaPSJqDkjj4B_9q-3eQ', '420300405602') }} data-idlhpdk="8668938" data-guid="gNJjaPSJqDkjj4B_9q-3eQ" lang="dangkyhocphan-huy-button">Hủy đăng ký</button>
+                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'mKojxuIkHMZpIR2kb-Ra3A', 2) }} data-idlhpdk="8668938" data-guid="gNJjaPSJqDkjj4B_9q-3eQ" lang="dangkyhocphan-xem-button">Xem lịch</button>
                                     </td>
                                     <td>4</td>
                                     <td>420300405602</td>
@@ -385,11 +494,13 @@ const RegisterCoursePage = ({ currentUser }) => {
                             </tbody>
                         </table>
                     </div>
+
+
                 </div>
             )
             }
         </div >
-    );
+    )
 }
 
-export default RegisterCoursePage;
+export default RegisterCoursePage

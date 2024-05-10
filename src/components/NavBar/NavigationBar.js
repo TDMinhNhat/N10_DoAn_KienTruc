@@ -33,11 +33,11 @@ const NavigationBar = ({ isLoggedIn, onLogout, currentUser }) => {
                             <Dropdown>
                                 <Dropdown.Toggle variant="null" id="dropdown-basic">
                                     <img
-                                        src={currentUser.user.avatar}
+                                        src={currentUser.data.person.avatar}
                                         alt="Avatar"
                                         style={{ width: '30px', height: '30px', borderRadius: '50%', marginRight: '5px' }}
                                     />
-                                    {currentUser.user.fullName}
+                                    {currentUser.data.person.fullName}
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu className="dropdown-menu" style={{ width: '100%', backgroundColor: '#F8F9FA', border: 'none', padding: 0 }}>

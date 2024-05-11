@@ -9,9 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @EnableJpaRepositories("dev.skyherobrine.server.repositories")
 public class AuthenticateServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AuthenticateServiceApplication.class, args);
     }
-
 }

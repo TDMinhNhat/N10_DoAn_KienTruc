@@ -9,6 +9,7 @@ const RegisterCoursePage = ({ currentUser }) => {
     const [selectedRow, setSelectedRow] = useState(null)
     const [openDropdownId, setOpenDropdownId] = useState(null);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const [radioValue, setRadioValue] = useState(null);
 
     useEffect(() => {
         if (!currentUser) {
@@ -51,7 +52,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                             <BasicSelect />
                         </div>
                         <div className="col-4">
-                            <RowRadioButtonsGroup />
+                            <RowRadioButtonsGroup onValueChange={setRadioValue} />
                         </div>
                     </div>
                     {/* Danh sach dang ky */}
@@ -74,6 +75,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         <br />
                                         song hành (c)
                                     </th>
+                                    {radioValue === 'hoc cai thien' && <th>Học Lại</th>} {/* Conditional rendering of the column */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -310,8 +312,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
                                                     <td className="text-left">
                                                         <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
-                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>X (CS1)</b></p>
                                                         <p><span lang="dkhp-phong">Phòng</span>: <b>X13.05</b></p>
                                                     </td>
                                                     <td className="text-left">
@@ -322,8 +322,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
                                                     <td className="text-left">
                                                         <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
-                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>Trực tuyến</b></p>
                                                         <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 115</b></p>
                                                     </td>
                                                     <td className="text-left">
@@ -334,8 +332,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
                                                     <td className="text-left">
                                                         <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
-                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>Trực tuyến</b></p>
                                                         <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 172</b></p>
                                                     </td>
                                                     <td className="text-left">
@@ -346,8 +342,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
                                                     <td className="text-left">
                                                         <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 6  (Tiết 7  -&gt; 9 )</b></div>
-                                                        <p><span lang="dkhp-coso">Cơ sở</span>: <b>Cơ sở 1 (Thành phố Hồ Chí Minh)</b></p>
-                                                        <p><span lang="dkhp-daynha">Dãy nhà</span>: <b>X (CS1)</b></p>
                                                         <p><span lang="dkhp-phong">Phòng</span>: <b>X13.06</b></p>
                                                     </td>
                                                     <td className="text-left">
@@ -380,25 +374,12 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <th lang="dangkyhocphan-dadangkylopdukien">Lớp học dự kiến</th>
                                     <th lang="dangkyhocphan-tc">TC</th>
                                     <th lang="dangkyhocphan-nhomth">Nhóm TH</th>
-                                    <th lang="dangkyhocphan-hocphi">Học phí</th>
-                                    <th lang="dangkyhocphan-hannop">Hạn nộp</th>
-                                    <th lang="dangkyhocphan-thu">Thu</th>
                                     <th lang="dangkyhocphan-trangthaidangky">Trạng thái ĐK</th>
                                     <th lang="dangkyhocphan-ngaydangky">Ngày ĐK</th>
                                     <th lang="dangkyhocphan-trangthailhp">TT lớp HP </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colSpan="6" className="text-center bold" style={{ fontSize: '16px' }}>Tổng</td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}>13</td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                    <td className="text-center bold" style={{ fontSize: '16px' }}></td>
-                                </tr>
                                 <tr onClick={() => SelectHocPhanDaDangKy(this)}>
                                     <td>
                                         <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'EHbuRMwZbLq-wqeg2E8Akg', 3) }}>Xem lịch</button>
@@ -409,15 +390,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <td>DHKTPM16A</td>
                                     <td>4</td>
                                     <td>3</td>
-                                    <td className="text-right">
-                                        <span>3.010.000</span>
-                                    </td>
-                                    <td>15/12/2023</td>
-                                    <td>
-                                        <div>
-                                            <div className="check"></div>
-                                        </div>
-                                    </td>
                                     <td>Đăng ký mới</td>
                                     <td>14/11/2023</td>
                                     <td>Đã khóa</td>
@@ -432,15 +404,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <td>DHKTPM17A</td>
                                     <td>3</td>
                                     <td>1</td>
-                                    <td className="text-right">
-                                        <span>2.350.000</span>
-                                    </td>
-                                    <td>15/12/2023</td>
-                                    <td>
-                                        <div>
-                                            <div className="check"></div>
-                                        </div>
-                                    </td>
                                     <td>Đăng ký mới</td>
                                     <td>14/11/2023</td>
                                     <td>Đã khóa</td>
@@ -455,15 +418,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <td>DHHTTT16B</td>
                                     <td>3</td>
                                     <td>1</td>
-                                    <td className="text-right">
-                                        <span>2.350.000</span>
-                                    </td>
-                                    <td>15/12/2023</td>
-                                    <td>
-                                        <div>
-                                            <div className="check"></div>
-                                        </div>
-                                    </td>
                                     <td>Đăng ký mới</td>
                                     <td>17/11/2023</td>
                                     <td>Đã khóa</td>
@@ -478,15 +432,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <td>DHKTPM16B</td>
                                     <td>3</td>
                                     <td>2</td>
-                                    <td className="text-right">
-                                        <span>2.350.000</span>
-                                    </td>
-                                    <td>15/12/2023</td>
-                                    <td>
-                                        <div>
-                                            <div className="check"></div>
-                                        </div>
-                                    </td>
                                     <td>Đăng ký mới</td>
                                     <td>14/11/2023</td>
                                     <td>Đã khóa</td>
@@ -494,7 +439,6 @@ const RegisterCoursePage = ({ currentUser }) => {
                             </tbody>
                         </table>
                     </div>
-
 
                 </div>
             )

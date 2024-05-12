@@ -5,12 +5,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export default function RowRadioButtonsGroup() {
+export default function RowRadioButtonsGroup({ onValueChange }) {
   const [value, setValue] = React.useState('hoc moi');
 
   const handleChange = (event) => {
     setValue(event.target.value);
     console.log(event.target.value);
+    onValueChange(event.target.value);
   };
 
   return (
@@ -24,7 +25,6 @@ export default function RowRadioButtonsGroup() {
         onChange={handleChange}
       >
         <FormControlLabel value="hoc moi" control={<Radio />} label="Học mới" />
-        <FormControlLabel value="hoc lai" control={<Radio />} label="Học lại" />
         <FormControlLabel value="hoc cai thien" control={<Radio />} label="Học cải thiện" />
       </RadioGroup>
     </FormControl>

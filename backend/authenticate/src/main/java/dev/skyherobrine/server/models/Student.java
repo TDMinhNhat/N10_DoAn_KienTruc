@@ -22,24 +22,28 @@ public class Student extends Person{
     private EducationType type;
     @Enumerated(EnumType.STRING) @Column(name = "EducationLevel", nullable = false)
     private EducationLevel level;
+    @Column(name = "ClassID", length = 20, nullable = false)
+    private String clazz;
     @Enumerated(EnumType.ORDINAL) @Column(name = "Status", nullable = false)
     private StudentStatus studentStatus;
 
-    public Student(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String password, String facultyID, String courseYear, LocalDate dateEnrolled, EducationType type, EducationLevel level) {
+    public Student(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String password, String facultyID, String courseYear, LocalDate dateEnrolled, EducationType type, String clazz, EducationLevel level) {
         super(id, fullName, sex, birthDay, cityBorn, address, phoneNumber, email, password, facultyID);
         this.courseYear = courseYear;
         this.dateEnrolled = dateEnrolled;
         this.type = type;
         this.level = level;
+        this.clazz = clazz;
         this.studentStatus = StudentStatus.STUDYING;
     }
 
-    public Student(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String avatar, String password, String facultyID, String courseYear, LocalDate dateEnrolled, EducationType type, EducationLevel level) {
+    public Student(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String avatar, String password, String facultyID, String courseYear, LocalDate dateEnrolled, EducationType type, String clazz, EducationLevel level) {
         super(id, fullName, sex, birthDay, cityBorn, address, phoneNumber, email, avatar, password, facultyID);
         this.courseYear = courseYear;
         this.dateEnrolled = dateEnrolled;
         this.type = type;
         this.level = level;
+        this.clazz = clazz;
         this.studentStatus = StudentStatus.STUDYING;
     }
 }

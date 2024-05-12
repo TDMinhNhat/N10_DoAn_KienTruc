@@ -6,7 +6,7 @@ import LoginForm from './components/Login/Login';
 import NavigationBar from './components/NavBar/NavigationBar';
 import ProfilePage from './components/Profile/ProfilePage';
 import RegisterForm from './components/Register/Register';
-import NavBarColumn from './components/NavBar/NavBarColumn';
+import Sidebar from './components/NavBar/Sidebar';
 import RegisterCoursePage from './components/RegisterCourse/RegisterCoursePage';
 import ChangePassword from './components/ChangePassword/ChangePasswordPage';
 import StudyResult from './components/StudyResults/StudyResultsPage';
@@ -75,7 +75,7 @@ function App() {
             <Router>
                 <div>
                     <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} currentUser={currentUser} />
-                    <NavBarColumn />
+                    <Sidebar />
                     <Routes>
                         <Route path="/dashboard" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>

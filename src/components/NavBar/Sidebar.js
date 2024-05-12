@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import './NavBarColumn.css';
+import './Sidebar.css';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Navbar, Nav } from 'react-bootstrap';
 
-const NavBarColumn = () => {
+const Sidebar = () => {
     const location = useLocation();
+    const { pathname } = location
+
     const [isNavbarVisible, setNavbarVisible] = useState(false);
     const [isGeneralInfoExpanded, setGeneralInfoExpanded] = useState(false);
     const [isStudyExpanded, setStudyExpanded] = useState(false);
@@ -34,14 +36,13 @@ const NavBarColumn = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto flex-column">
-                            <Nav.Link as={Link} to="/dashboard">TRANG CHỦ</Nav.Link>
-                            <Nav.Link onClick={toggleGeneralInfo}>
+                            <Nav.Link as={Link} to="/dashboard" className={`${pathname.includes('dashboard') ? 'active bg-info' : ''}`}>TRANG CHỦ</Nav.Link>                            <Nav.Link onClick={toggleGeneralInfo}>
                                 THÔNG TIN CHUNG {isGeneralInfoExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                             </Nav.Link>
                             {isGeneralInfoExpanded && (
                                 <>
-                                    <Nav.Link as={Link} to="/profile">Thông tin sinh viên</Nav.Link>
-                                    <Nav.Link as={Link} to="/update-suggestion">Cập nhật thông tin</Nav.Link>
+                                    <Nav.Link as={Link} to="/profile" className={`${pathname.includes('profile') ? 'active bg-info' : ''}`}>Thông tin sinh viên</Nav.Link>
+                                    <Nav.Link as={Link} to="/update-suggestion" className={`${pathname.includes('update-suggestion') ? 'active bg-info' : ''}`}>Cập nhật thông tin</Nav.Link>
                                 </>
                             )}
                             <Nav.Link onClick={toggleStudy}>
@@ -49,11 +50,11 @@ const NavBarColumn = () => {
                             </Nav.Link>
                             {isStudyExpanded && (
                                 <>
-                                    <Nav.Link as={Link} to="/study-results">Kết quả học tập</Nav.Link>
-                                    <Nav.Link as={Link} to="/weekly-schedule">Lịch học theo tuần</Nav.Link>
+                                    <Nav.Link as={Link} to="/study-results" className={`${pathname.includes('study-results') ? 'active bg-info' : ''}`}>Kết quả học tập</Nav.Link>
+                                    <Nav.Link as={Link} to="/weekly-schedule" className={`${pathname.includes('weekly-schedule') ? 'active bg-info' : ''}`}>Lịch học theo tuần</Nav.Link>
                                 </>
                             )}
-                            <Nav.Link as={Link} to="/register-course">ĐĂNG KÝ HỌC PHẦN</Nav.Link>
+                            <Nav.Link as={Link} to="/register-course" className={`${pathname.includes('register-course') ? 'active bg-info' : ''}`}>ĐĂNG KÝ HỌC PHẦN</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -69,4 +70,4 @@ const NavBarColumn = () => {
     );
 };
 
-export default NavBarColumn;
+export default Sidebar;

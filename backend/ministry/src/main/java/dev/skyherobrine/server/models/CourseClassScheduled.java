@@ -20,8 +20,8 @@ public class CourseClassScheduled {
     private LocalDate fromDate;
     @Column(name = "ToDate", nullable = false)
     private LocalDate toDate;
-    @Column(name = "GroupPratice", nullable = false)
-    private int groupPractice;
+    @Column(name = "GroupPractice")
+    private Integer groupPractice;
     @Column(name = "MaxStudents", nullable = false)
     private int maxStudents;
     @ManyToOne @JoinColumn(name = "TeacherID", nullable = false)

@@ -9,7 +9,21 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaConfig {
 
     @Bean
-    public NewTopic managementTopic() {
-        return TopicBuilder.name("management").build();
+    public NewTopic teacherTopic() {
+        return TopicBuilder
+                .name("teacher")
+                .build();
+    }
+
+    @Bean
+    public NewTopic studentTopic() {
+        return TopicBuilder
+                .name("student")
+                .build();
+    }
+
+    @Bean
+    public NewTopic courseTopic() {
+        return TopicBuilder.name("course").build();
     }
 }

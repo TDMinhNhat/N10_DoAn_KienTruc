@@ -1,10 +1,12 @@
 package dev.skyherobrine.server.controllers.management.impl;
 
 import dev.skyherobrine.server.controllers.management.IManagement;
+import dev.skyherobrine.server.messages.send.ManagementProducer;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.models.Student;
 import dev.skyherobrine.server.models.enums.StudentStatus;
 import dev.skyherobrine.server.repositories.StudentRepositories;
+import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +20,15 @@ public class StudentManagementController implements IManagement<Student, String>
 
     @Autowired
     private StudentRepositories sr;
+    @Autowired
+    private ManagementProducer producer;
 
     @PutMapping("add")
     @Override
     public ResponseEntity add(@RequestBody Student student) {
         try {
             Student target = sr.save(student);
+            producer.sendManagementMessage("student", JsonParserMessage.parseToJson(target));
             return ResponseEntity.ok(new Response(
                     HttpStatus.OK.value(),
                     "Student added successfully",

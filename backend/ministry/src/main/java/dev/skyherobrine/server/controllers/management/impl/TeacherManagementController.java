@@ -1,10 +1,12 @@
 package dev.skyherobrine.server.controllers.management.impl;
 
 import dev.skyherobrine.server.controllers.management.IManagement;
+import dev.skyherobrine.server.messages.send.ManagementProducer;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.models.Teacher;
 import dev.skyherobrine.server.models.enums.TeacherStatus;
 import dev.skyherobrine.server.repositories.TeacherRepositories;
+import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ public class TeacherManagementController implements IManagement<Teacher,String> 
     
     @Autowired
     private TeacherRepositories tr;
+    @Autowired
+    private ManagementProducer producer;
 
     @PutMapping("add")
     @Override
@@ -101,6 +105,7 @@ public class TeacherManagementController implements IManagement<Teacher,String> 
     @Override
     public ResponseEntity getById(@PathVariable String id) {
         Teacher target = tr.findById(id).orElse(null);
+        producer.sendManagementMessage("teacher", JsonParserMessage.parseToJson(target));
         if(target == null) {
             return ResponseEntity.ok(new Response(
                     HttpStatus.NOT_FOUND.value(),

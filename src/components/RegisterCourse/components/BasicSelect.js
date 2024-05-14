@@ -5,12 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect() {
+import {HK, Year } from '../FakeData.ts';
+
+export default function BasicSelect({ onValueChange }) {
   const [year, setYear] = React.useState('');
 
   const handleChange = (event) => {
     setYear(event.target.value);
     console.log(event.target.value);
+    onValueChange(event.target.value);
   };
 
   return (
@@ -24,9 +27,11 @@ export default function BasicSelect() {
           label="Year"
           onChange={handleChange}
         >
-          <MenuItem value={"HK1 (2023-2024)"}>HK1 (2023-2024)</MenuItem>
-          <MenuItem value={"HK2 (2023-2024)"}>HK2 (2023-2024)</MenuItem>
-          <MenuItem value={"HK3 (2023-2024)"}>HK3 (2023-2024)</MenuItem>
+          {Year.map((year) => (
+            HK.map((hk) => (
+              <MenuItem value={`${hk} (${year})`}>{`${hk} (${year})`}</MenuItem>
+            ))
+          ))}
         </Select>
       </FormControl>
     </Box>

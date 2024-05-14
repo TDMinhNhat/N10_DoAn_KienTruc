@@ -1,0 +1,8 @@
+.table td.small, .table th.small {
+  padding: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.color-gray {
+  background-color: #F3F7F9 !important;
+}

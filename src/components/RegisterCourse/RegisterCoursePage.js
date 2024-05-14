@@ -2,14 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BasicSelect from './components/BasicSelect';
 import RowRadioButtonsGroup from './components/RowRadioButtonsGroup';
-import { Dropdown } from 'react-bootstrap';
+import { courses, registerCourses, registerClasses } from './FakeData.ts';
+
 
 const RegisterCoursePage = ({ currentUser }) => {
     const navigate = useNavigate();
     const [selectedRow, setSelectedRow] = useState(null)
-    const [openDropdownId, setOpenDropdownId] = useState(null);
-    const [openDropdown, setOpenDropdown] = useState(null);
-    const [radioValue, setRadioValue] = useState(null);
+    const [radioValue, setRadioValue] = useState('hoc moi');
+
+    // Assume we have a state for the selected year and semester
+    const [selectedYear, setSelectedYear] = useState('2020-2021');
+    const [selectedSemester, setSelectedSemester] = useState('HK1');
+    const handleValueChange = (value) => {
+        // Assuming the value is in the format "HK1 (2021-2022)"
+        const [semester, year] = value.split(' ');
+
+        setSelectedYear(year.slice(1, -1)); // Remove the parentheses
+        setSelectedSemester(semester);
+    };
 
     useEffect(() => {
         if (!currentUser) {
@@ -17,10 +27,23 @@ const RegisterCoursePage = ({ currentUser }) => {
         }
     }, [currentUser, navigate]);
 
+    // Thêm trạng thái mới để theo dõi môn học được chọn
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    // Cập nhật hàm SelectMonHocChoDangKy để cập nhật môn học được chọn
+    const SelectMonHocChoDangKy = (name) => {
+        const selectedCourses = registerCourses.filter(course => course.name === name);
+        setSelectedCourse(selectedCourses);
+        console.log('check:', name);
+        console.log('check 2:', selectedCourses);
+    }
+    // Thêm trạng thái mới để theo dõi lớp học hiện tại được chọn
+    const [selectedClass, setSelectedClass] = useState(null);
 
-    const SelectMonHocChoDangKy = (id) => {
-        setSelectedRow(id);
-        console.log('check:', id);
+    // Cập nhật hàm SelectLopHocChoDangKy để cập nhật lớp học được chọn
+    const SelectLopHocChoDangKy = (id) => {
+        const selectedClass = registerCourses.find(course => course.id === id);
+        setSelectedClass(selectedClass);
+        console.log('check 2:', id);
     }
 
     const SelectHocPhanDaDangKy = (id) => {
@@ -31,16 +54,6 @@ const RegisterCoursePage = ({ currentUser }) => {
         console.log('check:', id);
     }
 
-    const HuyLopHocPhanDangKy = (id) => {
-        console.log('check:', id);
-    }
-    const toggleDropdown = (id) => {
-        if (openDropdownId === id) {
-            setOpenDropdownId(null); // If the dropdown is open, close it
-        } else {
-            setOpenDropdownId(id); // If the dropdown is closed, open it
-        }
-    }
     return (
         <div>
             {currentUser && (
@@ -49,12 +62,13 @@ const RegisterCoursePage = ({ currentUser }) => {
                     <div className="border-bottom w-100 my-3"></div>
                     <div className="row justify-content-center">
                         <div className="col-4">
-                            <BasicSelect />
+                            <BasicSelect onValueChange={handleValueChange} />
                         </div>
                         <div className="col-4">
                             <RowRadioButtonsGroup onValueChange={setRadioValue} />
                         </div>
                     </div>
+
                     {/* Danh sach dang ky */}
                     <div className="my-4"></div>
                     <h6 className='text-primary'>Môn học/học phần đang chờ đăng ký</h6>
@@ -75,178 +89,66 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         <br />
                                         song hành (c)
                                     </th>
-                                    {radioValue === 'hoc cai thien' && <th>Học Lại</th>} {/* Conditional rendering of the column */}
+                                    {radioValue === 'hoc cai thien' && <th>Học Lại</th>}
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr onClick={() => SelectMonHocChoDangKy("3193")} data-id="3193" data-mamh="003193" data-mahpduochoc="4203003193">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3193" checked={selectedRow === "3193"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>1</td>
-                                    <td>4203003193</td>
-                                    <td className="text-left">Toán ứng dụng</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3240")} data-id="3240" data-mamh="003240" data-mahpduochoc="4203003240">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3240" checked={selectedRow === "3240"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>2</td>
-                                    <td>4203003240</td>
-                                    <td className="text-left">Hàm phức và phép biến đổi Laplace</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3320")} data-id="3320" data-mamh="003320" data-mahpduochoc="4203003320">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3320" checked={selectedRow === "3320"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>3</td>
-                                    <td>4203003320</td>
-                                    <td className="text-left">Phương pháp tính</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3395")} data-id="3395" data-mamh="003395" data-mahpduochoc="4203003395">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3395" checked={selectedRow === "3395"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>4</td>
-                                    <td>4203003395</td>
-                                    <td className="text-left">Logic học</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3196")} data-id="3196" data-mamh="003196" data-mahpduochoc="4203003196">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3196" checked={selectedRow === "3196"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>5</td>
-                                    <td>4203003196</td>
-                                    <td className="text-left">Giao tiếp kinh doanh</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3206")} data-id="3206" data-mamh="003206" data-mahpduochoc="4203003206">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3206" checked={selectedRow === "3206"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>6</td>
-                                    <td>4203003206</td>
-                                    <td className="text-left">Môi trường và con người</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr onClick={() => SelectMonHocChoDangKy("3217")} data-id="3217" data-mamh="003217" data-mahpduochoc="4203003217">
-                                    <td className="text-center">
-                                        <div>
-                                            <label className="mt-radio" style={{ paddingLeft: '17px' }}>
-                                                <input id="rdoMonHocChoDangKy" name="rdoMonHocChoDangKy" type="radio" value="3217" checked={selectedRow === "3217"} readOnly />
-                                                <span></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>7</td>
-                                    <td>4203003217</td>
-                                    <td className="text-left">Quản trị học</td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="no-check"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
+                                {courses.filter(course => {
+                                    // Filter based on the selected year and semester
+                                    const isYearMatch = selectedYear ? course.year === selectedYear : true;
+                                    const isSemesterMatch = selectedSemester ? course.HK === selectedSemester : true;
+
+                                    // Filter based on the radio button value
+                                    const isOptionMatch = radioValue ? course.options === radioValue : true;
+
+                                    return isYearMatch && isSemesterMatch && isOptionMatch;
+                                }).map((course, index) => (
+                                    <tr
+                                        key={course.id}
+                                        onClick={() => {
+                                            SelectMonHocChoDangKy(course.name);
+                                            setSelectedRow(course.id);
+                                        }}
+                                        data-id={course.id}
+                                        data-mamh={course.code}
+                                        data-mahpduochoc={course.code}
+                                    >
+                                        <td className="text-center">
+                                            <div>
+                                                <label className="mt-radio" style={{ paddingLeft: '17px' }}>
+                                                    <input
+                                                        id="rdoMonHocChoDangKy"
+                                                        name="rdoMonHocChoDangKy"
+                                                        type="radio"
+                                                        value={course.id}
+                                                        checked={selectedRow === course.id}
+                                                        onChange={() => setSelectedRow(course.id)}
+                                                    />
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>{index + 1}</td>
+                                        <td>{course.code}</td>
+                                        <td className="text-left">{course.name}</td>
+                                        <td>{course.credits}</td>
+                                        <td>
+                                            <div>
+                                                <div className="no-check"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        {radioValue === 'hoc cai thien' && <td>{course.options === 'hoc cai thien' ? 'Yes' : 'No'}</td>} {/* Conditional rendering of the column */}
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
 
                     {/* Mon hoc cho dang ky */}
-                    <div className="row mt-4" id="lopHPChoDangKy">
-                        <div className="col-md-6">
+                    <div className="row mt-4" id="">
+                        <div className="col-md-6" id="lopHPDangKy">
                             <div className="gr-table">
                                 <div className="border-scroll overflow-auto outline-none" style={{ maxHeight: '570px' }} tabindex="1">                                    <div id="box_lophocphan_chodangky">
                                     <h3 className="title-table" lang="lhpchodangky-tabletitle">Lớp học phần chờ đăng ký</h3>
@@ -269,17 +171,19 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="tr-active" onClick="SelectLopHocPhanChoDangKy(this)" data-guidlhp="A_z8XtjSSV6iX-VEW36Nuw">
-                                                    <td style={{ width: '40px' }}>1</td>
-                                                    <td className="text-left">
-                                                        <div className="name">Automat &amp; ngôn ngữ hình thức</div>
-                                                        <div>
-                                                            <span lang="dkhp-trangthai">Trạng thái</span>: <span className="cl-red">Đã khóa </span>
-                                                            <span lang="dkhp-malhp">Mã lớp  học phần</span>: 420300136601 - DHCNTT16A
-                                                        </div>
-                                                    </td>
-                                                    <td>72 / 85</td>
-                                                </tr>
+                                                {selectedCourse && selectedCourse.map((course, index) => (
+                                                    <tr key={course.id} className="tr-active" onClick={() => SelectLopHocChoDangKy(course.id)}>
+                                                        <td style={{ width: '40px' }}>{index + 1}</td>
+                                                        <td className="text-left">
+                                                            <div className="name">{course.name}</div>
+                                                            <div>
+                                                                <span>Trạng thái</span>: <span className={course.status === 'open' ? 'cl-green' : 'cl-red'}>{course.status}</span>
+                                                                <span>Mã lớp học phần</span>: {course.code} - {course.className}
+                                                            </div>
+                                                        </td>
+                                                        <td>{course.student} / {course.maxStudent}</td>
+                                                    </tr>
+                                                ))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -287,7 +191,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6" id="thongtinchitietHPDangKy">
                             <div className="gr-table">
                                 <div className="border-scroll" tabindex="2" style={{ overflow: 'hidden', outline: 'none' }}>
                                     <div id="box_chitietlophocphan_chodangky">
@@ -297,58 +201,32 @@ const RegisterCoursePage = ({ currentUser }) => {
                                         </div>
                                         <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid">
                                             <thead>
-                                                <tr role="row">
-                                                    <th>
-                                                        <p><span lang="dkhp-trangthai">Trạng thái</span>: <span className="red-bold">Đã khóa</span></p>
-                                                    </th>
-                                                    <th>
-                                                        <div>
-                                                            <span><span lang="dkhp-sisomax">Sĩ số tối đa</span>: 85</span>
-                                                        </div>
-                                                    </th>
-                                                </tr>
+                                                {selectedClass && (
+                                                    <tr key={selectedClass.id}>
+                                                        <th>
+                                                            <p><span lang="dkhp-trangthai">Trạng thái</span>: <span className="red-bold">{selectedClass.status}</span></p>
+                                                        </th>
+                                                        <th>
+                                                            <p>
+                                                                <span><span lang="dkhp-sisomax">Sĩ số tối đa</span>: {selectedClass.maxStudent}</span>
+                                                            </p>
+                                                        </th>
+                                                    </tr>
+                                                )}
                                             </thead>
                                             <tbody>
-                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
-                                                    <td className="text-left">
-                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>X13.05</b></p>
-                                                    </td>
-                                                    <td className="text-left">
-                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
-                                                        27/12/2023 - 24/04/2024
-                                                    </td>
-                                                </tr>
-                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
-                                                    <td className="text-left">
-                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 115</b></p>
-                                                    </td>
-                                                    <td className="text-left">
-                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
-                                                        20/03/2024 - 03/04/2024
-                                                    </td>
-                                                </tr>
-                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
-                                                    <td className="text-left">
-                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 4  (Tiết 1  -&gt; 3 )</b></div>
-                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>Trực tuyến 172</b></p>
-                                                    </td>
-                                                    <td className="text-left">
-                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
-                                                        21/02/2024 - 21/02/2024
-                                                    </td>
-                                                </tr>
-                                                <tr className="tr-active tr-chitietlichdangky" onclick="SelectChiTietLopHocPhan(this)" data-guididdk="A_z8XtjSSV6iX-VEW36Nuw" data-nhomth="" data-chonnhom="false">
-                                                    <td className="text-left">
-                                                        <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>LT   - Thứ 6  (Tiết 7  -&gt; 9 )</b></div>
-                                                        <p><span lang="dkhp-phong">Phòng</span>: <b>X13.06</b></p>
-                                                    </td>
-                                                    <td className="text-left">
-                                                        <div className="name"><span lang="dkhp-gv">GV</span>: ThS Nguyễn Thị Thanh Bình</div>
-                                                        03/05/2024 - 03/05/2024
-                                                    </td>
-                                                </tr>
+                                                {selectedClass && (
+                                                    <tr key={selectedClass.id} >
+                                                        <td className="text-left">
+                                                            <div><span lang="dkhp-lichhoc">Lịch học</span>: <b>{selectedClass.type} - {selectedClass.time}</b></div>
+                                                            <p><span lang="dkhp-phong">Phòng</span>: <b>{selectedClass.room}</b></p>
+                                                        </td>
+                                                        <td className="text-left">
+                                                            <div className="name"><span lang="dkhp-gv">GV</span>: {selectedClass.teacher}</div>
+                                                            <div><span lang="dkhp-ngaybd"></span>{selectedClass.date}</div>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
                                         </table>
                                         <div className="text-center has-2btn">
@@ -380,62 +258,24 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr onClick={() => SelectHocPhanDaDangKy(this)}>
-                                    <td>
-                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'EHbuRMwZbLq-wqeg2E8Akg', 3) }}>Xem lịch</button>
-                                    </td>
-                                    <td>1</td>
-                                    <td>420300154901</td>
-                                    <td className="text-left">Kiến trúc và Thiết kế phần mềm</td>
-                                    <td>DHKTPM16A</td>
-                                    <td>4</td>
-                                    <td>3</td>
-                                    <td>Đăng ký mới</td>
-                                    <td>14/11/2023</td>
-                                    <td>Đã khóa</td>
-                                </tr>
-                                <tr onClick={() => SelectHocPhanDaDangKy(this)}>
-                                    <td>
-                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'HtfPo6KFwpTbEWELq-gWlA', 1) }} data-idlhpdk="8668950" data-guid="YhEVHnGDpbJCynKFAjMk2g" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                    </td>
-                                    <td>2</td>
-                                    <td>420300214605</td>
-                                    <td className="text-left">Lập trình phân tán với công nghệ Java</td>
-                                    <td>DHKTPM17A</td>
-                                    <td>3</td>
-                                    <td>1</td>
-                                    <td>Đăng ký mới</td>
-                                    <td>14/11/2023</td>
-                                    <td>Đã khóa</td>
-                                </tr>
-                                <tr onClick={() => SelectHocPhanDaDangKy(this)}>
-                                    <td>
-                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'K-16G7f-0qPI93MRzeEPBQ', 3) }} data-idlhpdk="8690765" data-guid="wKvXJ-3pUtny60yo0xgQ7g" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                    </td>
-                                    <td>3</td>
-                                    <td>420300232902</td>
-                                    <td className="text-left">Nhập môn dữ liệu lớn</td>
-                                    <td>DHHTTT16B</td>
-                                    <td>3</td>
-                                    <td>1</td>
-                                    <td>Đăng ký mới</td>
-                                    <td>17/11/2023</td>
-                                    <td>Đã khóa</td>
-                                </tr>
-                                <tr onClick={() => SelectHocPhanDaDangKy(this)}>
-                                    <td>
-                                        <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(this, 'mKojxuIkHMZpIR2kb-Ra3A', 2) }} data-idlhpdk="8668938" data-guid="gNJjaPSJqDkjj4B_9q-3eQ" lang="dangkyhocphan-xem-button">Xem lịch</button>
-                                    </td>
-                                    <td>4</td>
-                                    <td>420300405602</td>
-                                    <td className="text-left">Quản lý dự án CNTT</td>
-                                    <td>DHKTPM16B</td>
-                                    <td>3</td>
-                                    <td>2</td>
-                                    <td>Đăng ký mới</td>
-                                    <td>14/11/2023</td>
-                                    <td>Đã khóa</td>
-                                </tr>
+                                {registerClasses
+                                    .filter(classItem => classItem.Year === selectedYear && classItem.HK === selectedSemester)
+                                    .map((classItem, index) => (
+                                        <tr key={classItem.id} onClick={() => SelectHocPhanDaDangKy(classItem.id)}>
+                                            <td>
+                                                <button className="btn btn-primary w-full text-nowrap" onClick={(e) => { e.stopPropagation(); XemChiTietLichHoc(classItem.id) }}>Xem lịch</button>
+                                            </td>
+                                            <td>{index + 1}</td>
+                                            <td>{classItem.code}</td>
+                                            <td className="text-left">{classItem.name}</td>
+                                            <td>{classItem.className}</td>
+                                            <td>{classItem.credits}</td>
+                                            <td>{classItem.group}</td>
+                                            <td>{classItem.status}</td>
+                                            <td>{classItem.date}</td>
+                                            <td>{classItem.registerStatus}</td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>

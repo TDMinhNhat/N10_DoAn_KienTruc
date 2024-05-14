@@ -5,12 +5,19 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
+import { options } from '../FakeData.ts';
+const formatLabel = (value) => {
+  if (value === 'hoc moi') return 'Học mới';
+  if (value === 'hoc lai') return 'Học lại';
+  if (value === 'hoc cai thien') return 'Học cải thiện';
+  return value;
+}
+
 export default function RowRadioButtonsGroup({ onValueChange }) {
   const [value, setValue] = React.useState('hoc moi');
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log(event.target.value);
     onValueChange(event.target.value);
   };
 
@@ -24,8 +31,9 @@ export default function RowRadioButtonsGroup({ onValueChange }) {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="hoc moi" control={<Radio />} label="Học mới" />
-        <FormControlLabel value="hoc cai thien" control={<Radio />} label="Học cải thiện" />
+        {options.map((option, index) => (
+          <FormControlLabel key={index} value={option} control={<Radio />} label={formatLabel(option)} />
+        ))}
       </RadioGroup>
     </FormControl>
   );

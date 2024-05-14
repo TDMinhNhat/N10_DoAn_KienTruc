@@ -1,0 +1,38 @@
+.student-table {
+  width: 80%; /* Thiết lập độ rộng của bảng */
+  margin: 0 auto; /* Để căn giữa bảng trên màn hình */
+}
+
+.student-table th,
+.student-table td {
+  padding: 8px; /* Thiết lập padding cho ô trong bảng */
+  text-align: center; /* Căn trái nội dung trong ô */
+}
+.TenSV {
+  text-align: left; /* Căn trái nội dung trong ô */
+}
+
+/* Thiết lập border cho bảng */
+.student-table {
+  border-collapse: collapse;
+}
+
+/* Thiết lập màu chữ cho tiêu đề */
+.student-table thead{
+  color: #1da1f2;
+}
+
+.student-table th,
+.student-table td {
+  border: 1px solid #ddd; /* Thiết lập border cho mỗi ô */
+}
+
+/* Thiết lập border cho dòng đầu tiên (tiêu đề) */
+.student-table th {
+  background-color: #f2f2f2; /* Màu nền */
+}
+
+/* Thiết lập màu nền khi hover vào ô để chỉnh sửa */
+.student-table td:hover {
+  background-color: #f9f9f9;
+}

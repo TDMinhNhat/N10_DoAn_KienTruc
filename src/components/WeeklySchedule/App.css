@@ -1,0 +1,151 @@
+/* App.css */
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #e7ecf0;
+}
+
+.header {
+  font-weight: bold;
+  display: flex;
+  
+}
+
+.body {
+  display: flex;
+  flex: 1;
+}
+
+.left-panel {
+  flex: 2;
+}
+.right-panel {
+  flex: 8;
+  height: 800px;
+}
+
+.menu {
+  width: 200px; /* Đặt chiều rộng cho menu */
+  margin-top: 20px;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  cursor: pointer;
+  margin-bottom: 5px; /* Add margin between menu items */
+}
+
+.submenu {
+  margin-left: 15px; /* Indent sub-menus */
+}
+
+.submenu ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 5px; /* Add margin between sub-menu items */
+}
+
+.submenu ul li {
+  cursor: pointer;
+}
+.formLichHoc{
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 1600px;
+  margin: 10px;
+  padding: 10px;
+  height: 800px;
+  
+}
+
+
+.week-selector {
+  margin-top: 10px;
+  margin-left: 600px;
+  display: flex ;
+}
+
+.options {
+  margin-top: 14px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.time-display {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  border: 1px solid black; 
+  width: 200px;
+}
+
+.control-buttons {
+  
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  display: flex;
+  cursor: pointer;
+  
+}
+.control-buttons button {
+  margin-right: 15px;
+  color: white;
+  background-color: #1da1f2;
+  border: none;
+}
+
+
+.table-container {
+  overflow: auto;
+  margin-top: 20px;
+  
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-y: auto;
+  
+}
+
+
+
+#tableHeader {
+  color: #1da1f2;
+}
+.lesson-time  {
+  background-color: blanchedalmond;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 20px;
+
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+#weeklyclassSchedulAndExamSchedule{
+  margin-top: 13px;
+  font-size: 22px;
+}
+
+
+
+

@@ -14,6 +14,7 @@ import UpdateSuggestion from './components/UpdateSuggestion/UpdateSuggestionPage
 import WeeklySchedule from './components/WeeklySchedule/WeeklySchedulePage';
 import StudentManagement from './components_staff/studentManagement/StudentManagementPage';
 import StaffManagement from './components_staff/teacherManagement/TeacherManagementPage';
+import SubjectManagement from './components_staff/subjectManagement/SubjectManagementPage';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -129,11 +130,11 @@ function App() {
                                 <StaffManagement currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
-                        {/* <Route path="/subject-management" element={
+                        <Route path="/management/subject" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
                                 <SubjectManagement currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
-                        } /> */}
+                        } />
                     </Routes>
                 </div>
             </Router>

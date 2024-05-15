@@ -128,61 +128,63 @@ const WeeklySchedulePage = ({ currentUser }) => {
         </div>
       ));
   };
-  
+
 
 
 
   return (
     <div className="container mt-4">
-      <div className="row mb-2">
-        <div className="col text-center">
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="scheduleType" id="all" value="all" checked={scheduleType === 'all'} onChange={handleScheduleTypeChange} />
-            <label className="form-check-label" htmlFor="all">Tất cả</label>
+      <div className="card bg-light text-black p-4">
+        <h3 className="">Lịch học, lịch thi theo tuần</h3>
+        <div className="row mb-2">
+          <div className="col text-center">
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="scheduleType" id="all" value="all" checked={scheduleType === 'all'} onChange={handleScheduleTypeChange} />
+              <label className="form-check-label" htmlFor="all">Tất cả</label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="scheduleType" id="study" value="study" checked={scheduleType === 'study'} onChange={handleScheduleTypeChange} />
+              <label className="form-check-label" htmlFor="study">Lịch học</label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="scheduleType" id="exam" value="exam" checked={scheduleType === 'exam'} onChange={handleScheduleTypeChange} />
+              <label className="form-check-label" htmlFor="exam">Lịch thi</label>
+            </div>
+            <input type="date" onChange={handleDateChange} className="form-control d-inline-block w-auto me-3" />
+            <button className="btn btn-secondary me-2" onClick={() => { setCurrentWeek(moment()); handleUserSelection(currentWeek, scheduleType); }}>Hiện tại</button>
+            <button className="btn btn-primary me-2" onClick={() => { changeWeek(-1); handleUserSelection(currentWeek, scheduleType); }}>Trở về</button>
+            <button className="btn btn-primary" onClick={() => { changeWeek(1); handleUserSelection(currentWeek, scheduleType); }}>Tiếp</button>
           </div>
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="scheduleType" id="study" value="study" checked={scheduleType === 'study'} onChange={handleScheduleTypeChange} />
-            <label className="form-check-label" htmlFor="study">Lịch học</label>
-          </div>
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="scheduleType" id="exam" value="exam" checked={scheduleType === 'exam'} onChange={handleScheduleTypeChange} />
-            <label className="form-check-label" htmlFor="exam">Lịch thi</label>
-          </div>
-          <input type="date" onChange={handleDateChange} className="form-control d-inline-block w-auto" />
-          <button className="btn btn-secondary mr-2" onClick={() => { setCurrentWeek(moment()); handleUserSelection(currentWeek, scheduleType); }}>Hiện tại</button>
-          <button className="btn btn-primary mr-2" onClick={() => { changeWeek(-1); handleUserSelection(currentWeek, scheduleType); }}>Trở về</button>
-          <button className="btn btn-primary" onClick={() => { changeWeek(1); handleUserSelection(currentWeek, scheduleType); }}>Tiếp</button>
         </div>
-      </div>
-      <table className="table table-bordered" style={{tableLayout: 'fixed',wordWrap: 'break-word'}}>
-      <thead>
-        <tr>
-          <th>Ca học</th>
-          {weekDays.map((day, index) => (
-            <th key={day} className="text-center">
-              {day} <br />
-              {currentWeek.clone().startOf('isoWeek').add(index, 'days').format('DD/MM/YYYY')}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {timeSlots.map(timeSlotLabel => (
-          <tr key={timeSlotLabel}>
-            <td className="bg-light">{timeSlotLabel}</td>
-            {weekDays.map((day, dayIndex) => {
-              const date = currentWeek.clone().startOf('isoWeek').add(dayIndex, 'days');
-              return (
-                <td key={day + timeSlotLabel}>
-                  {getScheduleForDateAndSlot(date, timeSlotLabel)}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-
-    </table>
+        <table className="table table-bordered" style={{ tableLayout: 'fixed', wordWrap: 'break-word' }}>
+          <thead>
+            <tr>
+              <th className='text-center bg-success align-middle'>Ca học</th>
+              {weekDays.map((day, index) => (
+                <th key={day} className="text-center bg-success">
+                  {day} <br />
+                  {currentWeek.clone().startOf('isoWeek').add(index, 'days').format('DD/MM/YYYY')}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {timeSlots.map(timeSlotLabel => (
+              <tr key={timeSlotLabel}>
+                <td className="text-center align-middle bg-secondary">{timeSlotLabel}</td>                
+                {weekDays.map((day, dayIndex) => {
+                  const date = currentWeek.clone().startOf('isoWeek').add(dayIndex, 'days');
+                  return (
+                    <td key={day + timeSlotLabel}>
+                      {getScheduleForDateAndSlot(date, timeSlotLabel)}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div >
     </div >
   );
 };

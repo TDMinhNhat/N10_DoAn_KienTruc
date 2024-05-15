@@ -13,6 +13,7 @@ import StudyResult from './components/StudyResults/StudyResultsPage';
 import UpdateSuggestion from './components/UpdateSuggestion/UpdateSuggestionPage';
 import WeeklySchedule from './components/WeeklySchedule/WeeklySchedulePage';
 import StudentManagement from './components_staff/studentManagement/StudentManagementPage';
+import StaffManagement from './components_staff/teacherManagement/TeacherManagementPage';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -123,12 +124,12 @@ function App() {
                                 <StudentManagement currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
-                        {/* <Route path="/staff-management" element={
+                        <Route path="/management/teachers" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
                                 <StaffManagement currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
-                        <Route path="/subject-management" element={
+                        {/* <Route path="/subject-management" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
                                 <SubjectManagement currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>

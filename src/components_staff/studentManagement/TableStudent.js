@@ -169,7 +169,7 @@ const TableStudent = () => {
     () => [
       {
         accessorKey: 'id',
-        header: 'ID',
+        header: 'MSSV',
         // enableColumnActions: false, // ẩn cột actions
         // enableColumnDragging: false, // không cho kéo cột
         // enableColumnFilter: false, // không cho filter cột
@@ -182,23 +182,23 @@ const TableStudent = () => {
       },
       {
         accessorKey: 'name',
-        header: 'Name'
+        header: 'Họ Tên'
       },
       {
         accessorKey: 'gender',
-        header: 'Gender'
+        header: 'Giới Tính'
       },
       {
         accessorKey: 'birthday',
-        header: 'Birthday'
+        header: 'Ngày Sinh'
       },
       {
         accessorKey: 'major',
-        header: 'Major'
+        header: 'Chuyên Ngành Học'
       },
       {
         accessorKey: 'class',
-        header: 'Class'
+        header: 'Lớp Danh Nghĩa'
       },
       {
         accessorKey: 'actions',
@@ -261,7 +261,7 @@ const TableStudent = () => {
       <form onSubmit={handleSubmit(editingStudent ? handleUpdateStudent : handleCreateStudent)}>
         <div className="row">
           <div className="col-md-6 mb-3">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Họ Tên</label>
             <input
               id="name"
               {...register('name', {
@@ -275,7 +275,7 @@ const TableStudent = () => {
             {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
           </div>
           <div className="col-md-6 mb-3">
-            <label htmlFor="gender">Gender</label>
+            <label htmlFor="gender">Giới Tính</label>
             <select
               id="gender"
               {...register('gender', {
@@ -284,7 +284,7 @@ const TableStudent = () => {
               className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
               onChange={() => setErrorField('')}
             >
-              <option value="">Select gender</option>
+              <option value="">Chọn giới tính</option>
               <option value="Nam">Nam</option>
               <option value="Nu">Nữ</option>
             </select>
@@ -292,7 +292,7 @@ const TableStudent = () => {
           </div>
 
           <div className="col-md-6 mb-3">
-            <label htmlFor="birthday">Birthday</label>
+            <label htmlFor="birthday">Ngày Sinh</label>
             <input
               type="date"
               id="birthday"
@@ -306,7 +306,7 @@ const TableStudent = () => {
           </div>
 
           <div className="col-md-6 mb-3">
-            <label htmlFor="major">Major</label>
+            <label htmlFor="major">Chuyên Ngành Học</label>
             <input
               id="major"
               {...register('major', {
@@ -320,7 +320,7 @@ const TableStudent = () => {
           </div>
 
           <div className="col-md-6 mb-3">
-            <label htmlFor="class">Class</label>
+            <label htmlFor="class">Lớp Danh Nghĩa</label>
             <input
               id="class"
               {...register('class', {

@@ -13,6 +13,7 @@ const Sidebar = () => {
     const [isNavbarVisible, setNavbarVisible] = useState(false);
     const [isGeneralInfoExpanded, setGeneralInfoExpanded] = useState(false);
     const [isStudyExpanded, setStudyExpanded] = useState(false);
+    const [isStaffExpanded, setStaffExpanded] = useState(false);
 
     const toggleNavbar = () => {
         setNavbarVisible(!isNavbarVisible);
@@ -24,6 +25,10 @@ const Sidebar = () => {
 
     const toggleStudy = () => {
         setStudyExpanded(!isStudyExpanded);
+    };
+
+    const toggleStaff = () => {
+        setStaffExpanded(!isStaffExpanded);
     };
 
     if (location.pathname === '/' || location.pathname === '/register') {
@@ -55,6 +60,19 @@ const Sidebar = () => {
                                 </>
                             )}
                             <Nav.Link as={Link} to="/register-course" className={`${pathname.includes('register-course') ? 'active bg-info' : ''}`}>ĐĂNG KÝ HỌC PHẦN</Nav.Link>
+
+
+                            {/* Giáo vụ */}
+                            <Nav.Link onClick={toggleStaff}>
+                                GIÁO VỤ {isStaffExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                            </Nav.Link>
+                            {isStaffExpanded && (
+                                <>
+                                    <Nav.Link as={Link} to="/management/students" className={`${pathname.includes('management/students') ? 'active bg-info' : ''}`}>Quản lý sinh viên</Nav.Link>
+                                    <Nav.Link as={Link} to="/management/teachers" className={`${pathname.includes('management/teachers') ? 'active bg-info' : ''}`}>Quản lý giảng viên</Nav.Link>
+                                    <Nav.Link as={Link} to="/management/subject" className={`${pathname.includes('management/subject') ? 'active bg-info' : ''}`}>Quản lý môn học</Nav.Link>
+                                </>
+                            )}
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

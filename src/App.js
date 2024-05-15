@@ -12,6 +12,8 @@ import ChangePassword from './components/ChangePassword/ChangePasswordPage';
 import StudyResult from './components/StudyResults/StudyResultsPage';
 import UpdateSuggestion from './components/UpdateSuggestion/UpdateSuggestionPage';
 import WeeklySchedule from './components/WeeklySchedule/WeeklySchedulePage';
+import StudentManagement from './components_staff/studentManagement/StudentManagementPage';
+
 import { ToastContainer } from 'react-toastify';
 
 // Khóa bí mật, bạn cần bảo mật khóa này cẩn thận hơn trong môi trường thực tế.
@@ -114,6 +116,23 @@ function App() {
                                 <WeeklySchedule currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
+
+                        {/*  Staff */}
+                        <Route path="/management/students" element={
+                            <PrivateRoute isLoggedIn={isLoggedIn}>
+                                <StudentManagement currentUser={currentUser} onLogout={handleLogout} />
+                            </PrivateRoute>
+                        } />
+                        {/* <Route path="/staff-management" element={
+                            <PrivateRoute isLoggedIn={isLoggedIn}>
+                                <StaffManagement currentUser={currentUser} onLogout={handleLogout} />
+                            </PrivateRoute>
+                        } />
+                        <Route path="/subject-management" element={
+                            <PrivateRoute isLoggedIn={isLoggedIn}>
+                                <SubjectManagement currentUser={currentUser} onLogout={handleLogout} />
+                            </PrivateRoute>
+                        } /> */}
                     </Routes>
                 </div>
             </Router>

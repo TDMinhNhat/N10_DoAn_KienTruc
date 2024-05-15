@@ -1,0 +1,8 @@
+.dropdown-thaotac {
+  position: relative;
+}
+
+.right-dropdown {
+  position: absolute;
+  right: 40;
+}

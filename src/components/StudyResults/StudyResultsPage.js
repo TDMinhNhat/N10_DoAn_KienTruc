@@ -239,7 +239,7 @@ const StudyResultsPage = ({ currentUser }) => {
                   <tr key={result.classCode} className="text-center">
                     <td className="small">{index + 1}</td>
                     <td className="small">{result.classCode}</td>
-                    <td className="small">{result.subjectName}</td>
+                    <td className="small text-start ps-2">{result.subjectName}</td>
                     <td className="small">{result.credit}</td>
                     <td className="small">{result.creditTH}</td>
                     <td className="small">{result.midterm}</td>

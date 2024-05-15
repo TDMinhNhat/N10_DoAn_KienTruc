@@ -1,0 +1,15 @@
+/* Custom CSS */
+.col, .col-2 {
+  border-right: 1px solid #ccc;
+}
+
+.row:last-child .col, .row:last-child .col-2 {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Optional: Custom CSS for specific styling */
+.table th, .table td {
+  vertical-align: middle; /* Aligns content of the cells to the middle */
+  text-align: center; /* Centers text horizontally */
+}
+

@@ -1,5 +1,6 @@
 package dev.skyherobrine.server.controllers;
 
+import dev.skyherobrine.server.messages.send.StudentProducer;
 import dev.skyherobrine.server.models.*;
 import dev.skyherobrine.server.repositories.EnrollCourseRepository;
 import dev.skyherobrine.server.repositories.StudentRepositories;
@@ -19,6 +20,34 @@ public class StudentInfoController {
     private StudentRepositories sr;
     @Autowired
     private StudentInfoService sis;
+    @Autowired
+    private StudentProducer sp;
+
+    @PostMapping("update")
+    public ResponseEntity updatePersonal(@RequestBody Student student) {
+        try {
+            Student target = sr.save(student);
+            sr.save(target);
+            sp.sendUpdateStudent(target);
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.OK.value(),
+                    "Update student info successfully",
+                    new HashMap<>(){{
+                        put("data", target);
+                    }}));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "Update failed!",
+                    new HashMap<>(){{
+                        put("error", e.getCause());
+                        put("data", null);
+                    }}
+            ));
+        }
+    }
+
 
     @GetMapping("get-personal-info/{id}")
     public ResponseEntity getPersonalInfo(@PathVariable String id) {

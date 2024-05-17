@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/login")
+@RequestMapping("api/login")
 public class LoginController {
 
     private StudentRepository sr;
@@ -42,9 +42,9 @@ public class LoginController {
 
     @GetMapping("{id}/{password}")
     public ResponseEntity login(@PathVariable String id, @PathVariable String password) {
-        Person person = sr.findByIdAndPassword(id, Base64.getEncoder().encode(password.getBytes()).toString()).orElse(null);
-        person = person == null ? tr.findByIdAndPassword(id, Base64.getEncoder().encode(password.getBytes()).toString()).orElse(null) : person;
-        person = person == null ? mr.findByIdAndPassword(id, Base64.getEncoder().encode(password.getBytes()).toString()).orElse(null) : person;
+        Person person = sr.findByIdAndPassword(id, password).orElse(null);
+        person = person == null ? tr.findByIdAndPassword(id, password).orElse(null) : person;
+        person = person == null ? mr.findByIdAndPassword(id, password).orElse(null) : person;
 
         Map<String,Object> datas = new HashMap<>();
         datas.put("person", person);

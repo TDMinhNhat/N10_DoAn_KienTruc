@@ -95,7 +95,7 @@ function GraduationForm() {
     };
 
     return (
-        <div className="container mt-4">
+        <div className="container" style={{ marginTop: 80,zIndex:20  }}>
             <div className="card bg-light text-black p-4">
                 <h2>ĐƠN XIN XÉT TỐT NGHIỆP</h2>
                 <p>(Dành cho sinh viên học theo học chế tín chỉ)</p>

@@ -14,7 +14,7 @@ const TeacherManagementPage = ({ currentUser }) => {
   return (
     <div>
       {currentUser && (
-        <div className="container mt-4">
+        <div className="container" style={{ marginTop: 80,zIndex:20  }}>
           <div className="card bg-light text-black p-4">
             <h3 className="">Quản lý giảng viên</h3>
             <hr></hr>

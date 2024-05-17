@@ -30,9 +30,9 @@ const HomePage = ({ currentUser }) => {
     return (
         <div>
             {currentUser && (
-                <div className="container">
+                <div className="container" style={{ marginTop: 80,zIndex:20  }}>
                     <div className="col">
-                        <div className="row mt-4">
+                        <div className="row">
                             <div className="col-md-8">
                                 <div className="card bg-light text-black p-4 d-flex align-items-start">
                                     <div className="d-flex flex-column align-items-center">

@@ -104,7 +104,7 @@ const UpdateSuggestionPage = ({ currentUser }) => {
     return (
         <div>
             {currentUser && (
-                <div className="container mt-4">
+                <div className="container" style={{ marginTop: 80,zIndex:20  }}>
                     <div className="card bg-light text-black p-4">
                         <div className='row'>
                             <h3>Cập nhật thông tin sinh viên</h3>

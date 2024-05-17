@@ -181,7 +181,7 @@ const StudyResultsPage = ({ currentUser }) => {
   return (
     <div>
       {currentUser && (
-        <div className="container bg-light mt-4 card">
+        <div className="container bg-light card" style={{ marginTop: 80,zIndex:20  }}>
           <h2 className="mt-2">Kết quả học tập</h2>
           <hr />
           <div className="mb-3 d-flex align-items-center">

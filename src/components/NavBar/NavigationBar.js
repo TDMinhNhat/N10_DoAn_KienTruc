@@ -17,7 +17,7 @@ const NavigationBar = ({ isLoggedIn, onLogout, currentUser }) => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm justify-content-center">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm justify-content-center" style={{ position: 'fixed', top: 0, width: '100%', zIndex:40 }}>
             <div className="container">
                 <Link className="navbar-brand" to="/dashboard">
                     <img

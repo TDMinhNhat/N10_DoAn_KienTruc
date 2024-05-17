@@ -57,7 +57,7 @@ const RegisterCoursePage = ({ currentUser }) => {
     return (
         <div>
             {currentUser && (
-                <div className="container bg-light mt-4 card">
+                <div className="container bg-light card" style={{ marginTop: 80,zIndex:20  }}>
                     <h4>Đăng ký học phần</h4>
                     <div className="border-bottom w-100 my-3"></div>
                     <div className="row justify-content-center">

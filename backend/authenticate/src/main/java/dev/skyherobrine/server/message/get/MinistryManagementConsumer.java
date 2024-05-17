@@ -45,7 +45,7 @@ public class MinistryManagementConsumer {
                 object.get("courseYear").getAsString(),
                 convertStringToDate(object.get("dateEnrolled").getAsString()),
                 EducationType.valueOf(object.get("type").getAsString()),
-                object.get("clazz").getAsString(),
+                object.get("clazz").getAsString() == null ? null : object.get("clazz").getAsString(),
                 EducationLevel.valueOf(object.get("level").getAsString())
         );
         sr.save(student);

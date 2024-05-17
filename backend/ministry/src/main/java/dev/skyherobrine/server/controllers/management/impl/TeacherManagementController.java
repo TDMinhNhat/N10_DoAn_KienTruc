@@ -5,7 +5,7 @@ import dev.skyherobrine.server.messages.send.ManagementProducer;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.models.Teacher;
 import dev.skyherobrine.server.models.enums.TeacherStatus;
-import dev.skyherobrine.server.repositories.TeacherRepositories;
+import dev.skyherobrine.server.repositories.TeacherRepository;
 import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class TeacherManagementController implements IManagement<Teacher,String> {
     
     @Autowired
-    private TeacherRepositories tr;
+    private TeacherRepository tr;
     @Autowired
     private ManagementProducer producer;
 

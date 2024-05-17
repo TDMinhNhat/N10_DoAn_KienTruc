@@ -60,7 +60,7 @@ const Sidebar = () => {
                                 </>
                             )}
                             <Nav.Link as={Link} to="/register-course" className={`${pathname.includes('register-course') ? 'active bg-info' : ''}`}>ĐĂNG KÝ HỌC PHẦN</Nav.Link>
-
+                            <Nav.Link as={Link} to="/register-graduation" className={`${pathname.includes('register-graduation') ? 'active bg-info' : ''}`}>ĐĂNG KÝ TỐT NGHIỆP</Nav.Link>
 
                             {/* Giáo vụ */}
                             <Nav.Link onClick={toggleStaff}>

@@ -42,7 +42,6 @@ const NavigationBar = ({ isLoggedIn, onLogout, currentUser }) => {
 
                                 <Dropdown.Menu className="dropdown-menu" style={{ width: '100%', backgroundColor: '#F8F9FA', border: 'none', padding: 0 }}>
                                     <Dropdown.Item as={Link} to="/profile">Thông tin cá nhân</Dropdown.Item>
-                                    <Dropdown.Item as={Link} to="/change-password">Đổi mật khẩu</Dropdown.Item>
                                     <Dropdown.Item as={Link} to="/logout" onClick={handleLogoutClick}>Đăng xuất</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

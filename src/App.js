@@ -8,7 +8,7 @@ import ProfilePage from './components/Profile/ProfilePage';
 import RegisterForm from './components/Register/Register';
 import Sidebar from './components/NavBar/Sidebar';
 import RegisterCoursePage from './components/RegisterCourse/RegisterCoursePage';
-import ChangePassword from './components/ChangePassword/ChangePasswordPage';
+import RegisterGraduation from './components/RegisterGraduation/RegisterGraduationPage';
 import StudyResult from './components/StudyResults/StudyResultsPage';
 import UpdateSuggestion from './components/UpdateSuggestion/UpdateSuggestionPage';
 import WeeklySchedule from './components/WeeklySchedule/WeeklySchedulePage';
@@ -98,9 +98,9 @@ function App() {
                                 <RegisterCoursePage currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
-                        <Route path="/change-password" element={
+                        <Route path="/register-graduation" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
-                                <ChangePassword currentUser={currentUser} onLogout={handleLogout} />
+                                <RegisterGraduation currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
                         <Route path="/study-results" element={

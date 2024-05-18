@@ -62,7 +62,7 @@ const Sidebar = () => {
                             <Nav.Link as={Link} to="/register-course" className={`${pathname.includes('register-course') ? 'active bg-info' : ''}`}>ĐĂNG KÝ HỌC PHẦN</Nav.Link>
                             <Nav.Link as={Link} to="/register-graduation" className={`${pathname.includes('register-graduation') ? 'active bg-info' : ''}`}>ĐĂNG KÝ TỐT NGHIỆP</Nav.Link>
 
-                            {/* Giáo vụ */}
+                            {/* ministry*/}
                             <Nav.Link onClick={toggleStaff}>
                                 GIÁO VỤ {isStaffExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                             </Nav.Link>
@@ -73,6 +73,9 @@ const Sidebar = () => {
                                     <Nav.Link as={Link} to="/management/subject" className={`${pathname.includes('management/subject') ? 'active bg-info' : ''}`}>Quản lý môn học</Nav.Link>
                                 </>
                             )}
+
+                            {/* teacher */}
+                            <Nav.Link as={Link} to="/input-point" className={`${pathname.includes('input-point') ? 'active bg-info' : ''}`}>NHẬP ĐIỂM</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

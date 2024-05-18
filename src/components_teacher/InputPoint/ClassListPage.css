@@ -1,0 +1,86 @@
+
+  /* src/components/ClassListForm.css */
+.button-container {
+    display: flex;
+  }
+  
+  .button-container button {
+    margin-right: 10px; /* Khoảng cách giữa các nút */
+  }
+  
+  .action-column {
+    width: 100px; /* Chiều rộng của cột Action */
+  }
+
+  .MSSV-column  {
+    width: 200px; /* Chiều rộng của cột MSSV */
+  }
+  .class-column {
+    width: 200px; /* Chiều rộng của cột MSSV */
+  }
+  .sex-column {
+    width: 100px; /* Chiều rộng của cột MSSV */
+  }
+  
+  .name-column {
+    width: 400px; /* Chiều rộng của cột Họ tên */
+  }
+  
+  /* src/components/ClassListForm.css */
+.combobox-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .combobox-container > * {
+    margin-right: 20px; /* Khoảng cách giữa các combobox */
+  }
+
+  /* src/components/ClassListForm.css */
+.form-row {
+    display: flex;
+    align-items: center;
+  }
+/* src/components/ClassListForm.css */
+.student-table {
+    width: 100%; /* Bảng sẽ co dãn theo chiều ngang */
+  }
+  
+  .model-point .modal-dialog {
+    width: 90%;
+    max-width: 1200px; /* hoặc bất kỳ giá trị nào phù hợp với yêu cầu của bạn */
+  }
+  
+  /* Cập nhật CSS để điều chỉnh lại chiều rộng của các cột trong bảng */
+/* Ví dụ */
+.thuong-ki-column {
+    width: 300px;
+  }
+  
+  .thuc-hanh-column {
+    width: 300px;
+  }
+  
+  .giua-ki-column {
+    width: 300px;
+  }
+  
+  .cuoi-ki-column {
+    width: 300px;
+  }
+  
+  .tong-diem-column {
+    width: 300px;
+  }
+  
+  .thang-diem-column {
+    width: 300px;
+  }
+  
+  .diem-chu-column {
+    width: 300px;
+  }
+  
+  
+    
+  

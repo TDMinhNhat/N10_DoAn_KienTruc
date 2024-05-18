@@ -12,9 +12,10 @@ import RegisterGraduation from './components/RegisterGraduation/RegisterGraduati
 import StudyResult from './components/StudyResults/StudyResultsPage';
 import UpdateSuggestion from './components/UpdateSuggestion/UpdateSuggestionPage';
 import WeeklySchedule from './components/WeeklySchedule/WeeklySchedulePage';
-import StudentManagement from './components_staff/studentManagement/StudentManagementPage';
-import StaffManagement from './components_staff/teacherManagement/TeacherManagementPage';
-import SubjectManagement from './components_staff/subjectManagement/SubjectManagementPage';
+import StudentManagement from './components_ministry/studentManagement/StudentManagementPage';
+import StaffManagement from './components_ministry/teacherManagement/TeacherManagementPage';
+import SubjectManagement from './components_ministry/subjectManagement/SubjectManagementPage';
+import ClassListPage from './components_teacher/InputPoint/ClassListPage';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -62,7 +63,7 @@ function App() {
 
     const handleLogin = (user) => {
         setIsLoggedIn(true);
-        const currentUser = { data: { role: user.data.role, person: { id: user.data.person.id } } };
+        const currentUser = { data: { role: user.data.role, person: { id: user.data.person.id , avatar: user.data.person.avatar, fullName: user.data.person.fullName } } };
         setCurrentUser(currentUser);
         localStorage.setItem('isLoggedIn', encryptData('true'));
         localStorage.setItem('currentUser', encryptData(JSON.stringify(currentUser)));
@@ -120,7 +121,7 @@ function App() {
                             </PrivateRoute>
                         } />
 
-                        {/*  Staff */}
+                        {/*  ministry */}
                         <Route path="/management/students" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
                                 <StudentManagement currentUser={currentUser} onLogout={handleLogout} />
@@ -134,6 +135,13 @@ function App() {
                         <Route path="/management/subject" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>
                                 <SubjectManagement currentUser={currentUser} onLogout={handleLogout} />
+                            </PrivateRoute>
+                        } />
+
+                        {/*  Teacher */}
+                        <Route path="/input-point" element={
+                            <PrivateRoute isLoggedIn={isLoggedIn}>
+                                <ClassListPage currentUser={currentUser} onLogout={handleLogout} />
                             </PrivateRoute>
                         } />
                     </Routes>

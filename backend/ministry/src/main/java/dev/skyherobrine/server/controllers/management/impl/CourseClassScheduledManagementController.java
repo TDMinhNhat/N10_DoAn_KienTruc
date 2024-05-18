@@ -24,7 +24,7 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
 
     @PutMapping("add")
     @Override
-    public ResponseEntity add(CourseClassScheduled courseClassScheduled) {
+    public ResponseEntity add(@RequestBody CourseClassScheduled courseClassScheduled) {
         try {
             CourseClassScheduled ccs = ccsr.save(courseClassScheduled);
             return ResponseEntity.ok(new Response(

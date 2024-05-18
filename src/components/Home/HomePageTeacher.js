@@ -3,18 +3,19 @@ import { useNavigate, Link } from 'react-router-dom';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
-import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
-import UpcomingOutlinedIcon from '@mui/icons-material/UpcomingOutlined';
-import studentService from '../../services/student.service';
-const levelMapping = {
-    'COLLEGE': 'Cao đẳng',
-    'UNIVERSITY': 'Đại học',
-    'POSTGRADUATE': 'Sau đại học'
-};
 
-const educationTypeMapping = {
-    'FORMAL': 'Chính quy',
-    'HIGH_QUALITY': 'Chất lượng cao',
+import studentService from '../../services/student.service';
+
+const statusMapping = {
+    'ACTIVE': 'Hoạt động',
+    'HIBERNATE': 'Nghỉ dạy',
+    'DELETED': 'Đã xóa',
+};
+const teacherLevelMapping = {
+    'BACHELOR': 'Cử nhân',
+    'MASTER': 'Thạc sĩ',
+    'DOCTOR': 'Tiến sĩ',
+    'PROFESSOR': 'Giáo sư',
 };
 
 const HomePageTeacher = ({ currentUser }) => {
@@ -39,12 +40,12 @@ const HomePageTeacher = ({ currentUser }) => {
         <div>
             {userInfo && userInfo.data && userInfo.data.data && (
                 <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
-                    {/* <div className="col">
+                    <div className="col">
                         <div className="row">
                             <div className="col-md-8">
                                 <div className="card bg-light text-black p-4 d-flex align-items-start">
                                     <div className="d-flex flex-column align-items-center">
-                                        <h1>Thông tin sinh viên</h1>
+                                        <h1>Thông tin giảng viên</h1>
                                     </div>
                                     <div className="border-bottom w-100 my-3"></div>
                                     <div className='row col-md-12'>
@@ -60,17 +61,17 @@ const HomePageTeacher = ({ currentUser }) => {
                                         <div className='col-md-8'>
                                             <div className='row'>
                                                 <div className='col-md-6'>
-                                                    <p><span className="fw-bold">MSSV:</span> {userInfo.data.data.id}</p>
+                                                    <p><span className="fw-bold">MSGV:</span> {userInfo.data.data.id}</p>
                                                     <p><span className="fw-bold">Họ tên:</span> {userInfo.data.data.fullName}</p>
                                                     <p><span className="fw-bold">Giới tính:</span> {userInfo.data.data.sex ? 'Nam' : 'Nữ'}</p>
                                                     <p><span className="fw-bold">Ngày sinh:</span> {userInfo.data.data.birthDay}</p>
                                                     <p><span className="fw-bold">Nơi sinh:</span> {userInfo.data.data.cityBorn}</p>
                                                 </div>
                                                 <div className='col-md-6'>
-                                                    <p><span className="fw-bold">Lớp học:</span> {userInfo.data.data.clazz}</p>
-                                                    <p><span className="fw-bold">Khóa học:</span> {userInfo.data.data.courseYear}</p>
-                                                    <p><span className="fw-bold">Bậc đào tạo:</span> {levelMapping[userInfo.data.data.level]}</p>
-                                                    <p><span className="fw-bold">Loại hình đào tạo:</span> {educationTypeMapping[userInfo.data.data.type]}</p>
+                                                    <p><span className="fw-bold">Email:</span> {userInfo.data.data.email}</p>
+                                                    <p><span className="fw-bold">Số điện thoại:</span> {userInfo.data.data.phoneNumber}</p>
+                                                    <p><span className="fw-bold">Trạng thái:</span> {statusMapping[userInfo.data.data.status]}</p>
+                                                    <p><span className="fw-bold">Trình độ:</span> {teacherLevelMapping[userInfo.data.data.teacherLevel]}</p>
                                                     <p><span className="fw-bold">Ngành:</span> {userInfo.data.data.facultyID.facultyName}</p>
                                                 </div>
                                             </div>
@@ -120,7 +121,7 @@ const HomePageTeacher = ({ currentUser }) => {
                                     <button type="button" className="btn btn-light">
                                         <Link to="/study-results" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
                                             <EqualizerOutlinedIcon />
-                                            <span>Kết quả học tập</span>
+                                            <span>Danh sách lớp</span>
                                         </Link>
                                     </button>
                                 </div>
@@ -128,16 +129,15 @@ const HomePageTeacher = ({ currentUser }) => {
                             <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
-                                        <Link to="/register-course" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
+                                        <Link to="/input-point" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
                                             <StorageOutlinedIcon />
-                                            <span>Đăng ký học phần</span>
+                                            <span>Nhập điểm</span>
                                         </Link>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div> */}
-                    <h3>HomePageTeacher</h3>
+                    </div>
                 </div>
             )}
         </div>

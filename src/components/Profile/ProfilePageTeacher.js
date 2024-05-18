@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import studentService from '../../services/student.service';
 
-const levelMapping = {
-    'COLLEGE': 'Cao đẳng',
-    'UNIVERSITY': 'Đại học',
-    'POSTGRADUATE': 'Sau đại học'
+const statusMapping = {
+    'ACTIVE': 'Hoạt động',
+    'HIBERNATE': 'Nghỉ dạy',
+    'DELETED': 'Đã xóa',
 };
-
-const educationTypeMapping = {
-    'FORMAL': 'Chính quy',
-    'HIGH_QUALITY': 'Chất lượng cao',
+const teacherLevelMapping = {
+    'BACHELOR': 'Cử nhân',
+    'MASTER': 'Thạc sĩ',
+    'DOCTOR': 'Tiến sĩ',
+    'PROFESSOR': 'Giáo sư',
 };
 
 const ProfilePageTeacher = ({ currentUser }) => {
@@ -45,29 +46,20 @@ const ProfilePageTeacher = ({ currentUser }) => {
                                     className="img-fluid mb-3"
                                     style={{ maxHeight: '150px', borderRadius: '50%' }}
                                 />
-                                <div style={{ marginLeft: '-220px' }}>
-                                    <p><span className="fw-bold">MSSV:</span> {userInfo.data.data.id}</p>
-                                    <p><span className="fw-bold">Họ tên:</span> {userInfo.data.data.fullName}</p>
-                                    <p><span className="fw-bold">Giới tính:</span> {userInfo.data.data.sex ? 'Nam' : 'Nữ'}</p>
-                                </div>
                             </div>
                             <div className='col-md-8'>
-                                <h3>Thông tin học vấn</h3>
+                                <h3>Thông tin giảng viên</h3>
                                 <hr></hr>
                                 <div className='row'>
                                     <div className='col-md-6'>
-                                        <p><span className="fw-bold">Trạng thái:</span> Đang học</p>
-                                        <p><span className="fw-bold">Lớp học:</span>  {userInfo.data.data.clazz}</p>
-                                        <p><span className="fw-bold">Bậc đào tạo:</span>  {levelMapping[userInfo.data.data.level]}</p>
-                                        <p><span className="fw-bold">Khoa:</span>  {userInfo.data.data.facultyID.department.departmentName} </p>
-                                        <p><span className="fw-bold">Chuyên ngành:</span>  {userInfo.data.data.facultyID.facultyName}</p>
+                                    <p><span className="fw-bold">MSGV:</span> {userInfo.data.data.id}</p>
+                                    <p><span className="fw-bold">Họ tên:</span> {userInfo.data.data.fullName}</p>
+                                    <p><span className="fw-bold">Giới tính:</span> {userInfo.data.data.sex ? 'Nam' : 'Nữ'}</p>
                                     </div>
                                     <div className='col-md-6'>
-                                        <p><span className="fw-bold">Ngày vào trường:</span>  {userInfo.data.data.dateEnrolled}</p>
-                                        <p><span className="fw-bold">Cơ sở:</span>  Cơ sở 1 (Thành phố Hồ Chí Minh)</p>
-                                        <p><span className="fw-bold">Loại hình đào tạo:</span>  {educationTypeMapping[userInfo.data.data.type]}</p>
-                                        <p><span className="fw-bold">Ngành:</span>  {userInfo.data.data.facultyID.facultyName}</p>
-                                        <p><span className="fw-bold">Khóa học: </span> {userInfo.data.data.courseYear}</p>
+                                        <p><span className="fw-bold">Trạng thái:</span> {statusMapping[userInfo.data.data.status]}</p>
+                                        <p><span className="fw-bold">Trình độ:</span> {teacherLevelMapping[userInfo.data.data.teacherLevel]}</p>
+                                        <p><span className="fw-bold">Ngành:</span> {userInfo.data.data.facultyID.facultyName}</p>
                                     </div>
                                 </div>
                             </div>

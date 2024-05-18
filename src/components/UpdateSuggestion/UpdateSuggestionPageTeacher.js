@@ -166,7 +166,7 @@ const UpdateSuggestionPageReacher = ({ currentUser }) => {
                 <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
                     <div className="card bg-light text-black p-4">
                         <div className='row'>
-                            <h3>Cập nhật thông tin sinh viên</h3>
+                            <h3>Cập nhật thông tin giảng viên</h3>
                             <hr className='mb-3 mt-2'></hr>
                             <div className='col-md-12'>
                                 <div className="form-group mb-3 col-md-4">

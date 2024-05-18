@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7000/api';
+const API_URL = 'http://localhost:7000/api/student-info';
 
 class StudentService {
     async getPersonalInfo(id) {
-        const response = await axios.get(API_URL + '/student-info/get-personal-info/' + id)
+        const response = await axios.get(API_URL + '/get-personal-info/' + id)
         return response;
     }
 }

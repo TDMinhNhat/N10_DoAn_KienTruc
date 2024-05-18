@@ -1,9 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import studentService from '../../services/student.service';
 
 const UpdateSuggestionPage = ({ currentUser }) => {
     const navigate = useNavigate();
-    const [user, setUser] = useState(currentUser ? currentUser.data.person : {});
+    const [loading, setLoading] = useState(true);
+
+    const [user, setUser] = useState({
+        id: '',
+        fullName: '',
+        sex: '',
+        birthDay: '',
+        cityBorn: '',
+        address: '',
+        phoneNumber: '',
+        email: ''
+    });
 
     const [errorMessages, setErrorMessages] = useState({
         birthDay: '',
@@ -19,7 +31,7 @@ const UpdateSuggestionPage = ({ currentUser }) => {
         address: true,
         phoneNumber: true,
         email: true
-    }
+    };
     const [objCheckInput, setObjCheckInput] = useState(defaultObjCheckInput);
 
     const inputRefs = {
@@ -71,16 +83,33 @@ const UpdateSuggestionPage = ({ currentUser }) => {
             return false;
         }
         return true;
-    }
+    };
 
     useEffect(() => {
-        if (!currentUser) {
-            navigate('/');
-        } else {
-            setUser(currentUser.data.person);
+        async function fetchData() {
+            if (!currentUser) {
+                navigate('/');
+            } else {
+                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                if (response.data) {
+                    const fetchedUser = response.data.data.data;
+                    setUser({
+                        id: fetchedUser.id || '',
+                        fullName: fetchedUser.fullName || '',
+                        sex: fetchedUser.sex || '',
+                        birthDay: fetchedUser.birthDay || '',
+                        cityBorn: fetchedUser.cityBorn || '',
+                        address: fetchedUser.address || '',
+                        phoneNumber: fetchedUser.phoneNumber || '',
+                        email: fetchedUser.email || ''
+                    });
+                    console.log('Fetched user data:', response.data);
+                }
+                setLoading(false); // Add this line
+            }
         }
+        fetchData();
     }, [currentUser, navigate]);
-
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -99,12 +128,12 @@ const UpdateSuggestionPage = ({ currentUser }) => {
     const handleInput = (name) => {
         setObjCheckInput({ ...objCheckInput, [name]: true });
         setErrorMessages({ ...errorMessages, [name]: '' });
-    }
+    };
 
     return (
         <div>
-            {currentUser && (
-                <div className="container" style={{ marginTop: 80,zIndex:20  }}>
+            {user ? (
+                <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
                     <div className="card bg-light text-black p-4">
                         <div className='row'>
                             <h3>Cập nhật thông tin sinh viên</h3>
@@ -152,12 +181,16 @@ const UpdateSuggestionPage = ({ currentUser }) => {
                                         <div className="invalid-feedback">{errorMessages.email}</div>
                                     </label>
                                 </div>
-                                <button onClick={handleSave} className="btn btn-primary">Lưu</button>                            </div>
+                                <button onClick={handleSave} className="btn btn-primary">Lưu</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+            ) : (
+                <div>Loading...</div>
             )}
         </div>
     );
 };
+
 export default UpdateSuggestionPage;

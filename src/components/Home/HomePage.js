@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import UpcomingOutlinedIcon from '@mui/icons-material/UpcomingOutlined';
-
+import studentService from '../../services/student.service';
 const levelMapping = {
     'COLLEGE': 'Cao đẳng',
     'UNIVERSITY': 'Đại học',
@@ -19,18 +19,26 @@ const educationTypeMapping = {
 
 const HomePage = ({ currentUser }) => {
     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
-        if (!currentUser) {
-            navigate('/');
+        async function fetchData() {
+            if (!currentUser) {
+                navigate('/');
+            } else {
+                console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
+                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                setUserInfo(response.data);
+                console.log('check', response.data);
+            }
+            console.log('check cu', currentUser);
         }
-        console.log('check cu', currentUser);
+        fetchData();
     }, [currentUser, navigate]);
-
     return (
         <div>
-            {currentUser && (
-                <div className="container" style={{ marginTop: 80,zIndex:20  }}>
+            {userInfo && userInfo.data && userInfo.data.data && (
+                <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
                     <div className="col">
                         <div className="row">
                             <div className="col-md-8">
@@ -42,7 +50,7 @@ const HomePage = ({ currentUser }) => {
                                     <div className='row col-md-12'>
                                         <div className="col-md-4 d-flex flex-column align-items-center">
                                             <img
-                                                src={currentUser.data.person.avatar}
+                                                src={userInfo.data.data.avatar}
                                                 alt="Brand Logo"
                                                 className="img-fluid mb-3"
                                                 style={{ maxHeight: '150px', borderRadius: '50%' }}
@@ -52,17 +60,18 @@ const HomePage = ({ currentUser }) => {
                                         <div className='col-md-8'>
                                             <div className='row'>
                                                 <div className='col-md-6'>
-                                                    <p>MSSV: {currentUser.data.person.id}</p>
-                                                    <p>Họ tên: {currentUser.data.person.fullName}</p>
-                                                    <p>Giới tính: {currentUser.data.person.sex ? 'Nam' : 'Nữ'}</p>                                                    <p>Ngày sinh: {currentUser.data.person.birthDay}</p>
-                                                    <p>Nơi sinh: {currentUser.data.person.cityBorn}</p>
+                                                    <p><span className="fw-bold">MSSV:</span> {userInfo.data.data.id}</p>
+                                                    <p><span className="fw-bold">Họ tên:</span> {userInfo.data.data.fullName}</p>
+                                                    <p><span className="fw-bold">Giới tính:</span> {userInfo.data.data.sex ? 'Nam' : 'Nữ'}</p>
+                                                    <p><span className="fw-bold">Ngày sinh:</span> {userInfo.data.data.birthDay}</p>
+                                                    <p><span className="fw-bold">Nơi sinh:</span> {userInfo.data.data.cityBorn}</p>
                                                 </div>
                                                 <div className='col-md-6'>
-                                                    <p>Lớp học: {currentUser.data.person.class}</p>
-                                                    <p>Khóa học: {currentUser.data.person.courseYear}</p>
-                                                    <p>Bậc đào tạo: {levelMapping[currentUser.data.person.level]}</p>
-                                                    <p>Loại hình đào tạo: {educationTypeMapping[currentUser.data.person.type]}</p>
-                                                    <p>Ngành: {currentUser.data.person.facultyID}</p>
+                                                    <p><span className="fw-bold">Lớp học:</span> {userInfo.data.data.clazz}</p>
+                                                    <p><span className="fw-bold">Khóa học:</span> {userInfo.data.data.courseYear}</p>
+                                                    <p><span className="fw-bold">Bậc đào tạo:</span> {levelMapping[userInfo.data.data.level]}</p>
+                                                    <p><span className="fw-bold">Loại hình đào tạo:</span> {educationTypeMapping[userInfo.data.data.type]}</p>
+                                                    <p><span className="fw-bold">Ngành:</span> {userInfo.data.data.facultyID.facultyName}</p>
                                                 </div>
                                             </div>
                                         </div>

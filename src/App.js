@@ -45,26 +45,27 @@ function App() {
             false
     );
     const [currentUser, setCurrentUser] = useState(
-        localStorage.getItem('currentUser') ?
-            decryptData(localStorage.getItem('currentUser')) :
+        localStorage.getItem('currentUser') ? 
+            JSON.parse(decryptData(localStorage.getItem('currentUser'))) : 
             null
     );
-
+    
     useEffect(() => {
         const loggedInStatus = localStorage.getItem('isLoggedIn');
-        const user = localStorage.getItem('currentUser');
-
-        if (loggedInStatus && user) {
+        const storedUser = localStorage.getItem('currentUser');
+    
+        if (loggedInStatus && storedUser) {
             setIsLoggedIn(decryptData(loggedInStatus) === 'true');
-            setCurrentUser(decryptData(user));
+            setCurrentUser(JSON.parse(decryptData(storedUser)));
         }
     }, []);
 
     const handleLogin = (user) => {
         setIsLoggedIn(true);
-        setCurrentUser(user);
+        const currentUser = { data: { role: user.data.role, person: { id: user.data.person.id } } };
+        setCurrentUser(currentUser);
         localStorage.setItem('isLoggedIn', encryptData('true'));
-        localStorage.setItem('currentUser', encryptData(user));
+        localStorage.setItem('currentUser', encryptData(JSON.stringify(currentUser)));
     };
 
     const handleLogout = () => {

@@ -24,7 +24,7 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
 
     @PutMapping("add")
     @Override
-    public ResponseEntity add(CourseClassScheduled courseClassScheduled) {
+    public ResponseEntity add(@RequestBody CourseClassScheduled courseClassScheduled) {
         try {
             CourseClassScheduled ccs = ccsr.save(courseClassScheduled);
             return ResponseEntity.ok(new Response(
@@ -52,9 +52,28 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
         return null;
     }
 
+    @GetMapping("delete/{id}")
     @Override
-    public ResponseEntity delete(Long aLong) {
-        return null;
+    public ResponseEntity delete(@PathVariable Long id) {
+        CourseClassScheduled ccs = ccsr.findById(id).orElse(null);
+        if(ccs == null) {
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Can't found the course class scheduled!",
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        } else {
+            ccsr.delete(ccs);
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.OK.value(),
+                    "Delete successfully!",
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        }
     }
 
     @GetMapping("get/{id}")

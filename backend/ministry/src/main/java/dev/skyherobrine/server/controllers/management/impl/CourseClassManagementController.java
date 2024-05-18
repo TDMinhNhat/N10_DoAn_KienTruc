@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class CourseClassManagementController implements IManagement<CourseClass,String> {
 
     @Autowired
-    private CourseClassRepository ccs;
+    private CourseClassRepository ccr;
     @Autowired
     private ManagementProducer producer;
 
@@ -26,7 +26,7 @@ public class CourseClassManagementController implements IManagement<CourseClass,
     @Override
     public ResponseEntity add(@RequestBody CourseClass courseClass) {
         try {
-            CourseClass target = ccs.save(courseClass);
+            CourseClass target = ccr.save(courseClass);
             producer.sendManagementMessage("course-class", JsonParserMessage.parseToJson(target));
             return ResponseEntity.ok(new Response(
                     HttpStatus.OK.value(),
@@ -53,15 +53,34 @@ public class CourseClassManagementController implements IManagement<CourseClass,
         return null;
     }
 
+    @GetMapping("delete/{id}")
     @Override
-    public ResponseEntity delete(String s) {
-        return null;
+    public ResponseEntity delete(@PathVariable String id) {
+        CourseClass courseClass = ccr.findById(id).orElse(null);
+        if(courseClass == null) {
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Can't find the course class id = " + id,
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        }
+
+        ccr.delete(courseClass);
+        return ResponseEntity.ok(new Response(
+                HttpStatus.ACCEPTED.value(),
+                "Successfully!",
+                new HashMap<>() {{
+                    put("data", null);
+                }}
+        ));
     }
 
     @GetMapping("get/{id}")
     @Override
     public ResponseEntity getById(@PathVariable String s) {
-        CourseClass target = ccs.findById(s).orElse(null);
+        CourseClass target = ccr.findById(s).orElse(null);
         return ResponseEntity.ok(new Response(
                 target != null ? HttpStatus.OK.value() : HttpStatus.NOT_FOUND.value(),
                 target != null ? "Get successfully!" : "Not found!",
@@ -78,7 +97,7 @@ public class CourseClassManagementController implements IManagement<CourseClass,
                 HttpStatus.OK.value(),
                 "Get list courses class",
                 new HashMap<>(){{
-                    put("data", ccs.findAll());
+                    put("data", ccr.findAll());
                 }}
         ));
     }

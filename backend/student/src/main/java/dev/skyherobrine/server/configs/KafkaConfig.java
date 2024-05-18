@@ -13,4 +13,9 @@ public class KafkaConfig {
         return TopicBuilder.name("update_student_info").build();
     }
 
+    @Bean
+    public NewTopic registerCourseTopic() {
+        return TopicBuilder.name("register_course_student").build();
+    }
+
 }

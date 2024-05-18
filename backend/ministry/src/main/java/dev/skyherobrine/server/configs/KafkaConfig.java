@@ -26,4 +26,9 @@ public class KafkaConfig {
     public NewTopic courseTopic() {
         return TopicBuilder.name("course").build();
     }
+
+    @Bean
+    public NewTopic updateMinistryTopic() {
+        return TopicBuilder.name("update_ministry").build();
+    }
 }

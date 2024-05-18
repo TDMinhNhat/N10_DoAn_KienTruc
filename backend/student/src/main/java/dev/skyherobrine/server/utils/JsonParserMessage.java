@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class JsonParserMessage {
 
     public static String parseToJson(Object src) {
-        return new GsonBuilder()
+        return new GsonBuilder().serializeNulls()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
                     @Override
@@ -19,7 +19,7 @@ public class JsonParserMessage {
     }
 
     public static Object parseToObject(String message, Type src) {
-        return new GsonBuilder()
+        return new GsonBuilder().serializeNulls()
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
                     @Override

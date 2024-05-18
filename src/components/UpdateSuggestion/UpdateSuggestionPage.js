@@ -43,46 +43,45 @@ const UpdateSuggestionPage = ({ currentUser }) => {
     };
 
     const isValidInputs = () => {
-        setObjCheckInput(defaultObjCheckInput);
-        setErrorMessages({
-            birthDay: '',
-            cityBorn: '',
-            address: '',
-            phoneNumber: '',
-            email: ''
-        });
+        let isValid = true;
+        const newErrorMessages = { ...errorMessages };
+        const newObjCheckInput = { ...objCheckInput };
 
         if (user.birthDay === '') {
-            setObjCheckInput({ ...objCheckInput, birthDay: false });
+            newObjCheckInput.birthDay = false;
             inputRefs.birthDay.current.focus();
-            setErrorMessages({ ...errorMessages, birthDay: 'Ngày sinh không được để trống' });
-            return false;
+            newErrorMessages.birthDay = 'Ngày sinh không được để trống';
+            isValid = false;
         }
         if (user.cityBorn === '') {
-            setObjCheckInput({ ...objCheckInput, cityBorn: false });
+            newObjCheckInput.cityBorn = false;
             inputRefs.cityBorn.current.focus();
-            setErrorMessages({ ...errorMessages, cityBorn: 'Nơi sinh không được để trống' });
-            return false;
+            newErrorMessages.cityBorn = 'Nơi sinh không được để trống';
+            isValid = false;
         }
         if (user.address === '') {
-            setObjCheckInput({ ...objCheckInput, address: false });
+            newObjCheckInput.address = false;
             inputRefs.address.current.focus();
-            setErrorMessages({ ...errorMessages, address: 'Địa chỉ không được để trống' });
-            return false;
+            newErrorMessages.address = 'Địa chỉ không được để trống';
+            isValid = false;
         }
         if (user.phoneNumber === '') {
-            setObjCheckInput({ ...objCheckInput, phoneNumber: false });
+            newObjCheckInput.phoneNumber = false;
             inputRefs.phoneNumber.current.focus();
-            setErrorMessages({ ...errorMessages, phoneNumber: 'Số điện thoại không được để trống' });
-            return false;
+            newErrorMessages.phoneNumber = 'Số điện thoại không được để trống';
+            isValid = false;
         }
         if (user.email === '') {
-            setObjCheckInput({ ...objCheckInput, email: false });
+            newObjCheckInput.email = false;
             inputRefs.email.current.focus();
-            setErrorMessages({ ...errorMessages, email: 'Email không được để trống' });
-            return false;
+            newErrorMessages.email = 'Email không được để trống';
+            isValid = false;
         }
-        return true;
+
+        setObjCheckInput(newObjCheckInput);
+        setErrorMessages(newErrorMessages);
+
+        return isValid;
     };
 
     useEffect(() => {
@@ -105,11 +104,12 @@ const UpdateSuggestionPage = ({ currentUser }) => {
                     });
                     console.log('Fetched user data:', response.data);
                 }
-                setLoading(false); // Add this line
+                setLoading(false);
             }
         }
         fetchData();
     }, [currentUser, navigate]);
+
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -117,13 +117,41 @@ const UpdateSuggestionPage = ({ currentUser }) => {
         });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (isValidInputs()) {
-            console.log('Save', user);
+            try {
+                console.log('Fetching current user data...');
+                const currentUserData = (await studentService.getPersonalInfo(currentUser.data.person.id)).data.data.data;
+                // Merge the updated fields with the current user data
+                console.log('Current user data:', currentUserData);
+                const updatedUser = {
+                    ...currentUserData,
+                    id: user.id,
+                    fullName: user.fullName,
+                    sex: user.sex,
+                    birthDay: user.birthDay,
+                    cityBorn: user.cityBorn,
+                    address: user.address,
+                    phoneNumber: user.phoneNumber,
+                    email: user.email
+                };
+    
+                console.log('Updating personal info with data:', updatedUser);
+                const response = await studentService.updatePersonalInfo(updatedUser);
+                console.log('Save response:', response);
+    
+                // Handle success, e.g., show a success message or navigate to another page
+            } catch (error) {
+                console.error('Error updating personal info:', error);
+                // Handle error, e.g., show an error message
+                alert('Đã xảy ra lỗi khi cập nhật thông tin');
+            }
         } else {
             console.log('Invalid inputs', user);
         }
     };
+    
+    
 
     const handleInput = (name) => {
         setObjCheckInput({ ...objCheckInput, [name]: true });
@@ -132,7 +160,9 @@ const UpdateSuggestionPage = ({ currentUser }) => {
 
     return (
         <div>
-            {user ? (
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
                 <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
                     <div className="card bg-light text-black p-4">
                         <div className='row'>
@@ -186,8 +216,6 @@ const UpdateSuggestionPage = ({ currentUser }) => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div>Loading...</div>
             )}
         </div>
     );

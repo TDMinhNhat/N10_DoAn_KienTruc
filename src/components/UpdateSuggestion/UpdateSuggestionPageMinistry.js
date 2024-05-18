@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import studentService from '../../services/student.service';
-
+import { toast } from 'react-toastify';
 const UpdateSuggestionPageMinistry = ({ currentUser }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -135,23 +135,24 @@ const UpdateSuggestionPageMinistry = ({ currentUser }) => {
                     phoneNumber: user.phoneNumber,
                     email: user.email
                 };
-    
+
                 console.log('Updating personal info with data:', updatedUser);
+                toast.success('Cập nhật thông tin thành công');
                 const response = await studentService.updatePersonalInfo(updatedUser);
                 console.log('Save response:', response);
-    
+
                 // Handle success, e.g., show a success message or navigate to another page
             } catch (error) {
                 console.error('Error updating personal info:', error);
                 // Handle error, e.g., show an error message
-                alert('Đã xảy ra lỗi khi cập nhật thông tin');
+                toast.error('Cập nhật thông tin thất bại');
             }
         } else {
             console.log('Invalid inputs', user);
         }
     };
-    
-    
+
+
 
     const handleInput = (name) => {
         setObjCheckInput({ ...objCheckInput, [name]: true });

@@ -2,8 +2,7 @@ package dev.skyherobrine.server.controllers;
 
 import dev.skyherobrine.server.messages.send.StudentProducer;
 import dev.skyherobrine.server.models.*;
-import dev.skyherobrine.server.repositories.EnrollCourseRepository;
-import dev.skyherobrine.server.repositories.StudentRepositories;
+import dev.skyherobrine.server.repositories.StudentRepository;
 import dev.skyherobrine.server.services.StudentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -17,7 +16,7 @@ import java.util.Map;
 public class StudentInfoController {
 
     @Autowired
-    private StudentRepositories sr;
+    private StudentRepository sr;
     @Autowired
     private StudentInfoService sis;
     @Autowired

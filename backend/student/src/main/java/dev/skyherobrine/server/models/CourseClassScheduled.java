@@ -28,7 +28,7 @@ public class CourseClassScheduled {
     private int maxStudents;
     @Column(name = "TeacherID", length = 10, nullable = false)
     private String teacherId;
-    @ManyToOne @JoinColumn(name = "CourseClassID", nullable = false)
+    @ManyToOne @JoinColumn(name = "ClassID", nullable = false)
     private CourseClass courseClassID;
     @Column(name = "DayOfWeek", nullable = false)
     private int dayOfWeek;

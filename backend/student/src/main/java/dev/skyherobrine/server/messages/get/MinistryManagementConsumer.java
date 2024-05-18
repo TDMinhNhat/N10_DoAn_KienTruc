@@ -7,7 +7,7 @@ import dev.skyherobrine.server.models.Course;
 import dev.skyherobrine.server.models.Student;
 import dev.skyherobrine.server.repositories.ClazzRepository;
 import dev.skyherobrine.server.repositories.CourseRepository;
-import dev.skyherobrine.server.repositories.StudentRepositories;
+import dev.skyherobrine.server.repositories.StudentRepository;
 import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,7 +19,7 @@ public class MinistryManagementConsumer {
     @Autowired
     private CourseRepository cr;
     @Autowired
-    private StudentRepositories sr;
+    private StudentRepository sr;
     @Autowired
     private ClazzRepository clazzRepository;
 

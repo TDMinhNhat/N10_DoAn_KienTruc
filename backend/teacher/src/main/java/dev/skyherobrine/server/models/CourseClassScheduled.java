@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class CourseClassScheduled {
     @Id @Column(name = "ScheduledID") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "Room", length = 10, nullable = false)
+    @Column(name = "Room", length = 100, nullable = false)
     private String room;
     @Column(name = "FromLessonTime", nullable = false)
     private int fromLessonTime;
@@ -28,7 +28,7 @@ public class CourseClassScheduled {
     private int maxStudents;
     @ManyToOne @JoinColumn(name = "TeacherID", nullable = false)
     private Teacher teacherId;
-    @ManyToOne @JoinColumn(name = "CourseClassID", nullable = false)
+    @ManyToOne @JoinColumn(name = "ClassID", nullable = false)
     private CourseClass courseClassID;
 
     public CourseClassScheduled(long id, String room, int fromLessonTime, int toLessonTime, LocalDate fromDate, LocalDate toDate, int groupPractice, int maxStudents, Teacher teacherId, CourseClass courseClassID) {

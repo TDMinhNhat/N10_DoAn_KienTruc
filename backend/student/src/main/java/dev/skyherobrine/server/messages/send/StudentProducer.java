@@ -14,4 +14,8 @@ public class StudentProducer {
     public void sendUpdateStudent(Object obj) {
         template.send("update_student_info", JsonParserMessage.parseToJson(obj));
     }
+
+    public void sendRegisterCourseStudent(Object obj) {
+        template.send("register_course_student", JsonParserMessage.parseToJson(obj));
+    }
 }

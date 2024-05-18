@@ -1,9 +1,9 @@
 package dev.skyherobrine.server.repositories;
 
-import dev.skyherobrine.server.models.Department;
+import dev.skyherobrine.server.models.EnrollCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department, String> {
+public interface EnrollCourseRepository extends JpaRepository<EnrollCourse,Long> {
 }

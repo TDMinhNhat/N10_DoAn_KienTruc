@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# MÔ TẢ NGHIỆP VỤ
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-	Nhà trường yêu cầu tạo một phần mềm website có thể quản lý vấn đề đăng ký học phần tín chỉ cho các sinh viên, nhà trường muốn một phần mềm website có thể chịu tải được số lượng đông sinh viên khi tham gia đăng ký học phần cùng một lúc khi thời điểm đăng ký học phần mở, cùng lúc đó nhà trường cần một giao diện đơn giản cũng như đầy đủ các chức năng cần thiết để sử dụng. Nhà trường muốn có hệ thống sao cho sinh viên, giảng viên và giáo vụ khoa đều có thể sử dụng.
+-	Đối với sinh viên, các sinh viên muốn có thể sử dụng hệ thống này thì trước hết phải thực hiện đăng nhập tài khoản với mã số sinh viên và mật khẩu đã được nhà trường cung cấp lúc sinh viên tham gia học chính thức tại trường, sinh viên có thực hiện các dịch vụ của hệ thống cung cấp như: xem thông tin sinh viên hoặc điều chỉnh thay đổi thông tin nếu cần thiết, sinh viên có thể xem được điểm các môn học mà đã đăng ký theo kỳ học cũng như xem thời khoá biểu để biết lịch học, lịch thi. Khi đến mùa đăng ký học phần, sinh viên sẽ thực hiện đăng ký học phần các môn học do chính giáo vụ khoa mở cho sinh viên đăng ký, sinh viên thực hiện chọn năm học cũng như kỳ học để hiển thị danh sách các môn học có thể đăng ký được do giáo vụ khoa them, sinh viên chọn một môn học để hiển thị danh sách các lớp có sẵn để sinh viên có thể chọn lớp đúng theo ý muốn để học, mỗi lớp học phần đều luôn luôn có 1 lớp lý thuyết và trong trường hợp môn đó có thực hành sẽ có lớp thực hành riêng cũng như sẽ có nhiều ca lớp thực hành để sinh viên có thể lựa chọn ca sao cho phù hợp và đăng ký, khi nhấn nút đăng ký, sinh viên sẽ được gửi một thư email để xác nhận rằng việc mà mình đăng ký sẽ chấp nhận hoàn toàn và không thể nào huỷ, sau khi sinh viên đã thực hiện chấp nhận đăng ký thông qua xác nhận email, sinh viên sẽ nhận được giấy thông báo tiền học phí của môn mà sinh viên đã đăng ký. Ngoài ra nhà trường muốn cung cấp chức năng xét tốt nghiệp cho sinh viên nào đủ yêu cầu số lượng tín chỉ đã học để có thể thực hiện xét tốt nghiệp.
+-	Đối với giảng viên, giảng viên có thể xem hay cập nhật thông tin cá nhân của bản than, ngoài ra giảng viên có thể xem được thời khoá biểu để biết được lịch dạy cũng như sinh viên có thể thực hiện nhập điểm của sinh viên của mình đang dạy, việc nhập điểm của sinh viên chỉ dành cho giảng viên dạy lý thuyết nhập, đối với giảng viên thực hành sẽ không thể nhập điểm, thay vào đó vào gần cuối đến thời điểm nhập điểm thì giảng viên thực hành có thể gửi bảng điểm hay bảng đánh giá đến giảng viên lý thuyết để giảng viên lý thuyết có thể dựa vào đó có thể cho điểm phù hợp.
+-	Đối với giáo vụ, ngoài việc giáo vụ khoa có thể xem thông tin cũng như chỉnh được thông tin bản than thì giáo vụ khoa có thể thực hiện quản lý đăng ký lớp học phần, giáo vụ thể thực hiện them một môn học vào kỳ học sắp tới để có thể chuẩn bị them các lớp học lý thuyết và thực hành. Trong quá trình thêm môn học, giáo vụ cần chú ý vấn đề xếp thời gian, lịch thời khoá biểu sao cho phù hợp tránh vấn đề bị trùng lịch với nhau, giáo vụ khoa là người sẽ quyết định giáo viên sẽ dạy môn nào trong lớp học phần nào.
 
-## Available Scripts
+# THIẾT KẾ KIẾN TRÚC
+![image](https://lh3.googleusercontent.com/pw/AP1GczNFhb5V9qxvWW5MBch3bGspKc1vI57U3WlO5Y1MAYeZ1GmCynv7UgE--mov06G94vlrDoqVnU1lSk6M7roMGksUi9tgReyY-vSIjhYD5GzT86m7_yMh7R5EIOyWfHycA4rdOiIAIyo5PCkK3-yN_IrektVptT2NiSLC8jIx2QlYm_mzDf--9ZL3Z94hvoFj2Ju2UWjFYpfmY5YfOInfvmCM10A3JLyI2CvnOucxrPkiIspc2wukaPL_sWlMNuazJzBfDEQ3a0IKR958JU73hnHY70TbndL9xAwT4VgT9znAjVZjwBN4PDhPHn_6LXZzGfm5SXzhXR-sOcBHmF-_cbpwerzOE1NC-jarDOQgJ_DVx6l5VW4denziLowahbyNOW2bAF9QoNqVebnpHnPM_uFq68Qqj4NyRiZfHxUvNH40fIzq1Egjbjaek-wtmwgFGnMOFsH9lIid9h6OlGoRrgvMdBeQGxMEYWBubehXD8ZRutR5CpFbCImebYkW6XGTiY8If1VqmAXgAQH24TgCo6t3sWswXTDzjnSuwS9jUZ3G8KebJHPfhXozmMoItxdmunOCjMDDGbBzyA0kZL--Tq8Qiia17UY0XRireF2mnRpJ1C0el3jYqKvtRsqGrApDdpI-BCQ9-rHVdGHJtufsdi_j6HzPxLA4_D7HvcviL1EB4PZU_YspEm6GxT3DSRV4qo4dMDFUk5q3qS7Ad21QwFTxXniOkQysaOfarLVFSJ0_95bzEH3MdxOX-0cHfB5lRL8mBWoj2d8usbfYKFiwyf4DXa-wK_Jfyy3nnDYX-rKqDycutuOYeUlkh0JW_cL_Vkrnj1u0cQONB_WA0-Q6Ni2wsYxOSdmScdu0wl1Fw45yH8tLykMT7HVWbwC86-ADBa4ow5u9yOjz8k9-WocpaO_cFfw=w618-h657-s-no-gm?authuser=0)
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+##	Giải thích sơ đồ
+-	Từ phía người dùng “User Interface” họ có thể sẽ thuộc nhiều actors khác nhau, trước khi thực hiện các chức năng của các actors: Student, Teacher hay Ministry. Các người dùng, họ sẽ là những người “Guest” truy cập vào trang đăng nhập thông qua "Guest UI Component”, khi thực hiện đăng nhập, “Guest” sẽ gửi một request đến server để xử lý, server nhận và xử lý trả ngược lại cho “Guest”.
+-	Khi đăng nhập thành công thì UI sẽ được hiển thị trang chủ ứng với actors mà người dùng đó đăng nhập thông qua “Role”. 
+-	Trong service “Authenticate”, chỉ có 1 service con duy nhất là “Login” chủ yếu để thực hiện xử lý các request liên quan đến đăng nhập.
+-	Trong service “Student”, có 5 service con (3 service nhỏ và 2 service lớn) trong Student, đối với 3 service nhỏ là: “View Info”, “Update Info” và “View Score” (“Xem thông tin”, “Cập nhật thông tin” và “Xem điểm”) của mỗi cá nhân sinh viên, các chức năng này phụ để hỗ trợ cho sinh viên dễ dàng theo dõi. Còn 2 service lớn như: “View Course Scheduled” và “Register Course” (“Xem danh sách lớp học phần” và “Đăng ký môn học”) hai chức năng chủ yếu để sinh viên thực hiện đăng ký học phần tín chỉ.
+-	Trong service “Ministry”, có 5 chức năng: “View Info / Update Info”, “Course Class Management”, “Theory and Practice Class Management” (hay “Xem / Cập nhật”, “Quản lý các môn học trong kỳ”, “Quản lý lớp học lý thuyết và thực hành”).
+-	Trong service “Teacher”, có 5 chức năng: “View Info / Update Info”, “View Course Scheduled” và “Update Score Student” (hay “Xem / Cập nhật thông tin”, “Xem lịch thời khoả biểu dạy”, “Cập nhật điểm số sinh viên”). Trong trường hợp này đối với chức năng “Cập nhật điểm số sinh viên” (Update Score Student), sẽ phụ thuộc vào service “Ministry” của chức năng “Quản lý lớp học phần lý thuyết và thực hành” thông qua một thư viện hỗ trợ là FeignClient.
+-	Mỗi service sẽ kết nối với cơ sở dữ liệu MariaDB chính service đó sử dụng. Chính vì mỗi service sẽ sử dụng các database khác nhau nhưng có thể chung bảng cho nên việc đòi hỏi đồng bộ dữ liệu khá quan trọng, nên chúng em quyết định sử dụng công nghệ Apache Kafka để thực hiện vấn đề gửi và nhận các message giữa các services với nhau.
+##	Lý do chọn kiến trúc
+-	Theo đề tài này, nhóm chúng em quyết định sử dụng kiến trúc: Micro-services kết hợp với Micro-frontend, Layered Style và Event-Driven. Vì:
+o	Trong đề tài này, nhóm chúng em quyết định bổ sung thêm các nghiệp vụ cũng như các thành phần khác: giáo vụ và giảng viên dẫn đến trong đề tài môn học của nhóm chúng em có 3 actors.
+o	Dựa vào sự phân chia các actors như thế nhóm chúng em quyết định chia thành 3 services khác nhau, độc lập lẫn nhau (nhưng thực ra có service này phụ thuộc vào service khác), mỗi một service sẽ đảm nhiệm các chức năng, service con trong chính service của actor đó.
+o	Trong một service thì nhóm chúng em sẽ quyết định kết hợp một kiến trúc chính là Layered Style (đa tầng) trong việc phát triển các service con trong một service cha.
+o	Khi xây dựng kiến trúc nhất là phần cơ sở dữ liệu do các bảng sẽ có ở nhiều cơ sở dữ liệu khác nhau dẫn đến việc trùng lặp và đòi hỏi sự đồng bộ dữ liệu với nhau giữa các cơ sở dữ liệu cho nên nhóm chúng em sử dụng kiến trúc Event-Driven để có thể thực hiện đồng bộ dữ liệu thông qua vấn đề bắt event và gửi message cho các service khác thông qua Apache Kafka.
+##	Ưu điểm và nhược điểm khi chọn kiến trúc
+###	Ưu điểm:
+o	Việc sử dụng kiến trúc này giúp cho nhóm chúng em có thể dễ dàng bảo trì và nâng cấp service mà không bị ảnh hưởng đến các service khác, giả sử nhóm chúng em muốn nâng cấp, thay đổi hoặc tuỳ chỉnh, chỉnh sửa trong service Student thì các service khác như: Teacher hay Ministry sẽ không bị ảnh hưởng nhưng vẫn chạy bình thường.
+o	Mỗi một service là 1 instance (máy chủ) cho nên khi phân tán ở nhiều máy tính khác nhau (hay được hiểu là các service sẽ chạy trên 1 máy) thì dễ dàng một máy tính chạy trên instance sẽ giải quyết hết mức tối đa hiệu năng của máy tính đó trên riêng 1 service đó nếu service đó có nhiều sự request từ phía client gửi đến.
+###	Nhược điểm:
+o	Chính việc tách nhiều service trên nhiều máy tính khác nhau thì đòi hỏi các máy tính phải duy trì được băng thông mạng sao cho ổn định để dễ dàng kết nối, nhận và phản hồi lại dữ liệu cũng như là kết nối các service khác. Việc băng thông mạng không ổn định sẽ là nguyên nhân chính service đó sẽ bị sụp đổ.
+o	Đối với cơ sở dữ liệu, việc tách các service này dẫn đến ở một bảng nhưng sẽ có ở nhiều database khác nhau ở mỗi service khác nhau, chính vì vậy đòi hỏi phải có sự đồng bộ, và chính vấn đề này nhóm chúng em quyết định hi sinh vấn đề trùng lặp dữ liệu để đổi lấy tính hiệu năng cao thông qua các service chạy trên 1 máy tính.

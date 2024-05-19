@@ -81,7 +81,7 @@ function App() {
             <Router>
                 <div>
                     <NavigationBar isLoggedIn={isLoggedIn} onLogout={handleLogout} currentUser={currentUser} />
-                    <Sidebar />
+                    <Sidebar currentUser={currentUser} />
                     <Routes>
                         <Route path="/dashboard" element={
                             <PrivateRoute isLoggedIn={isLoggedIn}>

@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface CourseClassScheduledRepository extends JpaRepository<CourseClassScheduled,Long> {
     Optional<CourseClassScheduled> findByIdAndGroupPractice(long id, Integer groupPractice);
 
-    List<CourseClassScheduled> findByCourseClassID_SemesterYearAndCourseClassID_FacultyID_FacultyID(String semesterYear, String facultyID);
+    List<CourseClassScheduled> findByCourseClassID_SemesterYear(String semesterYear);
 
     Optional<CourseClassScheduled> findByCourseClassIDAndGroupPracticeNull(CourseClass courseClassID);
 

@@ -17,7 +17,7 @@ const NavigationBar = ({ isLoggedIn, onLogout, currentUser }) => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm justify-content-center">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm justify-content-center" style={{ position: 'fixed', top: 0, width: '100%', zIndex:40 }}>
             <div className="container">
                 <Link className="navbar-brand" to="/dashboard">
                     <img
@@ -42,7 +42,6 @@ const NavigationBar = ({ isLoggedIn, onLogout, currentUser }) => {
 
                                 <Dropdown.Menu className="dropdown-menu" style={{ width: '100%', backgroundColor: '#F8F9FA', border: 'none', padding: 0 }}>
                                     <Dropdown.Item as={Link} to="/profile">Thông tin cá nhân</Dropdown.Item>
-                                    <Dropdown.Item as={Link} to="/change-password">Đổi mật khẩu</Dropdown.Item>
                                     <Dropdown.Item as={Link} to="/logout" onClick={handleLogoutClick}>Đăng xuất</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

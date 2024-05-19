@@ -133,7 +133,7 @@ const WeeklySchedulePage = ({ currentUser }) => {
 
 
   return (
-    <div className="container mt-4">
+    <div className="container" style={{ marginTop: 80,zIndex:20  }}>
       <div className="card bg-light text-black p-4">
         <h3 className="">Lịch học, lịch thi theo tuần</h3>
         <div className="row mb-2">

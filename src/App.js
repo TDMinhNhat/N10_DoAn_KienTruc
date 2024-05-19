@@ -42,12 +42,12 @@ function PrivateRoute({ isLoggedIn, children }) {
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(
         localStorage.getItem('isLoggedIn') ?
-            decryptData(localStorage.getItem('isLoggedIn')) === 'true' :
+            localStorage.getItem('isLoggedIn') === 'true' :
             false
     );
     const [currentUser, setCurrentUser] = useState(
         localStorage.getItem('currentUser') ? 
-            JSON.parse(decryptData(localStorage.getItem('currentUser'))) : 
+            JSON.parse(localStorage.getItem('currentUser')) : 
             null
     );
     
@@ -56,17 +56,17 @@ function App() {
         const storedUser = localStorage.getItem('currentUser');
     
         if (loggedInStatus && storedUser) {
-            setIsLoggedIn(decryptData(loggedInStatus) === 'true');
-            setCurrentUser(JSON.parse(decryptData(storedUser)));
+            setIsLoggedIn(loggedInStatus === 'true');
+            setCurrentUser(JSON.parse(storedUser));
         }
     }, []);
 
     const handleLogin = (user) => {
         setIsLoggedIn(true);
-        const currentUser = { data: { role: user.data.role, person: { id: user.data.person.id , avatar: user.data.person.avatar, fullName: user.data.person.fullName } } };
+        const currentUser = { data: { role: user.data.role, person: { id: user.data.person.id, fullName: user.data.person.fullName, avatar: user.data.person.avatar, facultyID: user.data.person.facultyID } } };
         setCurrentUser(currentUser);
-        localStorage.setItem('isLoggedIn', encryptData('true'));
-        localStorage.setItem('currentUser', encryptData(JSON.stringify(currentUser)));
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
     };
 
     const handleLogout = () => {

@@ -9,14 +9,13 @@ import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/ministry-management")
-public class MinistryManagementController implements IManagement<Ministry,String> {
+public class MinistryController implements IManagement<Ministry,String> {
     @Autowired
     private MinistryRepository mr;
     @Autowired

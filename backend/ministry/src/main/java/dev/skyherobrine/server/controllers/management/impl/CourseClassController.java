@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("api/course-class")
-public class CourseClassManagementController implements IManagement<CourseClass,String> {
+public class CourseClassController implements IManagement<CourseClass,String> {
 
     @Autowired
     private CourseClassRepository ccr;

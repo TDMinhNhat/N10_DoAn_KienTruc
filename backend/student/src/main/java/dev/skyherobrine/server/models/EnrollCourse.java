@@ -117,13 +117,17 @@ public class EnrollCourse {
                 return 1.5;
             case "D":
                 return 1.0;
-            default:
+            case "F":
                 return 0.0;
+            default:
+                return -1;
         }
     }
 
     public String scoreLetter() {
-        if(average >= 9.0 && average <= 10.0) {
+        if(average == null || average < 0) {
+            return "";
+        } else if(average >= 9.0 && average <= 10.0) {
             return "A+";
         } else if(average >= 8.5 && average <= 8.9) {
             return "A";
@@ -168,8 +172,11 @@ public class EnrollCourse {
             case "D" -> {
                 return "Yếu";
             }
-            default -> {
+            case "F" -> {
                 return "Kém";
+            }
+            default -> {
+                return "";
             }
         }
     }

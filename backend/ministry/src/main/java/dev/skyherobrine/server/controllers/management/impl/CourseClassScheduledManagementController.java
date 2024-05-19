@@ -4,14 +4,19 @@ import dev.skyherobrine.server.controllers.management.IManagement;
 import dev.skyherobrine.server.messages.send.ManagementProducer;
 import dev.skyherobrine.server.models.CourseClass;
 import dev.skyherobrine.server.models.CourseClassScheduled;
+import dev.skyherobrine.server.models.EnrollCourse;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.repositories.CourseClassScheduledRepository;
+import dev.skyherobrine.server.repositories.EnrollCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/course-class-scheduled")
@@ -21,6 +26,8 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
     private CourseClassScheduledRepository ccsr;
     @Autowired
     private ManagementProducer producer;
+    @Autowired
+    private EnrollCourseRepository ecr;
 
     @PutMapping("add")
     @Override
@@ -110,5 +117,10 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
                     put("data", ccsr.findByCourseClassID_CourseClassIdOrderByGroupPracticeAsc(id).toList());
                 }}
         ));
+    }
+
+    @GetMapping("list-students-enroll/{id}")
+    public List<? extends Object> getListStudentsEnrollCourseClassScheduled(@PathVariable String id) {
+        return ecr.findByCcsID_IdAndCcsID_GroupPracticeNull(Long.parseLong(id));
     }
 }

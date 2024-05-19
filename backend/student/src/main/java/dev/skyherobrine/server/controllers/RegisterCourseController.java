@@ -2,10 +2,8 @@ package dev.skyherobrine.server.controllers;
 
 import dev.skyherobrine.server.messages.send.StudentProducer;
 import dev.skyherobrine.server.models.*;
-import dev.skyherobrine.server.repositories.CourseClassRepository;
-import dev.skyherobrine.server.repositories.CourseClassScheduledRepository;
-import dev.skyherobrine.server.repositories.EnrollCourseRepository;
-import dev.skyherobrine.server.repositories.StudentRepository;
+import dev.skyherobrine.server.models.keys.CourseFacultyID;
+import dev.skyherobrine.server.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,8 @@ public class RegisterCourseController {
     private StudentProducer sp;
     @Autowired
     private CourseClassRepository ccr;
+    @Autowired
+    private CourseFacultyRepository cfr;
 
     @PutMapping({"register/{idStudent}/{theoryScheduled}",
             "register/{idStudent}/{theoryScheduled}/{practiceGroup}"})
@@ -149,12 +149,19 @@ public class RegisterCourseController {
                 .map(CourseClassScheduled::getCourseClassID)
                 .map(CourseClass::getCourseID).distinct().toList();
 
+        List<CourseFaculty> cfs = cfr.findById_Faculty_FacultyID(facultyID);
+
         return ResponseEntity.ok(new Response(
                 HttpStatus.OK.value(),
                 "Get List Course Scheduled",
                 new HashMap<>(){{
-                    put("data", ccsr.findByCourseClassID_SemesterYearAndCourseClassID_FacultyID_FacultyID(semesterYear, facultyID)
+                    put("data", ccsr.findByCourseClassID_SemesterYear(semesterYear)
                             .stream()
+                            .filter(target -> cfs.stream()
+                                    .map(CourseFaculty::getId)
+                                    .map(CourseFacultyID::getCourse)
+                                    .toList()
+                                    .contains(target.getCourseClassID().getCourseID()))
                             .filter(target -> !listCourse.contains(target.getCourseClassID().getCourseID()))
                             .toList());
                 }}

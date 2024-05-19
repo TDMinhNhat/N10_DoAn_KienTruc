@@ -12,6 +12,10 @@ class StudentService {
         const response = await axios.post(API_URL + '/update', student);
         return response;
     }
+    async getAchieveStudy(id) {
+        const response = await axios.get(API_URL + '/get-achieve-study/' + id)
+        return response;
+    }
     
 }
 

@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CourseClassScheduledRepository extends JpaRepository<CourseClassScheduled,Long> {
     List<CourseClassScheduled> findByCourseClassID_SemesterYearAndGroupPracticeNull(String semesterYear);
+
+    List<CourseClassScheduled> findByTeacherId_Id(String id);
 }

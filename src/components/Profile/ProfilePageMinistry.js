@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import studentService from '../../services/student.service';
-
-const levelMapping = {
-    'COLLEGE': 'Cao đẳng',
-    'UNIVERSITY': 'Đại học',
-    'POSTGRADUATE': 'Sau đại học'
-};
-
-const educationTypeMapping = {
-    'FORMAL': 'Chính quy',
-    'HIGH_QUALITY': 'Chất lượng cao',
-};
+import ministryService from '../../services/ministry.service';
 
 const ProfilePageMinistry = ({ currentUser }) => {
     const navigate = useNavigate();
@@ -22,8 +11,8 @@ const ProfilePageMinistry = ({ currentUser }) => {
             if (!currentUser) {
                 navigate('/');
             } else {
-                console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
-                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                // console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
+                const response = await ministryService.getPersonalInfo(currentUser.data.person.id);
                 setUserInfo(response.data);
                 console.log('check', response.data);
             }

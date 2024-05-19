@@ -3,8 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
-
-import studentService from '../../services/student.service';
+import teacherService from '../../services/teacher.service';
 
 const statusMapping = {
     'ACTIVE': 'Hoạt động',
@@ -27,8 +26,8 @@ const HomePageTeacher = ({ currentUser }) => {
             if (!currentUser) {
                 navigate('/');
             } else {
-                console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
-                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                // console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
+                const response = await teacherService.getPersonalInfo(currentUser.data.person.id);
                 setUserInfo(response.data);
                 console.log('check', response.data);
             }

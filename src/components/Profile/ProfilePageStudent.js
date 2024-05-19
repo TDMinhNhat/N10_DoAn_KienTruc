@@ -59,7 +59,6 @@ const ProfilePageStudent = ({ currentUser }) => {
                                         <p><span className="fw-bold">Trạng thái:</span> Đang học</p>
                                         <p><span className="fw-bold">Lớp học:</span>  {userInfo.data.data.clazz}</p>
                                         <p><span className="fw-bold">Bậc đào tạo:</span>  {levelMapping[userInfo.data.data.level]}</p>
-                                        <p><span className="fw-bold">Khoa:</span>  {userInfo.data.data.facultyID.department.departmentName} </p>
                                         <p><span className="fw-bold">Chuyên ngành:</span>  {userInfo.data.data.facultyID.facultyName}</p>
                                     </div>
                                     <div className='col-md-6'>

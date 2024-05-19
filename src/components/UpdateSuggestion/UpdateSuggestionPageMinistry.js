@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import studentService from '../../services/student.service';
+import ministryService from '../../services/ministry.service';
 import { toast } from 'react-toastify';
 const UpdateSuggestionPageMinistry = ({ currentUser }) => {
     const navigate = useNavigate();
@@ -89,7 +89,7 @@ const UpdateSuggestionPageMinistry = ({ currentUser }) => {
             if (!currentUser) {
                 navigate('/');
             } else {
-                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                const response = await ministryService.getPersonalInfo(currentUser.data.person.id);
                 if (response.data) {
                     const fetchedUser = response.data.data.data;
                     setUser({
@@ -121,7 +121,7 @@ const UpdateSuggestionPageMinistry = ({ currentUser }) => {
         if (isValidInputs()) {
             try {
                 console.log('Fetching current user data...');
-                const currentUserData = (await studentService.getPersonalInfo(currentUser.data.person.id)).data.data.data;
+                const currentUserData = (await ministryService.getPersonalInfo(currentUser.data.person.id)).data.data.data;
                 // Merge the updated fields with the current user data
                 console.log('Current user data:', currentUserData);
                 const updatedUser = {
@@ -138,7 +138,7 @@ const UpdateSuggestionPageMinistry = ({ currentUser }) => {
 
                 console.log('Updating personal info with data:', updatedUser);
                 toast.success('Cập nhật thông tin thành công');
-                const response = await studentService.updatePersonalInfo(updatedUser);
+                const response = await ministryService.updatePersonalInfo(updatedUser);
                 console.log('Save response:', response);
 
                 // Handle success, e.g., show a success message or navigate to another page

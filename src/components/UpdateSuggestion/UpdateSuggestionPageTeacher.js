@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import studentService from '../../services/student.service';
+import teacherService from '../../services/teacher.service';
+import { toast } from 'react-toastify';
 
 const UpdateSuggestionPageReacher = ({ currentUser }) => {
     const navigate = useNavigate();
@@ -89,7 +90,7 @@ const UpdateSuggestionPageReacher = ({ currentUser }) => {
             if (!currentUser) {
                 navigate('/');
             } else {
-                const response = await studentService.getPersonalInfo(currentUser.data.person.id);
+                const response = await teacherService.getPersonalInfo(currentUser.data.person.id);
                 if (response.data) {
                     const fetchedUser = response.data.data.data;
                     setUser({
@@ -121,7 +122,7 @@ const UpdateSuggestionPageReacher = ({ currentUser }) => {
         if (isValidInputs()) {
             try {
                 console.log('Fetching current user data...');
-                const currentUserData = (await studentService.getPersonalInfo(currentUser.data.person.id)).data.data.data;
+                const currentUserData = (await teacherService.getPersonalInfo(currentUser.data.person.id)).data.data.data;
                 // Merge the updated fields with the current user data
                 console.log('Current user data:', currentUserData);
                 const updatedUser = {
@@ -137,14 +138,15 @@ const UpdateSuggestionPageReacher = ({ currentUser }) => {
                 };
     
                 console.log('Updating personal info with data:', updatedUser);
-                const response = await studentService.updatePersonalInfo(updatedUser);
+                toast.success('Cập nhật thông tin thành công');
+                const response = await teacherService.updatePersonalInfo(updatedUser);
                 console.log('Save response:', response);
     
                 // Handle success, e.g., show a success message or navigate to another page
             } catch (error) {
                 console.error('Error updating personal info:', error);
                 // Handle error, e.g., show an error message
-                alert('Đã xảy ra lỗi khi cập nhật thông tin');
+                toast.error('Cập nhật thông tin thất bại');
             }
         } else {
             console.log('Invalid inputs', user);

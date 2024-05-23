@@ -1,5 +1,6 @@
 package dev.skyherobrine.server.controllers;
 
+import dev.skyherobrine.server.feigns.TeacherInformation;
 import dev.skyherobrine.server.messages.send.StudentProducer;
 import dev.skyherobrine.server.models.*;
 import dev.skyherobrine.server.models.keys.CourseFacultyID;
@@ -28,6 +29,8 @@ public class RegisterCourseController {
     private CourseClassRepository ccr;
     @Autowired
     private CourseFacultyRepository cfr;
+    @Autowired
+    private TeacherInformation info;
 
     @PutMapping({"register/{idStudent}/{theoryScheduled}",
             "register/{idStudent}/{theoryScheduled}/{practiceGroup}"})
@@ -199,5 +202,14 @@ public class RegisterCourseController {
                     }}
             ));
         }
+    }
+
+    @GetMapping("get-teacher-info/{id}")
+    public ResponseEntity getTeacherInfo(@PathVariable String id) {
+        return ResponseEntity.ok(new Response(
+                HttpStatus.OK.value(),
+                "Get teacher info successfully",
+                (HashMap) info.getPersonalInfo(id)
+        ));
     }
 }

@@ -21,6 +21,7 @@ public class TeacherInfoController {
     public ResponseEntity getPersonalInfo(@PathVariable String id) {
         Teacher target = tr.findById(id).orElse(null);
         if(target == null)
+        {
             return ResponseEntity.ok(new Response(
                     HttpStatus.NOT_FOUND.value(),
                     "Can't find the teacher with id = " + id,
@@ -28,6 +29,7 @@ public class TeacherInfoController {
                         put("data", null);
                     }}
             ));
+        }
         return ResponseEntity.ok(new Response(
                 HttpStatus.OK.value(),
                 "Get teacher info successfully",

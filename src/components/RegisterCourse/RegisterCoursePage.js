@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import BasicSelect from './components/BasicSelect';
 import RowRadioButtonsGroup from './components/RowRadioButtonsGroup';
 import StudentService from '../../services/student.service';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
-const statusMappping = {
+const statusMapping = {
     PLANNING: 'Đang lên kế hoạch',
     REGISTERED: 'Đã đăng ký',
     ACCEPTED: 'Đã chấp nhận',
@@ -18,7 +18,7 @@ const RegisterCoursePage = ({ currentUser }) => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [radioValue, setRadioValue] = useState('hoc moi');
     const [selectedYear, setSelectedYear] = useState('2020-2021');
-    const [selectedSemester, setSelectedSemester] = useState('HK1');
+    const [selectedSemester, setSelectedSemester] = useState(''); // Initialize with an empty string
     const [courses, setCourses] = useState([]);
     const [semesterCourses, setSemesterCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState([]);
@@ -26,6 +26,7 @@ const RegisterCoursePage = ({ currentUser }) => {
     const [selectedClassGroupPractice, setSelectedClassGroupPractice] = useState(null);
     const [selectedClassId, setSelectedClassId] = useState(null);
     const [clickedClass, setClickedClass] = useState(null);
+    const [registeredCourses, setRegisteredCourses] = useState([]);
 
     const handleValueChange = (value) => {
         const [semester, year] = value.split(' ');
@@ -43,12 +44,16 @@ const RegisterCoursePage = ({ currentUser }) => {
         if (!currentUser) {
             navigate('/');
         } else {
-            fetchCourses();
+            if (selectedSemester) {
+                fetchCourses();
+                fetchRegisteredCourses();
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser, selectedYear, selectedSemester]);
 
     const fetchCourses = async () => {
+        if (!selectedSemester) return; // Skip if selectedSemester is empty
         try {
             const facultyID = currentUser.data.person.facultyID;
             const formattedYear = selectedYear.replace("-", " - ");
@@ -68,6 +73,27 @@ const RegisterCoursePage = ({ currentUser }) => {
             }
         } catch (error) {
             console.error('Failed to fetch courses:', error);
+        }
+    };
+
+    const fetchRegisteredCourses = async () => {
+        if (!selectedSemester) return; // Skip if selectedSemester is empty
+        try {
+            const facultyID = currentUser.data.person.facultyID;
+            const formattedYear = selectedYear.replace("-", " - ");
+            const response = await StudentService.getCourseRegistered(currentUser.data.person.id, formattedYear, facultyID);
+            if (response.status === 200) {
+                const allCourses2 = response.data.data.data;
+                console.log('All courses 2:', allCourses2);
+                const selectedSemesterNumber = parseInt(selectedSemester.slice(2), 10);
+                console.log('selectedSemester 2', selectedSemesterNumber);
+                const semesterCourses = allCourses2.filter(course => course.courseClassID.semester === selectedSemesterNumber );
+                console.log('semesterCourses 2:', semesterCourses);
+                setRegisteredCourses(semesterCourses);
+                console.log('Registered courses:', semesterCourses);
+            }
+        } catch (error) {
+            console.error('Failed to fetch registered courses:', error);
         }
     };
 
@@ -130,20 +156,18 @@ const RegisterCoursePage = ({ currentUser }) => {
             if (selectedClassGroupPractice === null) {
                 const response = await StudentService.registerTheoryCourse(currentUser.data.person.id, selectedClassId);
                 toast.success(`Đăng ký thành công: Course Class ID: ${selectedClassId}`);
-                // alert(`Đăng ký thành công: Course Class ID: ${selectedClassId}`);
+                fetchRegisteredCourses(); // Update registered courses after successful registration
             } else {
                 if (clickedClass && clickedClass.groupPractice !== null) {
                     const response = await StudentService.registerPracticeCourse(currentUser.data.person.id, selectedClassId, clickedClass.groupPractice);
-                    // alert(`Đăng ký thành công: Course Class ID: ${selectedClassId}, Group Practice: ${clickedClass.groupPractice}`);
                     toast.success(`Đăng ký thành công: Course Class ID: ${selectedClassId}, Group Practice: ${clickedClass.groupPractice}`);
+                    fetchRegisteredCourses(); // Update registered courses after successful registration
                 } else {
-                    // alert('Vui lòng chọn lớp với nhóm thực hành hợp lệ.');
                     toast.error('Vui lòng chọn lớp với nhóm thực hành hợp lệ.');
                 }
             }
         } catch (error) {
             console.error('Failed to register course:', error);
-            // alert('Đăng ký không thành công, vui lòng thử lại.');
             toast.error('Đăng ký không thành công, vui lòng thử lại. Error: ' + error);
         }
     };
@@ -189,7 +213,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 {courses.length > 0 ? (
                                     courses.map((course, index) => (
                                         <tr
-                                            key={course.id}
+                                            key={`${course.courseClassID.courseClassId}-${index}`}
                                             onClick={() => SelectMonHocChoDangKy(course.courseClassID.courseID.courseId)}
                                             data-id={course.id}
                                             data-mamh={course.courseClassID.courseID.courseId}
@@ -261,12 +285,12 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tbody>
                                                     {selectedCourse.length > 0 ? (
                                                         selectedCourse.map((course, index) => (
-                                                            <tr key={course.id} className="tr-active" onClick={() => SelectLopHocChoDangKy(course.courseClassID.courseClassId)}>
+                                                            <tr key={`${course.courseClassID.courseClassId}-${index}`} className="tr-active" onClick={() => SelectLopHocChoDangKy(course.courseClassID.courseClassId)}>
                                                                 <td style={{ width: '40px' }}>{index + 1}</td>
                                                                 <td className="text-left">
                                                                     <div className="name">{course.courseClassID.courseID.courseName}</div>
                                                                     <div>
-                                                                        <span>Trạng thái</span>: {statusMappping[course.courseClassID.status]}
+                                                                        <span>Trạng thái</span>: {statusMapping[course.courseClassID.status]}
                                                                         <br />
                                                                         <span>Mã lớp học phần</span>: {course.courseClassID.courseClassId} - {course.courseClassID.shortName}
                                                                     </div>
@@ -311,7 +335,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                             <tbody>
                                                 {selectedClass && selectedClass.length > 0 ? (
                                                     selectedClass.map((course, index) => (
-                                                        <tr key={course.id} onClick={() => handleClassClick(course.id)}>
+                                                        <tr key={`${course.id}-${index}`} onClick={() => handleClassClick(course.id)}>
                                                             <td className="text-left">
                                                                 <div><span lang="dkhp-lichhoc">Lịch học</span>:- Thứ {course.dayOfWeek} (Tiết {course.fromLessonTime}-{course.toLessonTime}) </div>
                                                                 <p><span lang="dkhp-phong">Phòng</span>: <b>{course.room}</b></p>
@@ -340,6 +364,48 @@ const RegisterCoursePage = ({ currentUser }) => {
                             </div>
                         </div>
                     </div>
+
+                    {/* danh sách các lớp học phần đã đăng ký */}
+                    <div className="row mt-4">
+                        <div className="col-md-12">
+                            <div className="gr-table">
+                                <h3 className="title-table">Lớp học phần đã đăng ký</h3>
+                                <div className="table-responsive">
+                                    <table className="table table-bordered text-center" width="100%" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>STT</th>
+                                                <th>Mã học phần</th>
+                                                <th>Tên môn học/học phần</th>
+                                                <th>TC</th>
+                                                <th>Trạng thái</th>
+                                                <th>Mã lớp học phần</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {registeredCourses.length > 0 ? (
+                                                registeredCourses.map((course, index) => (
+                                                    <tr key={`${course.courseClassID.courseClassId}-${index}`}>
+                                                        <td>{index + 1}</td>
+                                                        <td>{course.courseClassID.courseID.courseId}</td>
+                                                        <td className="text-left">{course.courseClassID.courseID.courseName}</td>
+                                                        <td>{course.courseClassID.courseID.credits}</td>
+                                                        <td>{statusMapping[course.courseClassID.status]}</td>
+                                                        <td>{course.courseClassID.courseClassId}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={6}>Không có dữ liệu</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             )}
         </div>

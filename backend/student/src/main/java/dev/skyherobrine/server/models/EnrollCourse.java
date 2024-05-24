@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Table(name = "EnrollCourse")
@@ -13,7 +14,7 @@ public class EnrollCourse {
     @Id @Column(name = "EnrollCourseID") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "DateEnrolled", nullable = false)
-    private LocalDateTime dateEnrolled;
+    private LocalDate dateEnrolled;
     @ManyToOne @JoinColumn(name = "StudentID", nullable = false)
     private Student student;
     @ManyToOne @JoinColumn(name = "CourseClassScheduled", nullable = false)
@@ -36,20 +37,14 @@ public class EnrollCourse {
     private Double finalExam;
     @Column(name = "Average")
     private Double average;
-    @Column(name = "DateModifier")
-    private LocalDateTime dateModifier;
 
-    public EnrollCourse(long id, LocalDateTime dateEnrolled, Student student, CourseClassScheduled ccsID) {
-        this.id = id;
-        this.dateEnrolled = dateEnrolled;
+    public EnrollCourse(Student student, CourseClassScheduled ccsID) {
+        this.dateEnrolled = LocalDate.now();
         this.student = student;
         this.ccsID = ccsID;
-        this.dateModifier = LocalDateTime.now();
     }
 
-    public EnrollCourse(long id, LocalDateTime dateEnrolled, Student student, CourseClassScheduled ccsID, double rs1, double rs2, double rs3, double ps1, double ps2, double ps3, double middleExam, double finalExam, double average) {
-        this.id = id;
-        this.dateEnrolled = dateEnrolled;
+    public EnrollCourse(Student student, CourseClassScheduled ccsID, double rs1, double rs2, double rs3, double ps1, double ps2, double ps3, double middleExam, double finalExam, double average) {
         this.student = student;
         this.ccsID = ccsID;
         this.rs1 = rs1;
@@ -61,11 +56,14 @@ public class EnrollCourse {
         this.middleExam = middleExam;
         this.finalExam = finalExam;
         this.average = average;
-        this.dateModifier = LocalDateTime.now();
     }
 
     public void setAverage() {
         this.average = calcAverage();
+    }
+
+    public void setAverage(Double value) {
+        this.average = value == null ? -1 : 0.0;
     }
 
     public double calcAverage() {
@@ -119,13 +117,17 @@ public class EnrollCourse {
                 return 1.5;
             case "D":
                 return 1.0;
-            default:
+            case "F":
                 return 0.0;
+            default:
+                return -1;
         }
     }
 
     public String scoreLetter() {
-        if(average >= 9.0 && average <= 10.0) {
+        if(average == null || average < 0) {
+            return "";
+        } else if(average >= 9.0 && average <= 10.0) {
             return "A+";
         } else if(average >= 8.5 && average <= 8.9) {
             return "A";
@@ -155,10 +157,7 @@ public class EnrollCourse {
             case "A" -> {
                 return "Giỏi";
             }
-            case "B+" -> {
-                return "Khá";
-            }
-            case "B" -> {
+            case "B+", "B" -> {
                 return "Khá";
             }
             case "C+" -> {
@@ -173,8 +172,11 @@ public class EnrollCourse {
             case "D" -> {
                 return "Yếu";
             }
-            default -> {
+            case "F" -> {
                 return "Kém";
+            }
+            default -> {
+                return "";
             }
         }
     }

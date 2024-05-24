@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter @Setter @NoArgsConstructor
@@ -35,7 +34,7 @@ public abstract class Person {
     @ManyToOne @JoinColumn(name = "FacultyID", nullable = false, unique = true)
     protected Faculty facultyID;
     @Column(name = "DateModifier", nullable = false)
-    protected LocalDateTime dateModifier;
+    protected LocalDate dateModifier;
 
     public Person(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String password, Faculty facultyID) {
         this.id = id;
@@ -48,7 +47,7 @@ public abstract class Person {
         this.email = email;
         this.password = password;
         this.facultyID = facultyID;
-        this.dateModifier = LocalDateTime.now();
+        this.dateModifier = LocalDate.now();
     }
 
     public Person(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String avatar, String password, Faculty facultyID) {
@@ -63,6 +62,6 @@ public abstract class Person {
         this.avatar = avatar;
         this.password = password;
         this.facultyID = facultyID;
-        this.dateModifier = LocalDateTime.now();
+        this.dateModifier = LocalDate.now();
     }
 }

@@ -21,7 +21,7 @@ public class Student extends Person{
     private EducationType type;
     @Enumerated(EnumType.STRING) @Column(name = "EducationLevel", nullable = false)
     private EducationLevel level;
-    @ManyToOne @JoinColumn(name = "classID", nullable = false)
+    @ManyToOne @JoinColumn(name = "ShortClassName")
     private Clazz clazz;
     @Enumerated(EnumType.ORDINAL) @Column(name = "Status", nullable = false)
     private StudentStatus studentStatus;

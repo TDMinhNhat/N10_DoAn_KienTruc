@@ -2,29 +2,32 @@ package dev.skyherobrine.server.controllers.management.impl;
 
 import dev.skyherobrine.server.controllers.management.IManagement;
 import dev.skyherobrine.server.messages.send.ManagementProducer;
-import dev.skyherobrine.server.models.CourseClass;
 import dev.skyherobrine.server.models.CourseClassScheduled;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.repositories.CourseClassScheduledRepository;
+import dev.skyherobrine.server.repositories.EnrollCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/course-class-scheduled")
-public class CourseClassScheduledManagementController implements IManagement<CourseClassScheduled,Long> {
+public class TheoryAndPracticeManagement implements IManagement<CourseClassScheduled,Long> {
 
     @Autowired
     private CourseClassScheduledRepository ccsr;
     @Autowired
     private ManagementProducer producer;
+    @Autowired
+    private EnrollCourseRepository ecr;
 
     @PutMapping("add")
     @Override
-    public ResponseEntity add(CourseClassScheduled courseClassScheduled) {
+    public ResponseEntity add(@RequestBody CourseClassScheduled courseClassScheduled) {
         try {
             CourseClassScheduled ccs = ccsr.save(courseClassScheduled);
             return ResponseEntity.ok(new Response(
@@ -52,9 +55,28 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
         return null;
     }
 
+    @GetMapping("delete/{id}")
     @Override
-    public ResponseEntity delete(Long aLong) {
-        return null;
+    public ResponseEntity delete(@PathVariable Long id) {
+        CourseClassScheduled ccs = ccsr.findById(id).orElse(null);
+        if(ccs == null) {
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Can't found the course class scheduled!",
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        } else {
+            ccsr.delete(ccs);
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.OK.value(),
+                    "Delete successfully!",
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        }
     }
 
     @GetMapping("get/{id}")
@@ -91,5 +113,10 @@ public class CourseClassScheduledManagementController implements IManagement<Cou
                     put("data", ccsr.findByCourseClassID_CourseClassIdOrderByGroupPracticeAsc(id).toList());
                 }}
         ));
+    }
+
+    @GetMapping("list-students-enroll/{id}")
+    public List<? extends Object> getListStudentsEnrollCourseClassScheduled(@PathVariable String id) {
+        return ecr.findByCcsID_IdAndCcsID_GroupPracticeNull(Long.parseLong(id));
     }
 }

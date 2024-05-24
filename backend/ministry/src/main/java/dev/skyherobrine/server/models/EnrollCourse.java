@@ -3,6 +3,7 @@ package dev.skyherobrine.server.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Table(name = "EnrollCourse")
@@ -11,7 +12,7 @@ public class EnrollCourse {
     @Id @Column(name = "EnrollCourseID") @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "DateEnrolled", nullable = false)
-    private LocalDateTime dateEnrolled;
+    private LocalDate dateEnrolled;
     @ManyToOne @JoinColumn(name = "StudentID", nullable = false)
     private Student student;
     @ManyToOne @JoinColumn(name = "CourseClassScheduled", nullable = false)
@@ -34,20 +35,14 @@ public class EnrollCourse {
     private double finalExam;
     @Column(name = "Average")
     private double average;
-    @Column(name = "DateModifier")
-    private LocalDateTime dateModifier;
 
-    public EnrollCourse(long id, LocalDateTime dateEnrolled, Student student, CourseClassScheduled ccsID) {
-        this.id = id;
-        this.dateEnrolled = dateEnrolled;
+    public EnrollCourse(Student student, CourseClassScheduled ccsID) {
+        dateEnrolled = LocalDate.now();
         this.student = student;
         this.ccsID = ccsID;
-        this.dateModifier = LocalDateTime.now();
     }
 
-    public EnrollCourse(long id, LocalDateTime dateEnrolled, Student student, CourseClassScheduled ccsID, double rs1, double rs2, double rs3, double ps1, double ps2, double ps3, double middleExam, double finalExam, double average) {
-        this.id = id;
-        this.dateEnrolled = dateEnrolled;
+    public EnrollCourse(Student student, CourseClassScheduled ccsID, double rs1, double rs2, double rs3, double ps1, double ps2, double ps3, double middleExam, double finalExam, double average) {
         this.student = student;
         this.ccsID = ccsID;
         this.rs1 = rs1;
@@ -59,6 +54,5 @@ public class EnrollCourse {
         this.middleExam = middleExam;
         this.finalExam = finalExam;
         this.average = average;
-        this.dateModifier = LocalDateTime.now();
     }
 }

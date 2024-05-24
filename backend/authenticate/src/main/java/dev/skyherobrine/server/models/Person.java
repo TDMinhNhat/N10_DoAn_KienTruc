@@ -1,11 +1,9 @@
 package dev.skyherobrine.server.models;
 
-import dev.skyherobrine.server.models.enums.TeacherStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter @Setter @NoArgsConstructor
@@ -34,7 +32,7 @@ public abstract class Person {
     @Column(name = "FacultyID", nullable = false, unique = true)
     protected String facultyID;
     @Column(name = "DateModifier", nullable = false)
-    protected LocalDateTime dateModifier;
+    protected LocalDate dateModifier;
 
     public Person(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String password, String facultyID) {
         this.id = id;
@@ -47,7 +45,7 @@ public abstract class Person {
         this.email = email;
         this.password = password;
         this.facultyID = facultyID;
-        this.dateModifier = LocalDateTime.now();
+        this.dateModifier = LocalDate.now();
     }
 
     public Person(String id, String fullName, boolean sex, LocalDate birthDay, String cityBorn, String address, String phoneNumber, String email, String avatar, String password, String facultyID) {
@@ -62,6 +60,6 @@ public abstract class Person {
         this.avatar = avatar;
         this.password = password;
         this.facultyID = facultyID;
-        this.dateModifier = LocalDateTime.now();
+        this.dateModifier = LocalDate.now();
     }
 }

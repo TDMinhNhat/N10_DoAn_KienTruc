@@ -10,21 +10,17 @@ public class Faculty {
     private String facultyID;
     @Column(name = "FacultyName", nullable = false)
     private String facultyName;
-    @ManyToOne @JoinColumn(name = "DepartmentID", nullable = false)
-    private Department department;
     @Column(name = "Description", length = 100)
     private String description;
 
-    public Faculty(String facultyID, String facultyName, Department department) {
+    public Faculty(String facultyID, String facultyName) {
         this.facultyID = facultyID;
         this.facultyName = facultyName;
-        this.department = department;
     }
 
-    public Faculty(String facultyID, String facultyName, Department department, String description) {
+    public Faculty(String facultyID, String facultyName, String description) {
         this.facultyID = facultyID;
         this.facultyName = facultyName;
-        this.department = department;
         this.description = description;
     }
 }

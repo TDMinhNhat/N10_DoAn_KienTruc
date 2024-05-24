@@ -40,6 +40,10 @@ class StudentService {
         return response;
     }
 
+    async getCourseRegistered(id) {
+        const response = await axios.get(API_URL + '/course-scheduled/' + id)
+        return response;
+    }
 
     
 }

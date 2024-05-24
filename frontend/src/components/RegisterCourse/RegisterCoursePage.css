@@ -6,3 +6,9 @@
   position: absolute;
   right: 40;
 }
+
+.selected-class {
+  background-color: #a70707 !important; /* Change this to your desired highlight color */
+  cursor: pointer;
+  color: white !important;
+}

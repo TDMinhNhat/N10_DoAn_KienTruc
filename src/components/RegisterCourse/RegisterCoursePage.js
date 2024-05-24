@@ -4,6 +4,7 @@ import BasicSelect from './components/BasicSelect';
 import RowRadioButtonsGroup from './components/RowRadioButtonsGroup';
 import StudentService from '../../services/student.service';
 import { toast } from 'react-toastify';
+import { Modal, Button, Table } from 'react-bootstrap';
 
 const statusMapping = {
     PLANNING: 'Đang lên kế hoạch',
@@ -27,6 +28,9 @@ const RegisterCoursePage = ({ currentUser }) => {
     const [selectedClassId, setSelectedClassId] = useState(null);
     const [clickedClass, setClickedClass] = useState(null);
     const [registeredCourses, setRegisteredCourses] = useState([]);
+    const [detailedCourse, setDetailedCourse] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalCourse, setModalCourse] = useState([]);
 
     const handleValueChange = (value) => {
         const [semester, year] = value.split(' ');
@@ -87,9 +91,13 @@ const RegisterCoursePage = ({ currentUser }) => {
                 console.log('All courses 2:', allCourses2);
                 const selectedSemesterNumber = parseInt(selectedSemester.slice(2), 10);
                 console.log('selectedSemester 2', selectedSemesterNumber);
-                const semesterCourses = allCourses2.filter(course => course.courseClassID.semester === selectedSemesterNumber );
+                console.log('formattedYear 2:', formattedYear);
+                const semesterCourses = allCourses2.filter(course => course.courseClassID.semester === selectedSemesterNumber && course.courseClassID.semesterYear === formattedYear);
                 console.log('semesterCourses 2:', semesterCourses);
-                setRegisteredCourses(semesterCourses);
+                setDetailedCourse(semesterCourses);
+                const uniqueCourses2 = removeDuplicates(semesterCourses);
+                console.log('Unique Courses 2:', uniqueCourses2);
+                setRegisteredCourses(uniqueCourses2);
                 console.log('Registered courses:', semesterCourses);
             }
         } catch (error) {
@@ -170,6 +178,20 @@ const RegisterCoursePage = ({ currentUser }) => {
             console.error('Failed to register course:', error);
             toast.error('Đăng ký không thành công, vui lòng thử lại. Error: ' + error);
         }
+    };
+
+    const handleViewClick = (id) => {
+        // làm sao để nó hiện ra thông tin chi tiết của lớp học phần đã đăng ký dựa vào id
+        const course = detailedCourse.filter(course => course.courseClassID.courseClassId === id);
+        console.log('detailedCourse:', detailedCourse);
+        console.log('Selected course:', course);
+        setModalCourse(course);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setModalCourse(null);
     };
 
     return (
@@ -316,9 +338,9 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <div id="box_chitietlophocphan_chodangky">
                                         <h3 className="title-table" lang="ctlhpchodangky-tabletitle">Chi tiết lớp học phần</h3>
                                         <div className="text-right" style={{ marginBottom: '5px' }}>
-                                            <button onClick={handleRegisterClick} className="btn btn--m block first" style={{ backgroundColor: '#ec9e0f', color: '#fff' }} lang="dkhp-xemlichtrungButton">Đăng ký</button>
+                                            {/* <button onClick={handleRegisterClick} className="btn btn--m block first" style={{ backgroundColor: '#ec9e0f', color: '#fff' }} lang="dkhp-xemlichtrungButton">Đăng ký</button> */}
                                         </div>
-                                        <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid">
+                                        <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid" style={{ marginTop: '72px' }}>
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -374,6 +396,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <table className="table table-bordered text-center" width="100%" role="grid">
                                         <thead>
                                             <tr role="row">
+                                                <th>Thao tác</th>
                                                 <th>STT</th>
                                                 <th>Mã học phần</th>
                                                 <th>Tên môn học/học phần</th>
@@ -386,6 +409,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                             {registeredCourses.length > 0 ? (
                                                 registeredCourses.map((course, index) => (
                                                     <tr key={`${course.courseClassID.courseClassId}-${index}`}>
+                                                        <td><button className="btn btn--m block first" style={{ backgroundColor: '#0190F3', color: '#fff' }} onClick={() => handleViewClick(course.courseClassID.courseClassId)}>Xem</button></td>
                                                         <td>{index + 1}</td>
                                                         <td>{course.courseClassID.courseID.courseId}</td>
                                                         <td className="text-left">{course.courseClassID.courseID.courseName}</td>
@@ -396,7 +420,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan={6}>Không có dữ liệu</td>
+                                                    <td colSpan={7}>Không có dữ liệu</td>
                                                 </tr>
                                             )}
                                         </tbody>
@@ -405,11 +429,56 @@ const RegisterCoursePage = ({ currentUser }) => {
                             </div>
                         </div>
                     </div>
-
                 </div>
+            )}
+             {modalCourse && (
+                <Modal 
+                    show={showModal} 
+                    onHide={handleCloseModal} 
+                    dialogClassName="custom-modal"
+                    centered // This will center the modal vertically
+                    size="lg" // This will set the modal size
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chi tiết lớp học</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Lịch học</th>
+                                    <th>Nhóm</th>
+                                    <th>Phòng</th>
+                                    <th>Giảng viên</th>
+                                    <th>Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {modalCourse.map((course, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>Thứ {course.dayOfWeek} (Tiết {course.fromLessonTime} - {course.toLessonTime})</td>
+                                        <td>{course.groupPractice}</td>
+                                        <td>{course.room}</td>
+                                        <td>{course.teacherId}</td>
+                                        <td>{course.fromDate} - {course.toDate}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                            Đóng
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             )}
         </div>
     );
 };
 
 export default RegisterCoursePage;
+// xong
+// xong 2

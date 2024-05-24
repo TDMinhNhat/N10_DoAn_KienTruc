@@ -32,11 +32,11 @@ class StudentService {
     }
 
     async registerTheoryCourse(idStudent, theoryScheduled) {
-        const response = await axios.post(API_URL + '/course-scheduled/register/' + idStudent + '/' + theoryScheduled)
+        const response = await axios.put(API_URL + '/course-scheduled/register/' + idStudent + '/' + theoryScheduled)
         return response;
     }
     async registerPracticeCourse(idStudent, theoryScheduled, practiceGroup) {
-        const response = await axios.post(API_URL + '/course-scheduled/register/' + idStudent + '/' + theoryScheduled + '/' + practiceGroup)
+        const response = await axios.put(API_URL + '/course-scheduled/register/' + idStudent + '/' + theoryScheduled + '/' + practiceGroup)
         return response;
     }
 

@@ -28,11 +28,12 @@ public class CourseClassScheduled {
     private int maxStudents;
     @ManyToOne @JoinColumn(name = "TeacherID", nullable = false)
     private Teacher teacherId;
-    @ManyToOne @JoinColumn(name = "ClassID", nullable = false)
+    @ManyToOne @JoinColumn(name = "CourseClassID", nullable = false)
     private CourseClass courseClassID;
+    @Column(name = "DayOfWeek", nullable = false)
+    private int dayOfWeek;
 
-    public CourseClassScheduled(long id, String room, int fromLessonTime, int toLessonTime, LocalDate fromDate, LocalDate toDate, int groupPractice, int maxStudents, Teacher teacherId, CourseClass courseClassID) {
-        this.id = id;
+    public CourseClassScheduled(String room, int fromLessonTime, int toLessonTime, LocalDate fromDate, LocalDate toDate, int groupPractice, int maxStudents, Teacher teacherId, CourseClass courseClassID, int dayOfWeek) {
         this.room = room;
         this.fromLessonTime = fromLessonTime;
         this.toLessonTime = toLessonTime;
@@ -42,5 +43,6 @@ public class CourseClassScheduled {
         this.maxStudents = maxStudents;
         this.teacherId = teacherId;
         this.courseClassID = courseClassID;
+        this.dayOfWeek = dayOfWeek;
     }
 }

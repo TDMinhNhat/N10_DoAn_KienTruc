@@ -1,7 +1,4 @@
 export const Year = [
-  "2019-2020",
-  "2020-2021",
-  "2021-2022",
   "2022-2023",
   "2023-2024",
   "2024-2025"
@@ -15,7 +12,7 @@ export const HK = [
 
 export const options = [
   "hoc moi",
-  "hoc cai thien"
+  // "hoc cai thien"
 ];
 
 export type Course = {

@@ -93,7 +93,7 @@ const HomePageMinistry = ({ currentUser }) => {
                             </div>
                         </div>
                         <div className="row mt-4">
-                            <div className="col">
+                            {/* <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/management/students" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
@@ -112,18 +112,18 @@ const HomePageMinistry = ({ currentUser }) => {
                                         </Link>
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/management/subject" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
                                             <StorageOutlinedIcon />
-                                            <span>Quản lý môn học</span>
+                                            <span>Quản lý lớp học phần</span>
                                         </Link>
                                     </button>
                                 </div>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/register-course" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
@@ -132,7 +132,7 @@ const HomePageMinistry = ({ currentUser }) => {
                                         </Link>
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

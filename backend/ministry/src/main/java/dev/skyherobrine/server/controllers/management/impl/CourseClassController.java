@@ -4,6 +4,7 @@ import dev.skyherobrine.server.controllers.management.IManagement;
 import dev.skyherobrine.server.messages.send.ManagementProducer;
 import dev.skyherobrine.server.models.CourseClass;
 import dev.skyherobrine.server.models.Response;
+import dev.skyherobrine.server.models.enums.CourseClassStatus;
 import dev.skyherobrine.server.repositories.CourseClassRepository;
 import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CourseClassController implements IManagement<CourseClass,String> {
     public ResponseEntity add(@RequestBody CourseClass courseClass) {
         try {
             CourseClass target = ccr.save(courseClass);
-            producer.sendManagementMessage("course-class", JsonParserMessage.parseToJson(target));
+            producer.sendManagementMessage("update_course_class", JsonParserMessage.parseToJson(target));
             return ResponseEntity.ok(new Response(
                     HttpStatus.OK.value(),
                     "Add successfully!",
@@ -98,6 +99,42 @@ public class CourseClassController implements IManagement<CourseClass,String> {
                 "Get list courses class",
                 new HashMap<>(){{
                     put("data", ccr.findAll());
+                }}
+        ));
+    }
+
+    @GetMapping("update-status/{courseClassID}/{status}")
+    public ResponseEntity updateStatus(@PathVariable String courseClassID, @PathVariable String status) {
+        CourseClass target = ccr.findById(courseClassID).orElse(null);
+        if(target == null) {
+            return ResponseEntity.ok(new Response(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Can't find the course class id = " + courseClassID,
+                    new HashMap<>(){{
+                        put("data", null);
+                    }}
+            ));
+        }
+
+        target.setStatus(CourseClassStatus.valueOf(status));
+        ccr.save(target);
+        producer.sendManagementMessage("update_course_class", JsonParserMessage.parseToJson(target));
+        return ResponseEntity.ok(new Response(
+                HttpStatus.OK.value(),
+                "Update status successfully!",
+                new HashMap<>(){{
+                    put("data", target);
+                }}
+        ));
+    }
+
+    @GetMapping("get-list-status")
+    public ResponseEntity getListStatus() {
+        return ResponseEntity.ok(new Response(
+                HttpStatus.OK.value(),
+                "Get list status",
+                new HashMap<>(){{
+                    put("data", CourseClassStatus.values());
                 }}
         ));
     }

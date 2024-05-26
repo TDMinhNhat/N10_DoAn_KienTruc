@@ -8,9 +8,39 @@ const StudyResultsPage = ({ currentUser }) => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState("");
   const [terms, setTerms] = useState([]);
-  
+  const [termAverages, setTermAverages] = useState({});
+
   const handleTermChange = (e) => {
     setSelectedTerm(e.target.value);
+  };
+
+  const calculateAverages = (results) => {
+    if (!results.length) return { average10: 0, average4: 0, grade: "" };
+
+    const allResultsGraded = results.every(result => 
+      result.average !== -1 && 
+      result.averageFollow4 !== -1 && 
+      result.scoreLetter !== "" && 
+      result.ranks !== ""
+    );
+
+    if (!allResultsGraded) return { average10: "", average4: "", grade: "" };
+
+    const totalCredits = results.reduce((sum, result) => sum + result.credits, 0);
+    const totalPoints10 = results.reduce((sum, result) => sum + (result.average !== -1 ? result.average * result.credits : 0), 0);
+    const totalPoints4 = results.reduce((sum, result) => sum + (result.averageFollow4 !== -1 ? result.averageFollow4 * result.credits : 0), 0);
+
+    const average10 = totalPoints10 / totalCredits;
+    const average4 = totalPoints4 / totalCredits;
+
+    let grade = "";
+    if (average4 >= 3.6) grade = "Xuất sắc";
+    else if (average4 >= 3.2) grade = "Giỏi";
+    else if (average4 >= 2.5) grade = "Khá";
+    else if (average4 >= 2.0) grade = "Trung bình";
+    else grade = "Yếu";
+
+    return { average10: average10.toFixed(2), average4: average4.toFixed(2), grade };
   };
 
   useEffect(() => {
@@ -26,7 +56,15 @@ const StudyResultsPage = ({ currentUser }) => {
           setTerms(uniqueTerms);
           setSelectedTerm(uniqueTerms[0]);
           
-          setFilteredResults(studyData.filter(result => `${result.semesterYear} - HK${result.semester}` === uniqueTerms[0]));
+          const initialFilteredResults = studyData.filter(result => `${result.semesterYear} - HK${result.semester}` === uniqueTerms[0]);
+          setFilteredResults(initialFilteredResults);
+
+          const termAverages = uniqueTerms.reduce((acc, term) => {
+            const termResults = studyData.filter(result => `${result.semesterYear} - HK${result.semester}` === term);
+            acc[term] = calculateAverages(termResults);
+            return acc;
+          }, {});
+          setTermAverages(termAverages);
         } catch (error) {
           console.error("Failed to fetch study results:", error);
         }
@@ -37,14 +75,26 @@ const StudyResultsPage = ({ currentUser }) => {
 
   useEffect(() => {
     if (selectedTerm) {
-      setFilteredResults(prevResults => prevResults.filter(result => `${result.semesterYear} - HK${result.semester}` === selectedTerm));
+      const fetchFilteredResults = async () => {
+        try {
+          const response = await StudentService.getAchieveStudy(currentUser.data.person.id);
+          const studyData = response.data.data.data;
+          const newFilteredResults = studyData.filter(result => `${result.semesterYear} - HK${result.semester}` === selectedTerm);
+          setFilteredResults(newFilteredResults);
+        } catch (error) {
+          console.error("Failed to fetch study results:", error);
+        }
+      };
+      fetchFilteredResults();
     }
-  }, [selectedTerm]);
+  }, [selectedTerm, currentUser]);
+
+  const { average10, average4, grade } = termAverages[selectedTerm] || { average10: 0, average4: 0, grade: "" };
 
   return (
     <div>
       {currentUser && (
-        <div className="container bg-light card study-results-container">
+        <div className="container bg-light card study-results-container" style={{ marginTop: 80, zIndex: 20 }}>
           <h2 className="mt-2">Kết quả học tập</h2>
           <hr />
           <div className="mb-3 d-flex align-items-center">
@@ -101,7 +151,7 @@ const StudyResultsPage = ({ currentUser }) => {
                   <td colSpan="18" className="text-start text-danger text-gradient small bg-light"> Học kỳ: {selectedTerm}</td>
                 </tr>
                 {filteredResults.map((result, index) => (
-                  <tr key={result.courseClassID} className="text-center">
+                  <tr key={`${result.courseClassID}-${index}`} className="text-center">
                     <td className="small">{index + 1}</td>
                     <td className="small">{result.courseClassID}</td>
                     <td className="small text-start ps-2">{result.courseName}</td>
@@ -119,34 +169,18 @@ const StudyResultsPage = ({ currentUser }) => {
                     <td className="small">{result.averageFollow4 !== -1 ? result.averageFollow4 : '-'}</td>
                     <td className="small">{result.scoreLetter || '-'}</td>
                     <td className="small">{result.ranks || '-'}</td>
-                    <td className="small">{result.average !== -1 && result.average >= 5 ? 'Đạt' : 'Không đạt'}</td>
+                    <td className="small"></td>
                   </tr>
                 ))}
 
                 <tr>
-                  <td colSpan="3" className="text-start small">Điểm trung bình học kỳ hệ 10: 7,50</td>
-                  <td colSpan="5" className="text-start small">Điểm trung bình học kỳ hệ 4: 3,18</td>
+                  <td colSpan="3" className="text-start small">Điểm trung bình học kỳ hệ 10: {average10}</td>
+                  <td colSpan="5" className="text-start small">Điểm trung bình học kỳ hệ 4: {average4}</td>
                   <td colSpan="10" className="text-start small"></td>
                 </tr>
                 <tr>
-                  <td colSpan="3" className="text-start small">Điểm trung bình tích lũy: 7,50</td>
-                  <td colSpan="5" className="text-start small">Điểm trung bình tích lũy (hệ 4): 3,18</td>
-                  <td colSpan="10" className="text-start small"></td>
-                </tr>
-                <tr>
-                  <td colSpan="3" className="text-start small">Tổng số tín chỉ đã đăng ký: 11</td>
-                  <td colSpan="5" className="text-start small">Tổng số tín chỉ tích lũy: 11</td>
-                  <td colSpan="10" className="text-start small"></td>
-                </tr>
-                <tr>
-                  <td colSpan="3" className="text-start small">Tổng số tín chỉ đạt: 11</td>
-                  <td colSpan="5" className="text-start small">Tổng số tín chỉ nợ tính đến hiện tại: 0</td>
-                  <td colSpan="10" className="text-start small"></td>
-                </tr>
-                <tr>
-                  <td colSpan="3" className="text-start small">Xếp loại học lực tích lũy: Khá</td>
-                  <td colSpan="5" className="text-start small">Xếp loại học lực học kỳ: Khá</td>
-                  <td colSpan="10" className="text-start small"></td>
+                  <td colSpan="3" className="text-start small">Xếp loại học lực học kỳ: {grade}</td>
+                  <td colSpan="15" className="text-start small"></td>
                 </tr>
               </tbody>
             </table>
@@ -158,4 +192,3 @@ const StudyResultsPage = ({ currentUser }) => {
 };
 
 export default StudyResultsPage;
-

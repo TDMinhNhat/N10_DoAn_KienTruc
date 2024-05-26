@@ -1,7 +1,7 @@
 package dev.skyherobrine.server.controllers;
 
 import dev.skyherobrine.server.dto.InputScoreStudentDTO;
-import dev.skyherobrine.server.feigns.StudentScore;
+import dev.skyherobrine.server.feigns.GetDataFromMinistry;
 import dev.skyherobrine.server.messages.send.UpdateScoreStudentProducer;
 import dev.skyherobrine.server.models.CourseClass;
 import dev.skyherobrine.server.models.Response;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class ScoreStudentController {
 
     @Autowired
-    private StudentScore student;
+    private GetDataFromMinistry student;
     @Autowired
     private CourseClassRepository ccr;
     @Autowired

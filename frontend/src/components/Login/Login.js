@@ -54,21 +54,21 @@ const Login = (props) => {
         <div className="row px-3 px-sm-0">
                 <div className="content-left col-12 d-none col-sm-7 d-sm-block ">
                     <div className="brand">Login</div>
-                    <div className="detail">Hello word</div>
+                    {/* <div className="detail text-white"><h3>Hệ thống quản lý lớp học tín chỉ</h3></div> */}
                 </div>
                 <div className="content-right col-sm-5 col-12 d-flex flex-column gap-3 py-3">
                     <div className="brand d-sm-none">Login</div>
                     <input
                         type="text"
                         className={objValidInput.isValidUsername  ? "form-control" : "is-invalid form-control"}
-                        placeholder="Email address or phone number"
+                        placeholder="Ma tai khoan"
                         value={username}
                         onChange={(e) => {setUsername(e.target.value)}}
                     />
                     <input
                         type="password"
                         className={objValidInput.isValidPassword ? "form-control" : "is-invalid form-control "}
-                        placeholder="password"
+                        placeholder="Mat khau"
                         value={password}
                         onChange={(e) => {setPassword(e.target.value)}}
                     />
@@ -77,9 +77,9 @@ const Login = (props) => {
                     </button>
                     <hr />
                     <div className="text-center">
-                        <button className="btn btn-success" onClick={handleCreateNewAccount}>
+                        {/* <button className="btn btn-success" onClick={handleCreateNewAccount}>
                             Create new account
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>

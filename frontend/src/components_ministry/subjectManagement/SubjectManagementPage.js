@@ -16,9 +16,9 @@ const SubjectManagementPage = ({ currentUser }) => {
       {currentUser && (
         <div className="container" style={{ marginTop: 80,zIndex:20  }}>
           <div className="card bg-light text-black p-4">
-            <h3 className="">Quản lý Môn Học</h3>
+            <h3 className="">Quản lý Lớp Học Phần</h3>
             <hr></hr>
-            <TableSubject></TableSubject>
+            <TableSubject currentUser={currentUser} ></TableSubject>
           </div>
         </div>
       )}

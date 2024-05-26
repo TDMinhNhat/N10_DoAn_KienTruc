@@ -4,10 +4,11 @@ import BasicSelect from './components/BasicSelect';
 import RowRadioButtonsGroup from './components/RowRadioButtonsGroup';
 import StudentService from '../../services/student.service';
 import { toast } from 'react-toastify';
+import { Modal, Button, Table } from 'react-bootstrap';
 
 const statusMapping = {
     PLANNING: 'Đang lên kế hoạch',
-    REGISTERED: 'Đã đăng ký',
+    REGISTERED: 'Chờ sinh viên đăng ký',
     ACCEPTED: 'Đã chấp nhận',
     LOCKED: 'Đã khóa',
     REJECTED: 'Đã từ chối',
@@ -27,6 +28,10 @@ const RegisterCoursePage = ({ currentUser }) => {
     const [selectedClassId, setSelectedClassId] = useState(null);
     const [clickedClass, setClickedClass] = useState(null);
     const [registeredCourses, setRegisteredCourses] = useState([]);
+    const [detailedCourse, setDetailedCourse] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalCourse, setModalCourse] = useState([]);
+    const [selectedRowClass, setSelectedRowClass] = useState(null); // Highlight the selected row
 
     const handleValueChange = (value) => {
         const [semester, year] = value.split(' ');
@@ -52,6 +57,20 @@ const RegisterCoursePage = ({ currentUser }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser, selectedYear, selectedSemester]);
 
+    const fetchTeacherName = async (teacherId) => {
+        try {
+            console.log('Fetching teacher data:', teacherId);
+            const response = await StudentService.getTeacherInfo(teacherId);
+            console.log('Teacher Data:', response.data.data);
+            if (response.status === 200) {
+                return response.data.data.data.fullName;// Assuming the teacher's name is in response.data.data.name
+            }
+        } catch (error) {
+            console.error('Error fetching teacher data:', error);
+            return 'Unknown';
+        }
+    };
+
     const fetchCourses = async () => {
         if (!selectedSemester) return; // Skip if selectedSemester is empty
         try {
@@ -63,7 +82,12 @@ const RegisterCoursePage = ({ currentUser }) => {
                 const allCourses = response.data.data.data;
                 console.log('All courses:', allCourses);
                 const selectedSemesterNumber = parseInt(selectedSemester.slice(2), 10); // Get the number after "HK" and convert it to a number
-                const semesterCourses = allCourses.filter(course => course.courseClassID.semester === selectedSemesterNumber);
+                const semesterCourses = await Promise.all(
+                    allCourses.filter(course => course.courseClassID.semester === selectedSemesterNumber).map(async course => ({
+                        ...course,
+                        teacherName: await fetchTeacherName(course.teacherId),
+                    }))
+                );
                 console.log('selectedSemester', selectedSemesterNumber);
                 setSemesterCourses(semesterCourses);
                 console.log('Semester courses:', semesterCourses);
@@ -87,9 +111,18 @@ const RegisterCoursePage = ({ currentUser }) => {
                 console.log('All courses 2:', allCourses2);
                 const selectedSemesterNumber = parseInt(selectedSemester.slice(2), 10);
                 console.log('selectedSemester 2', selectedSemesterNumber);
-                const semesterCourses = allCourses2.filter(course => course.courseClassID.semester === selectedSemesterNumber );
+                console.log('formattedYear 2:', formattedYear);
+                const semesterCourses = await Promise.all(
+                    allCourses2.filter(course => course.courseClassID.semester === selectedSemesterNumber && course.courseClassID.semesterYear === formattedYear).map(async course => ({
+                        ...course,
+                        teacherName: await fetchTeacherName(course.teacherId),
+                    }))
+                );
                 console.log('semesterCourses 2:', semesterCourses);
-                setRegisteredCourses(semesterCourses);
+                setDetailedCourse(semesterCourses);
+                const uniqueCourses2 = removeDuplicates(semesterCourses);
+                console.log('Unique Courses 2:', uniqueCourses2);
+                setRegisteredCourses(uniqueCourses2);
                 console.log('Registered courses:', semesterCourses);
             }
         } catch (error) {
@@ -117,6 +150,8 @@ const RegisterCoursePage = ({ currentUser }) => {
         console.log('Selected courses:', selectedCourses);
         setSelectedRow(courseId);
         setSelectedCourse(uniqueClasses);
+        selectedRowClass && setSelectedRowClass(null); // Reset selected row class
+        setSelectedClass(null); // Reset selected class
     };
 
     const removeDuplicateClasses = (courses) => {
@@ -142,6 +177,7 @@ const RegisterCoursePage = ({ currentUser }) => {
         setSelectedClassId(id);
         setClickedClass(null); // Reset clicked class
         console.log('Selected class:', selectedClass);
+        setSelectedRowClass(id); // Highlight the selected row
     };
 
     const handleClassClick = (id) => {
@@ -157,11 +193,19 @@ const RegisterCoursePage = ({ currentUser }) => {
                 const response = await StudentService.registerTheoryCourse(currentUser.data.person.id, selectedClassId);
                 toast.success(`Đăng ký thành công: Course Class ID: ${selectedClassId}`);
                 fetchRegisteredCourses(); // Update registered courses after successful registration
+                fetchCourses(); // Update courses after successful registration
+                setSelectedRow(null);
+                setSelectedCourse([]);
+                setSelectedClass(null);
             } else {
                 if (clickedClass && clickedClass.groupPractice !== null) {
                     const response = await StudentService.registerPracticeCourse(currentUser.data.person.id, selectedClassId, clickedClass.groupPractice);
                     toast.success(`Đăng ký thành công: Course Class ID: ${selectedClassId}, Group Practice: ${clickedClass.groupPractice}`);
                     fetchRegisteredCourses(); // Update registered courses after successful registration
+                    fetchCourses(); // Update courses after successful registration
+                    setSelectedRow(null);
+                    setSelectedCourse([]);
+                    setSelectedClass(null);
                 } else {
                     toast.error('Vui lòng chọn lớp với nhóm thực hành hợp lệ.');
                 }
@@ -170,6 +214,19 @@ const RegisterCoursePage = ({ currentUser }) => {
             console.error('Failed to register course:', error);
             toast.error('Đăng ký không thành công, vui lòng thử lại. Error: ' + error);
         }
+    };
+
+    const handleViewClick = (id) => {
+        const course = detailedCourse.filter(course => course.courseClassID.courseClassId === id);
+        console.log('detailedCourse:', detailedCourse);
+        console.log('Selected course:', course);
+        setModalCourse(course);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setModalCourse(null);
     };
 
     return (
@@ -265,13 +322,13 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <div id="box_lophocphan_chodangky">
                                         <h3 className="title-table" lang="lhpchodangky-tabletitle">Lớp học phần chờ đăng ký</h3>
                                         <div className="text-right mb-4 mt-4">
-                                            <label>
+                                            {/* <label>
                                                 <input id="checkLichTrung" name="checkLichTrung" type="checkbox" value="true" />
                                                 <input name="checkLichTrung" type="hidden" value="false" />
                                                 <b>
                                                     <span className="text-uppercase text-danger ms-2 me-3" lang="lhpchodangky-lhpkhongtrunglich">HIỂN THỊ LỚP học phần KHÔNG TRÙNG LỊCH</span>
                                                 </b>
-                                            </label>
+                                            </label> */}
                                         </div>
                                         <div className="table-responsive">
                                             <table id="table_lhpchodangky" className="table-pointer table-dkhp table-custom table table-bordered text-center no-footer dtr-inline" width="100%" role="grid">
@@ -285,7 +342,9 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 <tbody>
                                                     {selectedCourse.length > 0 ? (
                                                         selectedCourse.map((course, index) => (
-                                                            <tr key={`${course.courseClassID.courseClassId}-${index}`} className="tr-active" onClick={() => SelectLopHocChoDangKy(course.courseClassID.courseClassId)}>
+                                                            <tr key={`${course.courseClassID.courseClassId}-${index}`}
+                                                                className={`${selectedRowClass === course.courseClassID.courseClassId ? 'table-active' : ''}`}
+                                                                onClick={() => SelectLopHocChoDangKy(course.courseClassID.courseClassId)}>
                                                                 <td style={{ width: '40px' }}>{index + 1}</td>
                                                                 <td className="text-left">
                                                                     <div className="name">{course.courseClassID.courseID.courseName}</div>
@@ -315,10 +374,10 @@ const RegisterCoursePage = ({ currentUser }) => {
                                 <div className="border-scroll" tabIndex="2" style={{ overflow: 'hidden', outline: 'none' }}>
                                     <div id="box_chitietlophocphan_chodangky">
                                         <h3 className="title-table" lang="ctlhpchodangky-tabletitle">Chi tiết lớp học phần</h3>
-                                        <div className="text-right" style={{ marginBottom: '5px' }}>
-                                            <button onClick={handleRegisterClick} className="btn btn--m block first" style={{ backgroundColor: '#ec9e0f', color: '#fff' }} lang="dkhp-xemlichtrungButton">Đăng ký</button>
+                                        <div className="text-right">
+                                            {/* <button onClick={handleRegisterClick} className="btn btn--m block first" style={{ backgroundColor: '#ec9e0f', color: '#fff' }} lang="dkhp-xemlichtrungButton">Đăng ký</button> */}
                                         </div>
-                                        <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid">
+                                        <table id="tbChiTietDKHP" className="table table-bordered text-center" role="grid" style={{ marginTop: '22px' }}>
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -335,7 +394,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                             <tbody>
                                                 {selectedClass && selectedClass.length > 0 ? (
                                                     selectedClass.map((course, index) => (
-                                                        <tr key={`${course.id}-${index}`} onClick={() => handleClassClick(course.id)}>
+                                                        <tr key={`${course.id}-${index}`} onClick={() => handleClassClick(course.id)} className={`${index === 0 || (clickedClass && clickedClass.id === course.id) ? 'table-active' : ''}`}>
                                                             <td className="text-left">
                                                                 <div><span lang="dkhp-lichhoc">Lịch học</span>:- Thứ {course.dayOfWeek} (Tiết {course.fromLessonTime}-{course.toLessonTime}) </div>
                                                                 <p><span lang="dkhp-phong">Phòng</span>: <b>{course.room}</b></p>
@@ -344,7 +403,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                                 <div><span lang="dkhp-sisomax"></span>{course.groupPractice}</div>
                                                             </td>
                                                             <td className="text-left">
-                                                                <div className="name"><span lang="dkhp-gv">GV</span>: {course.teacherId}</div>
+                                                                <div className="name"><span lang="dkhp-gv">GV</span>: {course.teacherName}</div>
                                                                 <div><span lang="dkhp-lichhoc"><b>{course.fromDate} - {course.toDate}</b> </span></div>
                                                             </td>
                                                         </tr>
@@ -374,6 +433,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                     <table className="table table-bordered text-center" width="100%" role="grid">
                                         <thead>
                                             <tr role="row">
+                                                <th>Thao tác</th>
                                                 <th>STT</th>
                                                 <th>Mã học phần</th>
                                                 <th>Tên môn học/học phần</th>
@@ -386,6 +446,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                             {registeredCourses.length > 0 ? (
                                                 registeredCourses.map((course, index) => (
                                                     <tr key={`${course.courseClassID.courseClassId}-${index}`}>
+                                                        <td><button className="btn btn--m block first" style={{ backgroundColor: '#0190F3', color: '#fff' }} onClick={() => handleViewClick(course.courseClassID.courseClassId)}>Xem</button></td>
                                                         <td>{index + 1}</td>
                                                         <td>{course.courseClassID.courseID.courseId}</td>
                                                         <td className="text-left">{course.courseClassID.courseID.courseName}</td>
@@ -396,7 +457,7 @@ const RegisterCoursePage = ({ currentUser }) => {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan={6}>Không có dữ liệu</td>
+                                                    <td colSpan={7}>Không có dữ liệu</td>
                                                 </tr>
                                             )}
                                         </tbody>
@@ -405,8 +466,51 @@ const RegisterCoursePage = ({ currentUser }) => {
                             </div>
                         </div>
                     </div>
-
                 </div>
+            )}
+            {modalCourse && (
+                <Modal
+                    show={showModal}
+                    onHide={handleCloseModal}
+                    dialogClassName="custom-modal"
+                    centered // This will center the modal vertically
+                    size="lg" // This will set the modal size
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Chi tiết lớp học</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Lịch học</th>
+                                    <th>Nhóm</th>
+                                    <th>Phòng</th>
+                                    <th>Giảng viên</th>
+                                    <th>Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {modalCourse.map((course, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>Thứ {course.dayOfWeek} (Tiết {course.fromLessonTime} - {course.toLessonTime})</td>
+                                        <td>{course.groupPractice}</td>
+                                        <td>{course.room}</td>
+                                        <td>{course.teacherName}</td>
+                                        <td>{course.fromDate} - {course.toDate}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseModal}>
+                            Đóng
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             )}
         </div>
     );

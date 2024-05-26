@@ -29,7 +29,7 @@ const HomePageTeacher = ({ currentUser }) => {
                 // console.log(`Fetching data from /api/student-info/get-personal-info/${currentUser.data.person.id}`);
                 const response = await teacherService.getPersonalInfo(currentUser.data.person.id);
                 setUserInfo(response.data);
-                console.log('check', response.data);
+                console.log('check 2', response.data);
             }
             console.log('check cu', currentUser);
         }
@@ -41,7 +41,7 @@ const HomePageTeacher = ({ currentUser }) => {
                 <div className="container" style={{ marginTop: 80, zIndex: 20 }}>
                     <div className="col">
                         <div className="row">
-                            <div className="col-md-8">
+                            <div className="col-md-12">
                                 <div className="card bg-light text-black p-4 d-flex align-items-start">
                                     <div className="d-flex flex-column align-items-center">
                                         <h1>Thông tin giảng viên</h1>
@@ -78,7 +78,7 @@ const HomePageTeacher = ({ currentUser }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            {/* <div className="col-md-4">
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="card bg-light text-black p-4">
@@ -102,7 +102,7 @@ const HomePageTeacher = ({ currentUser }) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="row mt-4">
                             <div className="col">
@@ -115,7 +115,7 @@ const HomePageTeacher = ({ currentUser }) => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <div className="card">
                                     <button type="button" className="btn btn-light">
                                         <Link to="/study-results" className="stretched-link d-flex flex-column align-items-center text-decoration-none">
@@ -134,7 +134,7 @@ const HomePageTeacher = ({ currentUser }) => {
                                         </Link>
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   KEY `FK2kkmi1x38e189w8qpixk66xec` (`FacultyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table authenticate.student: ~3,197 rows (approximately)
+-- Dumping data for table authenticate.student: ~3,024 rows (approximately)
 DELETE FROM `student`;
 INSERT INTO `student` (`ID`, `Address`, `Avatar`, `BirthDay`, `CityBorn`, `DateModifier`, `Email`, `FullName`, `Password`, `PhoneNumber`, `Sex`, `Status`, `CourseYear`, `DateEnrolled`, `EducationLevel`, `EducationType`, `FacultyID`, `ClassID`) VALUES
 	('18000016', 'Suite 954 8219 Bửu Valley, Bắc Giang, NM G2  8DY', 'https://robohash.org/szivrtdd.png', '1998-11-05', 'An Giang', '2024-04-26', '18000016.vuong.đang@yahoo.com', 'Tô Mai Sơn', '18000016', '0162 606 8940', b'0', 0, '2018 - 2022', '2018-08-01', 'UNIVERSITY', 'FORMAL', 'CNTT', ''),
@@ -3508,40 +3508,39 @@ CREATE TABLE IF NOT EXISTS `courseclassscheduled` (
   `ToDate` date NOT NULL,
   `ScheduledID` bigint(20) NOT NULL AUTO_INCREMENT,
   `TeacherID` varchar(10) NOT NULL,
-  `ClassID` varchar(20) NOT NULL,
+  `CourseClassID` varchar(20) NOT NULL,
   `FromLessonTime` int(11) NOT NULL,
   `Room` varchar(100) NOT NULL,
   `ToLessonTime` int(11) NOT NULL,
   `DayOfWeek` int(11) NOT NULL,
-  `CourseClassID` varchar(20) NOT NULL,
   PRIMARY KEY (`ScheduledID`) USING BTREE,
   KEY `FKh3fff5hhqgicrolii71evry38` (`TeacherID`),
-  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`ClassID`) USING BTREE,
+  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`CourseClassID`) USING BTREE,
   CONSTRAINT `FK6r8gule2o8ptu5ci18h3g3sgv` FOREIGN KEY (`TeacherID`) REFERENCES `teacher` (`ID`),
-  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`ClassID`) REFERENCES `courseclass` (`CourseClassID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`CourseClassID`) REFERENCES `courseclass` (`CourseClassID`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Dumping data for table ministry.courseclassscheduled: ~18 rows (approximately)
 DELETE FROM `courseclassscheduled`;
-INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `ClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`, `CourseClassID`) VALUES
-	('2023-09-11', NULL, 20, '2023-12-11', 1, '01688077', '420300384821', 7, 'B1.11.1', 12, 1, ''),
-	('2023-09-15', NULL, 15, '2023-12-01', 2, '01689544', '422000424719', 7, 'H4.1', 12, 5, ''),
-	('2023-11-29', NULL, 20, '2023-12-13', 3, '01227982', '420300200902', 1, 'X10.03', 3, 3, ''),
-	('2023-11-29', NULL, 15, '2023-12-13', 4, '01250558', '422000279308', 1, 'B2.03', 3, 3, ''),
-	('2023-09-20', NULL, 15, '2023-12-05', 5, '01247298', '422000181506', 1, 'B3.01', 3, 4, ''),
-	('2023-09-12', NULL, 20, '2023-12-10', 6, '01294433', '420300100408', 1, 'Online (ID: 123 456 789, Pass: 1234)', 3, 1, ''),
-	('2024-01-14', NULL, 20, '2024-05-08', 7, '01049980', '420300213711', 1, 'V4.01', 3, 3, ''),
-	('2024-01-03', 1, 10, '2024-05-10', 8, '01049980', '420300213711', 1, 'H8.01', 3, 5, ''),
-	('2024-01-03', 2, 10, '2024-05-19', 9, '01049980', '420300213711', 4, 'H8.01', 6, 5, ''),
-	('2024-01-10', NULL, 20, '2024-04-03', 10, '01688077', '420300094110', 1, 'V4.02', 3, 3, ''),
-	('2024-01-17', 1, 10, '2024-04-24', 11, '01688077', '420300094110', 4, 'B1.11.1', 6, 3, ''),
-	('2024-01-17', 2, 10, '2024-04-24', 12, '01680343', '420300094110', 4, 'B1.11.2', 6, 3, ''),
-	('2024-01-13', NULL, 16, '2024-04-13', 13, '01657898', '422000178201', 4, 'V13.05', 6, 6, ''),
-	('2024-01-24', 1, 8, '2024-05-08', 14, '01657898', '422000178201', 1, 'H6.1', 3, 3, ''),
-	('2024-01-24', 2, 8, '2024-05-24', 15, '01657898', '422000178201', 4, 'H6.1', 6, 3, ''),
-	('2024-01-11', NULL, 16, '2024-05-16', 16, '01021699', '422000394904', 4, 'V7.01', 6, 4, ''),
-	('2024-01-25', 1, 8, '2024-05-09', 17, '01021699', '422000394904', 7, 'B1.4.1', 9, 4, ''),
-	('2024-01-25', 2, 8, '2024-05-09', 18, '01021699', '422000394904', 10, 'B1.4.1', 12, 4, '');
+INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `CourseClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`) VALUES
+	('2023-09-11', NULL, 20, '2023-12-11', 1, '01688077', '420300384821', 7, 'B1.11.1', 12, 1),
+	('2023-09-15', NULL, 15, '2023-12-01', 2, '01689544', '422000424719', 7, 'H4.1', 12, 5),
+	('2023-11-29', NULL, 20, '2023-12-13', 3, '01227982', '420300200902', 1, 'X10.03', 3, 3),
+	('2023-11-29', NULL, 15, '2023-12-13', 4, '01250558', '422000279308', 1, 'B2.03', 3, 3),
+	('2023-09-20', NULL, 15, '2023-12-05', 5, '01247298', '422000181506', 1, 'B3.01', 3, 4),
+	('2023-09-12', NULL, 20, '2023-12-10', 6, '01294433', '420300100408', 1, 'Online (ID: 123 456 789, Pass: 1234)', 3, 1),
+	('2024-01-14', NULL, 20, '2024-05-08', 7, '01049980', '420300213711', 1, 'V4.01', 3, 3),
+	('2024-01-03', 1, 10, '2024-05-10', 8, '01049980', '420300213711', 1, 'H8.01', 3, 5),
+	('2024-01-03', 2, 10, '2024-05-19', 9, '01049980', '420300213711', 4, 'H8.01', 6, 5),
+	('2024-01-10', NULL, 20, '2024-04-03', 10, '01688077', '420300094110', 1, 'V4.02', 3, 3),
+	('2024-01-17', 1, 10, '2024-04-24', 11, '01688077', '420300094110', 4, 'B1.11.1', 6, 3),
+	('2024-01-17', 2, 10, '2024-04-24', 12, '01680343', '420300094110', 4, 'B1.11.2', 6, 3),
+	('2024-01-13', NULL, 16, '2024-04-13', 13, '01657898', '422000178201', 4, 'V13.05', 6, 6),
+	('2024-01-24', 1, 8, '2024-05-08', 14, '01657898', '422000178201', 1, 'H6.1', 3, 3),
+	('2024-01-24', 2, 8, '2024-05-24', 15, '01657898', '422000178201', 4, 'H6.1', 6, 3),
+	('2024-01-11', NULL, 16, '2024-05-16', 16, '01021699', '422000394904', 4, 'V7.01', 6, 4),
+	('2024-01-25', 1, 8, '2024-05-09', 17, '01021699', '422000394904', 7, 'B1.4.1', 9, 4),
+	('2024-01-25', 2, 8, '2024-05-09', 18, '01021699', '422000394904', 10, 'B1.4.1', 12, 4);
 
 -- Dumping structure for table ministry.coursefaculty
 CREATE TABLE IF NOT EXISTS `coursefaculty` (
@@ -4210,9 +4209,9 @@ CREATE TABLE IF NOT EXISTS `enrollcourse` (
   KEY `FK2gdj6l57swnytcb8f623w8k3r` (`CourseClassScheduled`),
   CONSTRAINT `FK2gdj6l57swnytcb8f623w8k3r` FOREIGN KEY (`CourseClassScheduled`) REFERENCES `courseclassscheduled` (`ScheduledID`),
   CONSTRAINT `FKritef4bf30vwsi6r4kdutjtvj` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table ministry.enrollcourse: ~26 rows (approximately)
+-- Dumping data for table ministry.enrollcourse: ~28 rows (approximately)
 DELETE FROM `enrollcourse`;
 INSERT INTO `enrollcourse` (`DateEnrolled`, `EnrollCourseID`, `StudentID`, `Average`, `FinalExam`, `MiddleExam`, `PS1`, `PS2`, `PS3`, `RS1`, `RS2`, `RS3`, `CourseClassScheduled`) VALUES
 	('2024-05-18', 7, '21903984', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7),
@@ -4240,7 +4239,9 @@ INSERT INTO `enrollcourse` (`DateEnrolled`, `EnrollCourseID`, `StudentID`, `Aver
 	('2024-05-18', 29, '21903899', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7),
 	('2024-05-18', 30, '21903899', 0, 0, 0, 0, 0, 0, 0, 0, 0, 9),
 	('2024-05-18', 31, '21903892', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7),
-	('2024-05-18', 32, '21903892', 0, 0, 0, 0, 0, 0, 0, 0, 0, 9);
+	('2024-05-18', 32, '21903892', 0, 0, 0, 0, 0, 0, 0, 0, 0, 9),
+	('2024-05-25', 44, '21903464', 0, 0, 0, 0, 0, 0, 0, 0, 0, 7),
+	('2024-05-25', 45, '21903464', 0, 0, 0, 0, 0, 0, 0, 0, 0, 9);
 
 -- Dumping structure for table ministry.faculty
 CREATE TABLE IF NOT EXISTS `faculty` (
@@ -4321,7 +4322,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   CONSTRAINT `FK2kkmi1x38e189w8qpixk66xec` FOREIGN KEY (`FacultyID`) REFERENCES `faculty` (`FacultyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table ministry.student: ~3,118 rows (approximately)
+-- Dumping data for table ministry.student: ~3,024 rows (approximately)
 DELETE FROM `student`;
 INSERT INTO `student` (`ID`, `Address`, `Avatar`, `BirthDay`, `CityBorn`, `DateModifier`, `Email`, `FullName`, `Password`, `PhoneNumber`, `Sex`, `Status`, `CourseYear`, `DateEnrolled`, `EducationLevel`, `EducationType`, `FacultyID`, `ClassID`) VALUES
 	('18000016', 'Suite 954 8219 Bửu Valley, Bắc Giang, NM G2  8DY', 'https://robohash.org/szivrtdd.png', '1998-11-05', 'An Giang', '2024-04-26', '18000016.vuong.đang@yahoo.com', 'Tô Mai Sơn', 'czJ3OHduM2I2MWI4ZTA=', '0162 606 8940', b'0', 0, '2018 - 2022', '2018-08-01', 'UNIVERSITY', 'FORMAL', 'CNTT', NULL),
@@ -7504,7 +7505,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   PRIMARY KEY (`CourseID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table student.course: ~206 rows (approximately)
+-- Dumping data for table student.course: ~207 rows (approximately)
 DELETE FROM `course`;
 INSERT INTO `course` (`Credits`, `CourseID`, `CourseName`, `Description`) VALUES
 	(3, '1', 'abc', ''),
@@ -7757,20 +7758,20 @@ CREATE TABLE IF NOT EXISTS `courseclassscheduled` (
   `ToDate` date NOT NULL,
   `ScheduledID` bigint(20) NOT NULL AUTO_INCREMENT,
   `TeacherID` varchar(10) NOT NULL,
-  `ClassID` varchar(20) NOT NULL,
+  `CourseClassID` varchar(20) NOT NULL,
   `FromLessonTime` int(11) NOT NULL,
   `Room` varchar(100) NOT NULL,
   `ToLessonTime` int(11) NOT NULL,
   `DayOfWeek` int(11) NOT NULL,
   PRIMARY KEY (`ScheduledID`) USING BTREE,
   KEY `FKh3fff5hhqgicrolii71evry38` (`TeacherID`),
-  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`ClassID`) USING BTREE,
-  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`ClassID`) REFERENCES `courseclass` (`CourseClassID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`CourseClassID`) USING BTREE,
+  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`CourseClassID`) REFERENCES `courseclass` (`CourseClassID`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Dumping data for table student.courseclassscheduled: ~18 rows (approximately)
 DELETE FROM `courseclassscheduled`;
-INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `ClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`) VALUES
+INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `CourseClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`) VALUES
 	('2023-09-11', NULL, 20, '2023-12-11', 1, '01688077', '420300384821', 7, 'B1.11.1', 12, 1),
 	('2023-09-15', NULL, 15, '2023-12-01', 2, '01689544', '422000424719', 7, 'H4.1', 12, 5),
 	('2023-11-29', NULL, 20, '2023-12-13', 3, '01227982', '420300200902', 1, 'X10.03', 3, 3),
@@ -8457,9 +8458,9 @@ CREATE TABLE IF NOT EXISTS `enrollcourse` (
   KEY `FK2gdj6l57swnytcb8f623w8k3r` (`CourseClassScheduled`),
   CONSTRAINT `FK2gdj6l57swnytcb8f623w8k3r` FOREIGN KEY (`CourseClassScheduled`) REFERENCES `courseclassscheduled` (`ScheduledID`),
   CONSTRAINT `FKritef4bf30vwsi6r4kdutjtvj` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table student.enrollcourse: ~26 rows (approximately)
+-- Dumping data for table student.enrollcourse: ~28 rows (approximately)
 DELETE FROM `enrollcourse`;
 INSERT INTO `enrollcourse` (`DateEnrolled`, `EnrollCourseID`, `StudentID`, `Average`, `FinalExam`, `MiddleExam`, `PS1`, `PS2`, `PS3`, `RS1`, `RS2`, `RS3`, `CourseClassScheduled`) VALUES
 	('2024-05-18', 20, '21903984', -1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7),
@@ -8487,7 +8488,9 @@ INSERT INTO `enrollcourse` (`DateEnrolled`, `EnrollCourseID`, `StudentID`, `Aver
 	('2024-05-18', 42, '21903899', -1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7),
 	('2024-05-18', 43, '21903899', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9),
 	('2024-05-18', 44, '21903892', -1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7),
-	('2024-05-18', 45, '21903892', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9);
+	('2024-05-18', 45, '21903892', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9),
+	('2024-05-25', 57, '21903464', -1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7),
+	('2024-05-25', 58, '21903464', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9);
 
 -- Dumping structure for table student.faculty
 CREATE TABLE IF NOT EXISTS `faculty` (
@@ -8540,7 +8543,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   CONSTRAINT `FK2kkmi1x38e189w8qpixk66xec` FOREIGN KEY (`FacultyID`) REFERENCES `faculty` (`FacultyID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- Dumping data for table student.student: ~2,332 rows (approximately)
+-- Dumping data for table student.student: ~3,024 rows (approximately)
 DELETE FROM `student`;
 INSERT INTO `student` (`ID`, `Address`, `Avatar`, `BirthDay`, `CityBorn`, `DateModifier`, `Email`, `FullName`, `Password`, `PhoneNumber`, `Sex`, `Status`, `CourseYear`, `DateEnrolled`, `EducationLevel`, `EducationType`, `FacultyID`, `ShortClassName`) VALUES
 	('18000016', 'Suite 954 8219 Bửu Valley, Bắc Giang, NM G2  8DY', 'https://robohash.org/szivrtdd.png', '1998-11-05', 'An Giang', '2024-04-26', '18000016.vuong.đang@yahoo.com', 'Tô Mai Sơn', 'czJ3OHduM2I2MWI4ZTA=', '0162 606 8940', b'0', 0, '2018 - 2022', '2018-08-01', 'UNIVERSITY', 'FORMAL', 'CNTT', NULL),
@@ -11635,21 +11638,21 @@ CREATE TABLE IF NOT EXISTS `courseclassscheduled` (
   `ToDate` date NOT NULL,
   `ScheduledID` bigint(20) NOT NULL AUTO_INCREMENT,
   `TeacherID` varchar(10) NOT NULL,
-  `ClassID` varchar(20) NOT NULL,
+  `CourseClassID` varchar(20) NOT NULL,
   `FromLessonTime` int(11) NOT NULL,
   `Room` varchar(100) NOT NULL,
   `ToLessonTime` int(11) NOT NULL,
   `DayOfWeek` int(11) NOT NULL,
   PRIMARY KEY (`ScheduledID`) USING BTREE,
   KEY `FKh3fff5hhqgicrolii71evry38` (`TeacherID`),
-  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`ClassID`) USING BTREE,
+  KEY `FKk964fdf9j66jr8gmgbdlju9uw` (`CourseClassID`) USING BTREE,
   CONSTRAINT `FK6r8gule2o8ptu5ci18h3g3sgv` FOREIGN KEY (`TeacherID`) REFERENCES `teacher` (`ID`),
-  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`ClassID`) REFERENCES `courseclass` (`CourseClassID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  CONSTRAINT `FKk964fdf9j66jr8gmgbdlju9uw` FOREIGN KEY (`CourseClassID`) REFERENCES `courseclass` (`CourseClassID`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- Dumping data for table teacher.courseclassscheduled: ~18 rows (approximately)
 DELETE FROM `courseclassscheduled`;
-INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `ClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`) VALUES
+INSERT INTO `courseclassscheduled` (`FromDate`, `GroupPractice`, `MaxStudents`, `ToDate`, `ScheduledID`, `TeacherID`, `CourseClassID`, `FromLessonTime`, `Room`, `ToLessonTime`, `DayOfWeek`) VALUES
 	('2023-09-11', NULL, 20, '2023-12-11', 1, '01688077', '420300384821', 7, 'B1.11.1', 12, 1),
 	('2023-09-15', NULL, 15, '2023-12-01', 2, '01689544', '422000424719', 7, 'H4.1', 12, 5),
 	('2023-11-29', NULL, 20, '2023-12-13', 3, '01227982', '420300200902', 1, 'X10.03', 3, 3),

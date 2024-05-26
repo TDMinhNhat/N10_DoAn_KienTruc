@@ -6,6 +6,7 @@ import dev.skyherobrine.server.models.CourseClassScheduled;
 import dev.skyherobrine.server.models.Response;
 import dev.skyherobrine.server.repositories.CourseClassScheduledRepository;
 import dev.skyherobrine.server.repositories.EnrollCourseRepository;
+import dev.skyherobrine.server.utils.JsonParserMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class TheoryAndPracticeManagement implements IManagement<CourseClassSched
     public ResponseEntity add(@RequestBody CourseClassScheduled courseClassScheduled) {
         try {
             CourseClassScheduled ccs = ccsr.save(courseClassScheduled);
+            producer.sendManagementMessage("update_course_class_scheduled", JsonParserMessage.parseToJson(ccs));
             return ResponseEntity.ok(new Response(
                     HttpStatus.OK.value(),
                     "Add successfully!",

@@ -5,7 +5,13 @@ plugins {
 }
 
 group = 'dev.skyherobrine.app'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
+
+jar {
+    manifest {
+        attributes( 'Main-Class': 'dev.skyherobrine.server.ApiGatewayApplication' )
+    }
+}
 
 java {
     sourceCompatibility = '17'

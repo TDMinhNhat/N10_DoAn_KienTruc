@@ -45,20 +45,22 @@ const Sidebar = ({ currentUser }) => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto flex-column">
                             <Nav.Link as={Link} to="/dashboard" className={`${pathname.includes('dashboard') ? 'active bg-info' : ''}`}>TRANG CHỦ</Nav.Link>
-                            {(currentUser.data.role === 'ministry' || currentUser.data.role === 'student') && (
+                            {(currentUser.data.role === 'ministry' || currentUser.data.role === 'student' || currentUser.data.role === 'teacher') && (
                                 <>
                                     <Nav.Link onClick={toggleGeneralInfo}>
                                         THÔNG TIN CHUNG {isGeneralInfoExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                                     </Nav.Link>
                                     {isGeneralInfoExpanded && (
                                         <>
-                                            <Nav.Link as={Link} to="/profile" className={`${pathname.includes('profile') ? 'active bg-info' : ''}`}>Thông tin sinh viên</Nav.Link>
+                                            <Nav.Link as={Link} to="/profile" className={`${pathname.includes('profile') ? 'active bg-info' : ''}`}>
+                                                {currentUser.data.role === 'ministry' ? 'Thông tin giáo vụ' : currentUser.data.role === 'student' ? 'Thông tin sinh viên' : 'Thông tin giảng viên'}
+                                            </Nav.Link>
                                             <Nav.Link as={Link} to="/update-suggestion" className={`${pathname.includes('update-suggestion') ? 'active bg-info' : ''}`}>Cập nhật thông tin</Nav.Link>
                                         </>
                                     )}
                                 </>
                             )}
-                            {(currentUser.data.role === 'student' || currentUser.data.role === 'teacher') && (
+                            {(currentUser.data.role === 'student') && (
                                 <>
                                     <Nav.Link onClick={toggleStudy}>
                                         HỌC TẬP {isStudyExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -71,28 +73,29 @@ const Sidebar = ({ currentUser }) => {
                                     )}
                                 </>
                             )}
-                            {(currentUser.data.role === 'student' || currentUser.data.role === 'teacher') && (
+                            {(currentUser.data.role === 'student') && (
                                 <>
                                     <Nav.Link as={Link} to="/register-course" className={`${pathname.includes('register-course') ? 'active bg-info' : ''}`}>ĐĂNG KÝ HỌC PHẦN</Nav.Link>
                                     <Nav.Link as={Link} to="/register-graduation" className={`${pathname.includes('register-graduation') ? 'active bg-info' : ''}`}>ĐĂNG KÝ TỐT NGHIỆP</Nav.Link>
                                 </>
                             )}
-                            {(currentUser.data.role === 'ministry' || currentUser.data.role === 'teacher') && (
+                            {(currentUser.data.role === 'ministry') && (
                                 <>
                                     <Nav.Link onClick={toggleStaff}>
                                         GIÁO VỤ {isStaffExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                                     </Nav.Link>
                                     {isStaffExpanded && (
                                         <>
-                                            <Nav.Link as={Link} to="/management/students" className={`${pathname.includes('management/students') ? 'active bg-info' : ''}`}>Quản lý sinh viên</Nav.Link>
-                                            <Nav.Link as={Link} to="/management/teachers" className={`${pathname.includes('management/teachers') ? 'active bg-info' : ''}`}>Quản lý giảng viên</Nav.Link>
-                                            <Nav.Link as={Link} to="/management/subject" className={`${pathname.includes('management/subject') ? 'active bg-info' : ''}`}>Quản lý môn học</Nav.Link>
+                                            {/* <Nav.Link as={Link} to="/management/students" className={`${pathname.includes('management/students') ? 'active bg-info' : ''}`}>Quản lý sinh viên</Nav.Link>
+                                            <Nav.Link as={Link} to="/management/teachers" className={`${pathname.includes('management/teachers') ? 'active bg-info' : ''}`}>Quản lý giảng viên</Nav.Link> */}
+                                            <Nav.Link as={Link} to="/management/subject" className={`${pathname.includes('management/subject') ? 'active bg-info' : ''}`}>Quản lý lớp học phần</Nav.Link>
                                         </>
                                     )}
                                 </>
                             )}
                             {(currentUser.data.role === 'teacher') && (
-                                <Nav.Link as={Link} to="/input-point" className={`${pathname.includes('input-point') ? 'active bg-info' : ''}`}>NHẬP ĐIỂM</Nav.Link>
+                                // <Nav.Link as={Link} to="/input-point" className={`${pathname.includes('input-point') ? 'active bg-info' : ''}`}>NHẬP ĐIỂM</Nav.Link>
+                                <Nav.Link as={Link} to="/weekly-schedule" className={`${pathname.includes('input-point') ? 'active bg-info' : ''}`}>LỊCH DẠY</Nav.Link>
                             )}
                         </Nav>
                     </Navbar.Collapse>
